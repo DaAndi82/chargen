@@ -1,18 +1,7 @@
-angular.module('chargen', ['ngRoute', 'overview'])
-    
-    
-    /*.config(function($routeProvider) {
-        var resolveProjects = {
-            projects: function (Projects) {
-                return Projects.fetch();
-            }
-        };
-        
-        $routeProvider.otherwise({redirectTo:'/overview'});
-    })*/
+﻿angular.module('chargen', ['ngRoute', 'overview', 'users'])
     
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.otherwise({redirectTo: '/overview'});
+        $routeProvider.otherwise({redirectTo: '/'});
     }]);
  
     /*.value('fbURL', 'https://chargen.firebaseio.com/')
