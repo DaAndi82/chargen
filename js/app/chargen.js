@@ -8,5 +8,3 @@
     .service('fbRef', function(fbURL) {
         return new Firebase(fbURL)
     })*/
-    
-    

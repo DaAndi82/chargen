@@ -8,43 +8,59 @@
 
 <!-- Main content -->
 <section class="content" ng-controller="UsersController as uc">
+	{{test}}
+	
+	<div ng-click="changeTest('asdf')">value asdf</div>
+	
+	<div ng-click="changeTest('1234')">value 1234</div>
+	
+	{{test}}
+	
+	<div ng-show="test=='asdf'">SHOW</div>
+	
 	<div class="row">
-		<div class="col-xs-12">
+		<div class="col-md-8">
 			<div class="box">
 				<!--div class="box-header">
 					<h3 class="box-title">Data Table With Full Features</h3>                                    
 				</div--><!-- /.box-header -->
 				<div class="box-body table-responsive">
-					<table id="userTable" class="table table-bordered table-striped">
+					<table id="userTable" class="table table-bordered table-striped" <!--datatable="users"-->>
 						<thead>
 							<tr>
 								<th>Name</th>
 								<th>E-Mail</th>
+								<th>Aktionen</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="user in uc.users">
+							<tr ng-repeat="user in users">
 								<td>{{user.name}}</td>
 								<td>{{user.email}}</td>
+								<td style="width: 70px; text-align: center">
+									<div class="btn-group">
+										<button class="btn btn-warning btn-xs" type="button"><i class="fa fa-edit"></i></button>
+										<button class="btn btn-danger btn-xs" type="button" style="width: 24px" ng-click="deleteUser($index)"><i class="fa fa-trash-o"></i></button>
+									</div>
+								</td>
 							</tr>
 						</tbody>
 						<tfoot>
 							<tr>
 								<th>Name</th>
 								<th>E-Mail</th>
+								<th>Aktionen</th>
 							</tr>
 						</tfoot>
 					</table>
 				</div><!-- /.box-body -->
 			</div><!-- /.box -->
 		</div>
+		<div class="col-md-4">
+			<div class="box">
+				
+			</div>
+		</div>
 	</div>
 </section>
 <!-- /.content -->
-
-<!-- page script -->
-        <script type="text/javascript">
-            $(function() {
-                $("#userTable").dataTable();
-            });
-        </script>
