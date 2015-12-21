@@ -1,26 +1,47 @@
 angular.module('users', ['ngRoute'])
 
-	.config(['$routeProvider', function($routeProvider) {
+	.config(function($routeProvider) {
         $routeProvider.when('/users', {
 			templateUrl: 'pages/users.html',
 			controller: 'UsersController as uc'
 		});
-    }])
+    })
 	
-	.controller('UsersController', ['$scope', function ($scope) {
+	.controller('UsersController',  function ($scope) {
 		
 		$scope.users = [
-			{id: 1, name: 'Da.Andi', email: 'Da.Andi@web.de'},
-			{id: 2, name: 'Da.Andi2', email: 'Da.Andi2@web.de'}
+			{uuid: 1, name: 'Da.Andi', email: 'Da.Andi@web.de'},
+			{uuid: 2, name: 'Da.Andi2', email: 'Da.Andi2@web.de'}
 		];
+		
+		$scope.EditMaskModel = {
+			index: false,
+			user: {uuid: false, name: '', email: ''}
+		}
 		
 		
 		$scope.deleteUser = function (index) {
-			var usersTemp = $scope.users;
-			
-			usersTemp.splice(index, 1);
+			$scope.users.splice(index, 1);
 		}
-	}])
+		
+		$scope.showUser = function (index) {
+			$scope.EditMaskModel.index = index;
+			$scope.EditMaskModel.user = {};
+			$scope.EditMaskModel.user.name = $scope.users[index].name;
+			$scope.EditMaskModel.user.email = $scope.users[index].email;
+		}
+		
+		$scope.saveUser = function (index) {
+			$scope.users[index].name = $scope.EditMaskModel.user.name;
+			$scope.users[index].email = $scope.EditMaskModel.user.email;
+			
+			// Reset EditMask.
+			$scope.EditMaskModel = {
+				index: false,
+				user: {uuid: false, name: '', email: ''}
+			}
+		}
+	})
 	
 	/*.directive('datatable', [function() {
         return {

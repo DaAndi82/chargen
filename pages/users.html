@@ -12,11 +12,17 @@
 		<div class="col-md-12">
 			<div class="box">
 				<div class="box-header">
-					<h3 class="box-title">User-Liste</h3>                                    
+					<h3 class="box-title">User-Liste</h3>
+					<div class="box-tools">
+						<div class="input-group">
+							<input type="text" placeholder="Suchen" style="width: 150px;" class="form-control input-sm pull-right" name="table_search" ng-model="suche">
+							<span class="input-group-addon"><i class="fa fa-search"></i></span>
+						</div>
+					</div>					
 				</div><!-- /.box-header -->
-				<div class="box-body table-responsive">
+				<div class="box-body table-responsive no-padding">
 					<!--table id="userTable" class="table table-bordered table-striped" datatable="users"-->
-                    <table id="userTable" class="table no-padding table-striped">
+                    <table id="userTable" class="table table-striped">
 						<thead>
 							<tr>
 								<th>Name</th>
@@ -25,12 +31,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="user in users">
+							<tr ng-repeat="user in users | filter:suche">
 								<td>{{user.name}}</td>
 								<td>{{user.email}}</td>
 								<td style="width: 70px; text-align: center">
 									<div class="btn-group">
-										<button class="btn btn-warning btn-xs" type="button" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-edit"></i></button>
+										<button class="btn btn-warning btn-xs" type="button" data-toggle="modal" data-target="#compose-modal" ng-click="showUser($index)"><i class="fa fa-edit"></i></button>
 										<button class="btn btn-danger btn-xs" type="button" style="width: 24px" ng-click="deleteUser($index)"><i class="fa fa-trash-o"></i></button>
 									</div>
 								</td>
@@ -48,37 +54,36 @@
 			</div><!-- /.box -->
 		</div>
 	</div>
+	<!-- COMPOSE MESSAGE MODAL -->
+	<div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true" ng-show="EditMaskModel != false">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title"><i class="fa fa-edit"></i> Detailansicht</h4>
+				</div>
+				<form action="#" method="post" name="userDetail">
+					<div class="modal-body">
+						<div class="form-group">
+							<div class="input-group">
+								<label for="name">Benutzername</label>
+								<input id="name" name="name" type="text" class="form-control" placeholder="Benutzername eingeben" ng-model="EditMaskModel.user.name">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<label for="name">E-Mail</label>
+								<input id="email" name="email" type="email" class="form-control" placeholder="E-Mail eingeben" ng-model="EditMaskModel.user.email">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer clearfix">
+						<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Abbrechen</button>
+						<button type="button" class="btn btn-warning pull-left" data-dismiss="modal" ng-click="saveUser(EditMaskModel.index)"><i class="fa fa-edit"></i> Ändern</button>
+					</div>
+				</form>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 </section>
 <!-- /.content -->
-
-<!-- COMPOSE MESSAGE MODAL -->
-        <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"><i class="fa fa-envelope-o"></i> Compose New Message</h4>
-                    </div>
-                    <form action="#" method="post">
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <label for="name">Benutzername</label>
-                                    <input id="name" name="name" type="text" class="form-control" placeholder="Benutzername eingeben">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <label for="name">E-Mail</label>
-                                    <input id="email" name="email" type="email" class="form-control" placeholder="E-Mail eingeben">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer clearfix">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Abbrechen</button>
-                            <button type="submit" class="btn btn-warning pull-left"><i class="fa fa-envelope"></i> Ändern</button>
-                        </div>
-                    </form>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
