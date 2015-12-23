@@ -7,10 +7,12 @@
 </section>
 
 <!-- Main content -->
-<section class="content" ng-controller="UsersController as uc">	
+<section class="content" ng-controller="UsersController as uc">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="box">
+				<div class="overlay" ng-show="showUserlistLoading"></div>
+				<div class="loading-img" ng-show="showUserlistLoading"></div>
 				<div class="box-header">
 					<h3 class="box-title">User-Liste</h3>
 					<div class="box-tools">
@@ -31,7 +33,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="user in userList | filter:suche">
+							<tr ng-repeat="user in userService.users | filter:suche">
 								<td>{{user.name}}</td>
 								<td>{{user.email}}</td>
 								<td style="width: 70px; text-align: center">
@@ -42,13 +44,6 @@
 								</td>
 							</tr>
 						</tbody>
-						<!--tfoot>
-							<tr>
-								<th>Name</th>
-								<th>E-Mail</th>
-								<th>Aktionen</th>
-							</tr>
-						</tfoot-->
 					</table>
 				</div><!-- /.box-body -->
 			</div><!-- /.box -->

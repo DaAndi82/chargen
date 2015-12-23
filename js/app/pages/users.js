@@ -1,6 +1,6 @@
 angular.module('chargen.users', [
 		'ngRoute',
-		'firebase'
+		'chargen.userService'
 	])
 
 	.config(function($routeProvider) {
@@ -9,18 +9,18 @@ angular.module('chargen.users', [
 		});
     })
 	
-	.controller('UsersController',  function ($scope, $firebaseArray) {
+	.controller('UsersController',  function ($scope, userService) {
 		
-		$scope.users = $scope.users || $firebaseArray(new Firebase('https://chargen.firebaseio.com/users'));
+		$scope.userService = userService;
+		$scope.showUserlistLoading = true;
 		
+		$scope.userService.loadUsers(function () {
+			$scope.showUserlistLoading = false;
+		});
 		/* $scope.users.$add({name: 'Da.Andi1', email: 'Da.Andi1@web.de'});
 		$scope.users.$add({name: 'Da.Andi2', email: 'Da.Andi2@web.de'}); */
 		
-		$scope.userList = $scope.users;
-		
-		console.log($scope.userList);
-		
-		
+	
 		$scope.EditMaskModel = {
 			index: false,
 			user: {uuid: false, name: '', email: ''}
