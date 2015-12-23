@@ -1,4 +1,4 @@
-﻿angular.module('overview', ['ngRoute'])
+﻿angular.module('chargen.overview', ['ngRoute'])
 
     .config(function($routeProvider) {
         $routeProvider.when('/', {
