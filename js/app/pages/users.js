@@ -11,8 +11,11 @@ angular.module('chargen.users', [
 	
 	.controller('UsersController',  function ($scope, userService) {
 		
+		/* Hält den UserService. */
 		$scope.userService = userService;
+		/* Triggert die Loading-Animation .*/
 		$scope.showUserlistLoading = true;
+		
 		
 		$scope.userService.loadUsers(function () {
 			$scope.showUserlistLoading = false;
@@ -22,8 +25,9 @@ angular.module('chargen.users', [
 		
 	
 		$scope.EditMaskModel = {
-			index: false,
-			user: {uuid: false, name: '', email: ''}
+			$id: false,
+			name: '',
+			email: ''
 		}
 		
 		
@@ -31,23 +35,41 @@ angular.module('chargen.users', [
 			$scope.users.splice(index, 1);
 		}
 		
-		$scope.showUser = function (index) {
-			$scope.EditMaskModel.index = index;
+		$scope.showUser = function (id) {
+			
+			//$scope.EditMaskModel.index = index;
 			//$scope.EditMaskModel.user = angular.copy($scope.users[index]);
-			$scope.EditMaskModel.user = $scope.users[index];
+			$scope.userService.users.forEach(function (user, index, userList){
+				if (user.$id == id){
+					console.log("Edit user " + user.$id);
+					$scope.EditMaskModel = angular.copy(user);
+					//$scope.EditMaskModel = user;
+				}
+			})			
 		}
 		
-		$scope.saveUser = function (index) {
+		$scope.saveUser = function () {
 			//$scope.users[index] = angular.copy($scope.EditMaskModel.user);
-			$scope.users.$save($scope.EditMaskModel.user);
-			
+			//$scope.users.$save($scope.EditMaskModel);			
 			/*var myDataRef = new Firebase('https://chargen.firebaseio.com/');
 			myDataRef.push({users: $scope.users[0]});*/
 			
+			$scope.userService.firebaseArray.$save($scope.EditMaskModel);
+			
+			/*$scope.userService.users.forEach(function (user, index, userList){
+				if (user.$id == $scope.EditMaskModel.$id){
+					console.log("Save user " + user.$id);
+					userList[index] = angular.copy($scope.EditMaskModel);
+				}
+			})*/
+			
+			$scope.userService.users.$save();
+			
 			// Reset EditMask.
 			$scope.EditMaskModel = {
-				index: false,
-				user: {uuid: false, name: '', email: ''}
+				uuid: false,
+				name: '',
+				email: ''
 			}
 		}
 		

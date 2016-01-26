@@ -4,14 +4,15 @@ angular.module('chargen.userService', [
 
 	.factory('userService', function ($firebaseArray) {
 		
-		var userService = this;		
-		userService.users = null;		
+		var userService = this;
+		userService.firebaseArray = null;
+		userService.users = null;
 		
 		userService.loadUsers = function (callback) {
 			console.log('UserService: Loading users');
 			
-			var users = $firebaseArray(new Firebase('https://chargen.firebaseio.com/users'));
-			users.$loaded()
+			userService.firebaseArray = $firebaseArray(new Firebase('https://chargen.firebaseio.com/users'));
+			userService.firebaseArray.$loaded()
 				.then(function (loadedUsers) {
 					userService.users = loadedUsers;
 					
