@@ -13,22 +13,23 @@ angular.module('chargen.users', [
 		
 		/* Hält den UserService. */
 		$scope.userService = userService;
+		/* Hält die Liste der User (nicht das FirebaseArray). */
+		$scope.userList = null;
 		/* Triggert die Loading-Animation .*/
 		$scope.showUserlistLoading = true;
 		
-		
-		$scope.userService.loadUsers(function () {
-			$scope.showUserlistLoading = false;
-		});
-		/* $scope.users.$add({name: 'Da.Andi1', email: 'Da.Andi1@web.de'});
-		$scope.users.$add({name: 'Da.Andi2', email: 'Da.Andi2@web.de'}); */
-		
-	
+		/* EditMaskModel für die Edit-Maske */
 		$scope.EditMaskModel = {
 			$id: false,
 			name: '',
 			email: ''
 		}
+		
+		/* Initalisierung des UserService */
+		$scope.userService.init(function () {
+			$scope.userList = $scope.userService.getUserList();
+			$scope.showUserlistLoading = false;
+		});
 		
 		
 		$scope.deleteUser = function (index) {
@@ -36,76 +37,30 @@ angular.module('chargen.users', [
 		}
 		
 		$scope.showUser = function (id) {
-			
-			//$scope.EditMaskModel.index = index;
-			//$scope.EditMaskModel.user = angular.copy($scope.users[index]);
-			$scope.userService.users.forEach(function (user, index, userList){
-				if (user.$id == id){
-					console.log("Edit user " + user.$id);
-					$scope.EditMaskModel = angular.copy(user);
-					//$scope.EditMaskModel = user;
-				}
-			})			
+			$scope.EditMaskModel = $scope.userService.getUser(id);
 		}
 		
-		$scope.saveUser = function () {
-			//$scope.users[index] = angular.copy($scope.EditMaskModel.user);
-			//$scope.users.$save($scope.EditMaskModel);			
-			/*var myDataRef = new Firebase('https://chargen.firebaseio.com/');
-			myDataRef.push({users: $scope.users[0]});*/
+		$scope.saveUser = function () {			
+			$scope.showUserlistLoading = true;
 			
-			$scope.userService.firebaseArray.$save($scope.EditMaskModel);
-			
-			/*$scope.userService.users.forEach(function (user, index, userList){
-				if (user.$id == $scope.EditMaskModel.$id){
-					console.log("Save user " + user.$id);
-					userList[index] = angular.copy($scope.EditMaskModel);
+			$scope.userService.saveUser($scope.EditMaskModel, function() {
+				$scope.updateUserlist();
+				$scope.showUserlistLoading = false;
+				
+				// Reset EditMask.
+				$scope.EditMaskModel = {
+					uuid: false,
+					name: '',
+					email: ''
 				}
-			})*/
-			
-			$scope.userService.users.$save();
-			
-			// Reset EditMask.
-			$scope.EditMaskModel = {
-				uuid: false,
-				name: '',
-				email: ''
-			}
+			});
 		}
 		
 		$scope.updateUserlist = function () {
 			console.log('Update userlist');
-			$scope.userList = angular.copy($scope.users);
+			$scope.userList = $scope.userService.getUserList();
 		}
 		
 		
 		
 	});
-	
-	/*.directive('datatable', [function() {
-        return {
-            restrict: 'A',
-			scope: {
-				users: "=datatable"
-			},
-            link: function link(scope, element, attrs) {
-				var dataTable;
-				
-				setTimeout(function() { 
-					//element.DataTable();
-				}, 0);
-				
-				scope.$watch('users', function() {
-					
-					setTimeout(function() { 
-						//element.DataTable();
-						console.log(scope.users);
-					}, 1000);
-				
-				}, true);
-            }
-        };
-    }]);*/
-	
-	
-    
