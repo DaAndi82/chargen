@@ -22,36 +22,46 @@ angular.module('chargen.users', [
 		$scope.EditMaskModel = {
 			$id: false,
 			name: '',
-			email: ''
+			email: '',
+			lastModified: 0
 		}
 		
-		/* Initalisierung des UserService */
-		$scope.userService.init(function () {
-			$scope.userList = $scope.userService.getUserList();
-			$scope.showUserlistLoading = false;
-		});
+		$scope.loadUserlist = function () {
+			$scope.showUserlistLoading = true;
 		
+			/* Initalisierung des UserService */			
+			$scope.userService.init(function () {
+				$scope.userList = $scope.userService.getUserList();
+				$scope.showUserlistLoading = false;
+			});
+		};
 		
-		$scope.deleteUser = function (index) {
-			$scope.users.splice(index, 1);
+		$scope.deleteUser = function (id) {
+			$scope.showUserlistLoading = true;
+			
+			$scope.userService.deleteUser(id, function() {
+				$scope.updateUserlist();
+				$scope.showUserlistLoading = false;
+			});
 		}
 		
-		$scope.showUser = function (id) {
+		$scope.editUser = function (id) {
 			$scope.EditMaskModel = $scope.userService.getUser(id);
 		}
 		
 		$scope.saveUser = function () {			
 			$scope.showUserlistLoading = true;
 			
-			$scope.userService.saveUser($scope.EditMaskModel, function() {
-				$scope.updateUserlist();
+			$scope.userService.modifyUser($scope.EditMaskModel, function() {
+				//$scope.updateUserlist();
 				$scope.showUserlistLoading = false;
 				
 				// Reset EditMask.
 				$scope.EditMaskModel = {
-					uuid: false,
+					$id: false,
 					name: '',
-					email: ''
+					email: '',
+					lastModified: 0
 				}
 			});
 		}
@@ -61,6 +71,5 @@ angular.module('chargen.users', [
 			$scope.userList = $scope.userService.getUserList();
 		}
 		
-		
-		
+		$scope.loadUserlist();		
 	});
