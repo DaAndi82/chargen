@@ -7,6 +7,7 @@ angular.module('chargen.userService', [
 		var userService = this;
 		userService.firebaseArray = null;
 		
+		
 		userService.init = function (callback) {
 			console.log('UserService: Loading users');
 			
@@ -18,6 +19,7 @@ angular.module('chargen.userService', [
 				});
 		}
 		
+		
 		userService.getUser = function (id) {
 			var user = userService.firebaseArray.$getRecord(id);
 				if (user != null) {
@@ -28,47 +30,72 @@ angular.module('chargen.userService', [
 			return user;
 		}
 		
+		
 		userService.modifyUser = function(user, callback) {
 			if (user != null) {
 				console.log('UserService: Save user with id "' + user.$id + '"');
 				
-				user.lastModified = Date.now();
+				userService.signTransaction(user, false);
 				
 				userService.firebaseArray.$save(user).then(function() {
 					console.log('UserService: User with id "' + user.$id + '" saved');
-					if (callback) callback();
+					if (callback) callback(true);
 				});
 			}
 		}
+		
 		
 		userService.getUserList = function () {
 			// return angular.copy(userService.firebaseArray);
 			return userService.firebaseArray;
 		}
 		
+		
 		userService.deleteUser = function (id, callback) {
 			if (id != null) {
-				console.log('UserService: Delete user with id "' + id + '"');
+				var user = userService.getUser(id);
 				
-				userService.firebaseArray.$remove(id).then(function() {
-					console.log('UserService: User with id "' + id + '" deleted');
-					if (callback) callback();
-				});
+				if (user != null) {
+					console.log('UserService: Delete user with id "' + id + '"');			
+				
+					userService.firebaseArray.$remove(user).then(function() {
+						console.log('UserService: User with id "' + id + '" deleted');
+						if (callback) callback(true);
+					});
+				}
 			}
 		}
+		
 		
 		userService.createUser = function (user, callback) {
 			if (user != null) {
 				console.log('UserService: Create user with name "' + user.name + '"');
 				
-				user.lastModified = Date.now();
+				userService.signTransaction(user, true);
 				
 				userService.firebaseArray.$add(user).then(function(ref) {
 					console.log('UserService: User with name "' + user.name + '" created (id: ' + ref.$id + ')');
-					if (callback) callback();
+					if (callback) callback(true);
 				});
 			}
 		}
+		
+		
+		userService.signTransaction = function (user, isCreation) {
+			var now = Date.now();
+			
+			user.dataLastModified = now;
+			user.dataLastModifier = "Da.Andi";
+			
+			if (isCreation) {
+				user.dataCreation = now;
+				user.dataCreator = "Da.Andi";
+			} else {
+				if (user.dataCreation == null) user.dataCreation = now;
+				if (user.dataCreator == null) user.dataCreator = "Da.Andi";;
+			}
+		}
+		
 		
 		/*userService.userOutOfSync = function (user) {
 			var syncUser = userService.firebaseArray.$getRecord(user.$id);			
@@ -80,6 +107,7 @@ angular.module('chargen.userService', [
 				return false;
 			}
 		}*/
+		
 		
 		return userService;
 	});

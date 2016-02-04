@@ -15,16 +15,19 @@ angular.module('chargen.users', [
 		$scope.userService = userService;
 		/* Hält die Liste der User (nicht das FirebaseArray). */
 		$scope.userList = null;
+		/* EditMaskModel für die Edit-Maske */
+		$scope.EditMaskModel = null;
+		/* Hält die Nachrichten */
+		$scope.messages = [{type: "info", text: "Hallo"}, {type: "warning", text: "Hallo"}];
 		/* Triggert die Loading-Animation .*/
 		$scope.showUserlistLoading = true;
+		/* Triggert die EditMask .*/
+		$scope.showEditMask = false;
+		/* Triggert in der EditMask den Create-Button.*/
+		$scope.showEditMaskCreateButton = false;
+		/* Triggert in der EditMask den Edit-Button.*/
+		$scope.showEditMaskEditButton = false;
 		
-		/* EditMaskModel für die Edit-Maske */
-		$scope.EditMaskModel = {
-			$id: false,
-			name: '',
-			email: '',
-			lastModified: 0
-		}
 		
 		$scope.loadUserlist = function () {
 			$scope.showUserlistLoading = true;
@@ -36,40 +39,80 @@ angular.module('chargen.users', [
 			});
 		};
 		
+		
+		$scope.editUser = function (id) {
+			$scope.EditMaskModel = $scope.userService.getUser(id);
+			if ($scope.EditMaskModel != null) {				
+				$scope.showEditMaskCreateButton = false;
+				$scope.showEditMaskEditButton = true;
+				$scope.showEditMask = true;
+			}
+		}
+		
+		
 		$scope.deleteUser = function (id) {
 			$scope.showUserlistLoading = true;
 			
-			$scope.userService.deleteUser(id, function() {
-				$scope.updateUserlist();
+			$scope.userService.deleteUser(id, function(success) {
+				//$scope.updateUserlist();
 				$scope.showUserlistLoading = false;
 			});
 		}
 		
-		$scope.editUser = function (id) {
-			$scope.EditMaskModel = $scope.userService.getUser(id);
+		
+		$scope.newUser = function () {
+			$scope.EditMaskModel = null;
+			$scope.showEditMaskCreateButton = true;
+			$scope.showEditMaskEditButton = false;
+			$scope.showEditMask = true;
 		}
+		
+		
+		$scope.cancelEditing = function () {
+			$scope.EditMaskModel = null;
+			$scope.showEditMask = false;
+			$scope.loadUserlist();
+		}
+		
 		
 		$scope.saveUser = function () {			
 			$scope.showUserlistLoading = true;
 			
-			$scope.userService.modifyUser($scope.EditMaskModel, function() {
+			$scope.userService.modifyUser($scope.EditMaskModel, function(success) {
 				//$scope.updateUserlist();
 				$scope.showUserlistLoading = false;
 				
 				// Reset EditMask.
-				$scope.EditMaskModel = {
-					$id: false,
-					name: '',
-					email: '',
-					lastModified: 0
-				}
+				$scope.EditMaskModel = null;
+				$scope.showEditMask = false;
 			});
 		}
 		
-		$scope.updateUserlist = function () {
+		
+		$scope.createUser = function () {			
+			$scope.showUserlistLoading = true;
+			
+			$scope.userService.createUser($scope.EditMaskModel, function(success) {
+				//$scope.updateUserlist();
+				$scope.showUserlistLoading = false;
+				
+				// Reset EditMask.
+				$scope.EditMaskModel = null;
+				$scope.showEditMask = false;
+			});
+		}
+		
+		
+		$scope.deleteMessage = function (index) {
+			$scope.messages.splice(index, 1);
+		}
+		
+		
+		/*$scope.updateUserlist = function () {
 			console.log('Update userlist');
 			$scope.userList = $scope.userService.getUserList();
-		}
+		}*/
+		
 		
 		$scope.loadUserlist();		
 	});

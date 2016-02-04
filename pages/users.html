@@ -6,8 +6,17 @@
     </h1>
 </section>
 
+<!-- Error-Box -->
+<div ng-controller="UsersController as uc" class="pad margin no-print" ng-show="messages.length > 0">
+	<div ng-repeat="message in messages" class="alert alert-{{message.type}} alert-dismissable" ng-style="{'margin-bottom': $last ? '0px' : ''}" >
+		<i class="fa fa-{{message.type}}"></i>
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="deleteMessage($index)">×</button>
+		{{message.text}}
+	</div>
+</div>
+
 <!-- Main content -->
-<section class="content" ng-controller="UsersController as uc">
+<section ng-controller="UsersController as uc" class="content">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="box">
@@ -46,6 +55,9 @@
 						</tbody>
 					</table>
 				</div><!-- /.box-body -->
+				<div class="box-footer clearfix">
+					<button type="submit" class="btn btn-success pull-right" style="width: 48px" data-toggle="modal" data-target="#compose-modal" ng-click="newUser()"><i class="fa fa-plus"></i></button>
+				</div><!-- /.box-body -->
 			</div><!-- /.box -->
 		</div>
 	</div>
@@ -73,8 +85,9 @@
 						</div>
 					</div>
 					<div class="modal-footer clearfix">
-						<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="loadUserlist()"><i class="fa fa-times"></i> Abbrechen</button>
-						<button type="button" class="btn btn-warning pull-left" data-dismiss="modal" ng-click="saveUser()"><i class="fa fa-edit"></i> Ändern</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="cancelEditing()"><i class="fa fa-times"></i> Abbrechen</button>
+						<button type="button" class="btn btn-warning pull-left" data-dismiss="modal" ng-show="showEditMaskEditButton" ng-click="saveUser()"><i class="fa fa-edit"></i> Ändern</button>
+						<button type="button" class="btn btn-success pull-left" data-dismiss="modal" ng-show="showEditMaskCreateButton" ng-click="createUser()"><i class="fa fa-plus"></i> Erstellen</button>
 					</div>
 				</form>
 			</div><!-- /.modal-content -->
