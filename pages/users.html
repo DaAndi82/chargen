@@ -7,10 +7,10 @@
 </section>
 
 <!-- Error-Box -->
-<div ng-controller="UsersController as uc" class="pad margin no-print" ng-show="messages.length > 0">
-	<div ng-repeat="message in messages" class="alert alert-{{message.type}} alert-dismissable" ng-style="{'margin-bottom': $last ? '0px' : ''}" >
-		<i class="fa fa-{{message.type}}"></i>
-		<button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="deleteMessage($index)">×</button>
+<div ng-controller="UsersController as uc" class="pad margin no-print" ng-show="alertService.alerts.length > 0">
+	<div ng-repeat="message in alertService.alerts" class="alert alert-{{message.class}} alert-dismissable" ng-style="{'margin-bottom': $last ? '0px' : ''}" >
+		<i class="fa fa-{{message.icon}}"></i>
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="alertService.deleteAlert($index)">×</button>
 		{{message.text}}
 	</div>
 </div>

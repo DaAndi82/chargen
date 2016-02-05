@@ -1,6 +1,7 @@
 angular.module('chargen.users', [
 		'ngRoute',
-		'chargen.userService'
+		'chargen.userService',
+		'chargen.alertService'
 	])
 
 	.config(function($routeProvider) {
@@ -9,16 +10,16 @@ angular.module('chargen.users', [
 		});
     })
 	
-	.controller('UsersController',  function ($scope, userService) {
+	.controller('UsersController',  function ($scope, userService, alertService) {
 		
 		/* Hält den UserService. */
 		$scope.userService = userService;
+		/* Hält den AlertService. */
+		$scope.alertService = alertService;
 		/* Hält die Liste der User (nicht das FirebaseArray). */
 		$scope.userList = null;
 		/* EditMaskModel für die Edit-Maske */
 		$scope.EditMaskModel = null;
-		/* Hält die Nachrichten */
-		$scope.messages = [{type: "info", text: "Hallo"}, {type: "warning", text: "Hallo"}];
 		/* Triggert die Loading-Animation .*/
 		$scope.showUserlistLoading = true;
 		/* Triggert die EditMask .*/
@@ -85,6 +86,9 @@ angular.module('chargen.users', [
 				// Reset EditMask.
 				$scope.EditMaskModel = null;
 				$scope.showEditMask = false;
+				
+				// Show alert
+				$scope.alertService.addAlert('success', 'User wurde aktuallisiert.');
 			});
 		}
 		
@@ -100,11 +104,6 @@ angular.module('chargen.users', [
 				$scope.EditMaskModel = null;
 				$scope.showEditMask = false;
 			});
-		}
-		
-		
-		$scope.deleteMessage = function (index) {
-			$scope.messages.splice(index, 1);
 		}
 		
 		
