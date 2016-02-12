@@ -1,5 +1,16 @@
-angular.module('firebase.auth', ['firebase', 'firebase.utils'])
+angular.module('chargen.auth',[
+		'firebase'
+	])
 
-    .factory('Auth', ['$firebaseAuth', 'fbutil', function($firebaseAuth, fbutil) {
+    .factory('Auth', function($firebaseAuth) {
+        return $firebaseAuth(new Firebase('https://chargen.firebaseio.com/'));
+    });
+	
+	/*angular.module('chargen.auth',[
+		'firebase',
+		'firebase.utils'
+	])
+
+    .factory('Auth', function($firebaseAuth, fbutil) {
         return $firebaseAuth(fbutil.ref());
-    }]);
+    });*/

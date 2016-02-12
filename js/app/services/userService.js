@@ -31,6 +31,18 @@ angular.module('chargen.userService', [
 		}
 		
 		
+		userService.getUserByUID = function (uid) {			
+			if (uid) {
+				for (var i=0 ; i < userService.firebaseArray.length ; i++) {
+					if (userService.firebaseArray[i].uid && userService.firebaseArray[i].uid === uid) {
+						return userService.getUser (userService.firebaseArray[i].$id);
+					}
+				}
+			}			
+			return null;
+		}
+		
+		
 		userService.modifyUser = function(user, callback) {
 			if (user != null) {
 				console.log('UserService: Save user with id "' + user.$id + '"');

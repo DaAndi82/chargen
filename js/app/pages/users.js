@@ -1,16 +1,22 @@
 angular.module('chargen.users', [
-		'ngRoute',
+		'ui.router',
 		'chargen.userService',
 		'chargen.alertService'
 	])
 
-	.config(function($routeProvider) {
-        $routeProvider.when('/users', {
-			templateUrl: 'pages/users.html'
-		});
+	.config(function($stateProvider, $urlRouterProvider) {
+		$stateProvider.state('users', {
+            url: '/users',
+            templateUrl: 'pages/users.html',
+			resolve: {
+				"currentAuth": ["Auth", function(Auth) {
+					return Auth.$requireAuth();
+				}]
+			}
+        })
     })
 	
-	.controller('UsersController',  function ($scope, userService, alertService) {
+	.controller('UsersController',  function ($scope, $rootScope, $state, userService, alertService) {
 		
 		/* Hält den UserService. */
 		$scope.userService = userService;
@@ -28,6 +34,11 @@ angular.module('chargen.users', [
 		$scope.showEditMaskCreateButton = false;
 		/* Triggert in der EditMask den Edit-Button.*/
 		$scope.showEditMaskEditButton = false;
+		
+		
+		$scope.init = function () {
+			$scope.loadUserlist();
+		}
 		
 		
 		$scope.loadUserlist = function () {
@@ -113,5 +124,5 @@ angular.module('chargen.users', [
 		}*/
 		
 		
-		$scope.loadUserlist();		
+		$scope.init();		
 	});
