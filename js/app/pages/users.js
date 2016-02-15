@@ -42,13 +42,15 @@ angular.module('chargen.users', [
 		
 		
 		$scope.loadUserlist = function () {
-			$scope.showUserlistLoading = true;
-		
+			$scope.showUserlistLoading = true;		
+			$scope.userList = $scope.userService.getUserList();
+			$scope.showUserlistLoading = false;
+				
 			/* Initalisierung des UserService */			
-			$scope.userService.init(function () {
+			/*$scope.userService.init(function () {
 				$scope.userList = $scope.userService.getUserList();
 				$scope.showUserlistLoading = false;
-			});
+			});*/
 		};
 		
 		

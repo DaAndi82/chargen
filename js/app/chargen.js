@@ -19,7 +19,7 @@
 	})
 	
 	
-	.controller('ChargenController',  function ($rootScope, $scope, $state, Auth, userService) {
+	.controller('ChargenController',  function ($rootScope, $scope, $state, $timeout, Auth, userService) {
 		
 		$scope.showChargen = function () {
 			if ($state.is('login') || $state.is('registration')) {
@@ -43,13 +43,32 @@
 		}
 		
 		
+		$scope.init = function () {
+			// Service-Initialisition
+			userService.init(function() {
+				// User aus Auth zuweisen
+				var authData = Auth.$getAuth();
+				if (authData) {
+					console.log('ChargenController - Init: User zuweisen.')
+					$rootScope.user = userService.getUserByUID (authData.uid);
+				}
+				
+				// Damit  der Body erst nach der Initialisierung von Angular angezeigt wird.
+				// Verhindert flackern der Login/Registrierungs-Boxen.
+				$timeout(function() {
+					angular.element(document.body).removeClass('ng-hide');
+				}, 500);
+			});
+		}
+		
+		
 		$scope.login = function (email, password, remember_me) {
 			console.log("ChargenController: User versucht sich anzumelden.");
 			
 			Auth.$authWithPassword({ email: email, password: password }, { rememberMe: remember_me ? "default" : "none"})
 				.then(function(user) {
 					console.log("ChargenController: User angemeldet");
-					//$rootScope.user = userService.getUserByUID (user.uid);
+					$rootScope.user = userService.getUserByUID (user.uid);
 					$state.go('overview');
 				}, function(err) {
 					if (angular.isObject(err) && err.code) {
@@ -68,19 +87,12 @@
 			Auth.$unauth();
 			$state.go('login');
 		}
+		
+		
+		$scope.init()
 	})
 	
-	.run(function($rootScope, $state, Auth, $timeout) {
-		// track status of authentication
-		/*Auth.$onAuth(function(user) {
-			console.log('Run: LoggedIn: ' + !!user);
-			$rootScope.loggedIn = !!user;
-			
-			if (!$rootScope.loggedIn) {
-				$state.go('login');
-			}
-		});*/
-		
+	.run(function($rootScope, $state, Auth, $timeout, userService) {		
 		$rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
 			// We can catch the error thrown when the $requireAuth promise is rejected
 			// and redirect the user back to the home page
@@ -89,12 +101,6 @@
 				$state.reload();
 			}
 		});
-		
-		// Damit  der Body erst nach der Initialisierung von Angular angezeigt wird.
-		// Verhindert flackern der Login/Registrierungs-Boxen.
-		$timeout(function() {
-			angular.element(document.body).removeClass('ng-hide');
-		}, 500);
 	});
  
     /*.value('fbURL', 'https://chargen.firebaseio.com/')

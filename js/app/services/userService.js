@@ -1,8 +1,9 @@
 angular.module('chargen.userService', [
-		'firebase'
+		'firebase',
+		'chargen.auth'
 	])
 
-	.factory('userService', function ($firebaseArray) {
+	.factory('userService', function ($firebaseArray, Auth) {
 		
 		var userService = this;
 		userService.firebaseArray = null;
@@ -83,12 +84,19 @@ angular.module('chargen.userService', [
 			if (user != null) {
 				console.log('UserService: Create user with name "' + user.name + '"');
 				
-				userService.signTransaction(user, true);
+				Auth.$createUser({
+					email: user.email,
+					password: user.password				
+				}).then ( function (userData) {
+					console.log ('UserService: FirebaseUser created with uid "' + userData.uid + '"')
+					user.uid = userData.uid;
+					userService.signTransaction(user, true);
 				
-				userService.firebaseArray.$add(user).then(function(ref) {
-					console.log('UserService: User with name "' + user.name + '" created (id: ' + ref.$id + ')');
-					if (callback) callback(true);
-				});
+					userService.firebaseArray.$add(user).then(function(ref) {
+						console.log('UserService: User with name "' + user.name + '" created (id: ' + ref.$id + ')');
+						if (callback) callback(true);
+					});				
+				}).catch ()
 			}
 		}
 		
