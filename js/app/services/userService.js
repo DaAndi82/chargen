@@ -44,14 +44,14 @@ angular.module('chargen.userService', [
 		}
 		
 		
-		userService.modifyUser = function(user, callback) {
-			if (user != null) {
-				console.log('UserService: Save user with id "' + user.$id + '"');
+		userService.modifyUser = function(userModel, callback) {
+			if (userModel != null) {
+				console.log('UserService: Save user with id "' + userModel.user.$id + '"');
 				
-				userService.signTransaction(user, false);
+				userService.signTransaction(userModel.user, false);
 				
-				userService.firebaseArray.$save(user).then(function() {
-					console.log('UserService: User with id "' + user.$id + '" saved');
+				userService.firebaseArray.$save(userModel.user).then(function() {
+					console.log('UserService: User with id "' + userModel.user.$id + '" saved');
 					if (callback) callback(true);
 				});
 			}
@@ -73,30 +73,33 @@ angular.module('chargen.userService', [
 				
 					userService.firebaseArray.$remove(user).then(function() {
 						console.log('UserService: User with id "' + id + '" deleted');
-						if (callback) callback(true);
+						if (callback) callback(null);
 					});
 				}
 			}
 		}
 		
 		
-		userService.createUser = function (user, callback) {
-			if (user != null) {
-				console.log('UserService: Create user with name "' + user.name + '"');
+		userService.createUser = function (userModel, callback) {
+			if (userModel != null) {
+				console.log('UserService: Create user with name "' + userModel.user.name + '"');
 				
 				Auth.$createUser({
-					email: user.email,
-					password: user.password				
+					email: userModel.user.email,
+					password: userModel.password				
 				}).then ( function (userData) {
 					console.log ('UserService: FirebaseUser created with uid "' + userData.uid + '"')
-					user.uid = userData.uid;
-					userService.signTransaction(user, true);
+					userModel.user.uid = userData.uid;
+					userService.signTransaction(userModel.user, true);
 				
-					userService.firebaseArray.$add(user).then(function(ref) {
-						console.log('UserService: User with name "' + user.name + '" created (id: ' + ref.$id + ')');
-						if (callback) callback(true);
+					userService.firebaseArray.$add(userModel.user).then(function(ref) {
+						console.log('UserService: User with name "' + userModel.user.name + '" created (id: ' + ref.$id + ')');
+						if (callback) callback(null);
 					});				
-				}).catch ()
+				}).catch (function (error) {
+						console.log('UserService: Could not create user with name "' + userModel.user.name + '" (' + error.code + ')');
+						if (callback) callback(error);
+				});
 			}
 		}
 		

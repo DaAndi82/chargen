@@ -1,4 +1,5 @@
 ﻿angular.module('chargen', [
+		'ngMessages',
         'ui.router',
         'chargen.overview',
         'chargen.users',

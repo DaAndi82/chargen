@@ -7,10 +7,10 @@
 </section>
 
 <!-- Error-Box -->
-<div ng-controller="UsersController as uc" class="pad margin no-print" ng-show="alertService.alerts.length > 0">
-	<div ng-repeat="message in alertService.alerts" class="alert alert-{{message.class}} alert-dismissable" ng-style="{'margin-bottom': $last ? '0px' : ''}" >
+<div ng-controller="UsersController as uc" class="pad margin no-print" ng-show="alertService.alerts['userScope'].length > 0">
+	<div ng-repeat="message in alertService.alerts['userScope']" class="alert alert-{{message.class}} alert-dismissable" ng-style="{'margin-bottom': $last ? '0px' : ''}" >
 		<i class="fa fa-{{message.icon}}"></i>
-		<button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="alertService.deleteAlert($index)">×</button>
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="alertService.deleteAlert('userScope' ,$index)">×</button>
 		{{message.text}}
 	</div>
 </div>
@@ -47,7 +47,7 @@
 								<td>{{user.email}}</td>
 								<td style="width: 70px; text-align: center">
 									<div class="btn-group">
-										<button class="btn btn-warning btn-xs" type="button" data-toggle="modal" data-target="#compose-modal" ng-click="editUser(user.$id)"><i class="fa fa-edit"></i></button>
+										<button class="btn btn-warning btn-xs" type="button" data-toggle="modal" data-target="#EditMaskModel-modal" ng-click="editUser(user.$id)"><i class="fa fa-edit"></i></button>
 										<button class="btn btn-danger btn-xs" type="button" style="width: 24px" ng-click="deleteUser(user.$id)"><i class="fa fa-trash-o"></i></button>
 									</div>
 								</td>
@@ -56,57 +56,97 @@
 					</table>
 				</div><!-- /.box-body -->
 				<div class="box-footer clearfix">
-					<button type="submit" class="btn btn-success pull-right" style="width: 48px" data-toggle="modal" data-target="#compose-modal" ng-click="newUser()"><i class="fa fa-plus"></i></button>
+					<button type="submit" class="btn btn-success pull-right" style="width: 48px" data-toggle="modal" data-target="#EditMaskModel-modal" ng-click="newUser()"><i class="fa fa-plus"></i></button>
 				</div><!-- /.box-body -->
 			</div><!-- /.box -->
 		</div>
 	</div>
-	<!-- COMPOSE MESSAGE MODAL -->
-	<div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true" ng-show="EditMaskModel != false">
+	<!-- EditMaskModel MODAL -->
+	<div class="modal fade" id="EditMaskModel-modal" tabindex="-1" role="dialog" aria-hidden="true" ng-show="EditMaskModel != false" data-keyboard="false" data-backdrop="static">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					<h4 class="modal-title"><i class="fa fa-edit"></i> Detailansicht</h4>
 				</div>
-				<form action="#" method="post" name="userDetail" novalidate>
+				<form id="userDetail" action="#" method="post" name="userDetail" novalidate>
 					<div class="modal-body">
-						<div class="form-group">
+						<div class="form-group" ng-show="alertService.alerts['editMaskScope'].length > 0">
+							<div ng-repeat="message in alertService.alerts['editMaskScope']" class="alert alert-{{message.class}} alert-dismissable" ng-style="{'margin-bottom': $last ? '0px' : ''}" >
+								<i class="fa fa-{{message.icon}}"></i>
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="alertService.deleteAlert('editMaskScope', $index)">×</button>
+								{{message.text}}
+							</div>
+						</div>
+						<div class="form-group" ng-class="{'has-error': userDetail.name.$touched && userDetail.name.$invalid}">
 							<div class="input-group">
 								<label for="name">Benutzername</label>
 								<input id="name" name="name" type="text" class="form-control" placeholder="Benutzername eingeben"
-									ng-model="EditMaskModel.name"
+									ng-model="EditMaskModel.user.name"
+									ng-minlength="3"
+									ng-maxlength="20"
 									required>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" ng-class="{'has-error': userDetail.fullname.$touched && userDetail.fullname.$invalid}">
 							<div class="input-group">
 								<label for="fullname">Vor- & Nachnahme</label>
 								<input id="fullname" name="fullname" type="text" class="form-control" placeholder="Vor- & Nachnahme eingeben"
-									ng-model="EditMaskModel.fullname">
+									ng-model="EditMaskModel.user.fullname">
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" ng-class="{'has-error': userDetail.email.$touched && userDetail.email.$invalid}">
 							<div class="input-group">
 								<label for="email">E-Mail</label>
 								<input id="email" name="email" type="email" class="form-control" placeholder="E-Mail eingeben"
-									ng-model="EditMaskModel.email"
+									ng-model="EditMaskModel.user.email"
 									required>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" ng-if="showEditMaskCreate" ng-class="{'has-error': userDetail.password.$touched && userDetail.password.$invalid}">
 							<div class="input-group">
 								<label for="password">Passwort</label>
-								<input id="password" name="email" type="password" class="form-control" placeholder="Passwort eingeben"
+								<input id="password" name="password" type="password" class="form-control" placeholder="Passwort eingeben"
 									ng-model="EditMaskModel.password"
 									required>
 							</div>
 						</div>
+						<div class="form-group" ng-if="showEditMaskCreate" ng-class="{'has-error': userDetail.confirmPassword.$touched && userDetail.confirmPassword.$invalid}">
+							<div class="input-group">
+								<label for="confirmPassword">Passwort wiederholen</label>
+								<input id="confirmPassword" name="confirmPassword" type="password" class="form-control" placeholder="Passwort wiederholen"
+									ng-model="EditMaskModel.confirmPassword"
+									ng-pattern="EditMaskModel.password"
+									required>
+							</div>
+						</div>
+						<div class="form-group" ng-if="showEditMaskEdit" ng-class="{'has-error': userDetail.oldPassword.$touched && userDetail.oldPassword.$invalid}">
+							<div class="input-group">
+								<label for="oldPassword">Altes Passwort</label>
+								<input id="oldPassword" name="oldPassword" type="password" class="form-control" placeholder="Altes Passwort eingeben"
+									ng-model="EditMaskModel.oldPassword">
+							</div>
+						</div>
+						<div class="form-group" ng-if="showEditMaskEdit" ng-class="{'has-error': userDetail.newPassword.$touched && userDetail.newPassword.$invalid}">
+							<div class="input-group">
+								<label for="newPassword">Neues Passwort</label>
+								<input id="newPassword" name="newPassword" type="password" class="form-control" placeholder="Neues Passwort eingeben"
+									ng-model="EditMaskModel.newPassword">
+							</div>
+						</div>
+						<div class="form-group" ng-if="showEditMaskEdit" ng-class="{'has-error': userDetail.confirmNewPassword.$touched && userDetail.confirmNewPassword.$invalid}">
+							<div class="input-group">
+								<label for="confirmNewPassword">Neues Passwort wiederholen</label>
+								<input id="confirmNewPassword" name="confirmNewPassword" type="password" class="form-control" placeholder="Neues Passwort wiederholen"
+									ng-model="EditMaskModel.confirmNewPassword"
+									ng-pattern="EditMaskModel.newPassword">
+							</div>
+						</div>
 					</div>
 					<div class="modal-footer clearfix">
-						<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="cancelEditing()"><i class="fa fa-times"></i> Abbrechen</button>
-						<button type="button" class="btn btn-warning pull-left" data-dismiss="modal" ng-show="showEditMaskEditButton" ng-click="saveUser()"><i class="fa fa-edit"></i> Ändern</button>
-						<button type="button" class="btn btn-success pull-left" data-dismiss="modal" ng-show="showEditMaskCreateButton" ng-click="createUser()"><i class="fa fa-plus"></i> Erstellen</button>
+						<button type="button" class="btn btn-danger" ng-click="cancelEditing(userDetail)"><i class="fa fa-times"></i> Abbrechen</button>
+						<button type="button" class="btn btn-warning pull-left" ng-show="showEditMaskEdit" ng-click="saveUser(userDetail)" ng-class="{'disabled': userDetail.$invalid}"><i class="fa fa-edit"></i> Ändern</button>
+						<button type="button" class="btn btn-success pull-left" ng-show="showEditMaskCreate" ng-click="createUser(userDetail)" ng-class="{'disabled': userDetail.$invalid}"><i class="fa fa-plus"></i> Erstellen</button>
 					</div>
 				</form>
 			</div><!-- /.modal-content -->

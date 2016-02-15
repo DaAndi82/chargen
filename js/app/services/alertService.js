@@ -6,7 +6,7 @@ angular.module('chargen.alertService', [])
 		alertService.alerts = [];
 		
 		
-		alertService.addAlert = function (type, text) {
+		alertService.addAlert = function (scope, type, text) {
 			var alert = {icon: null, class: null, text: null};
 		
 			switch (type) {
@@ -32,16 +32,19 @@ angular.module('chargen.alertService', [])
 			}
 			
 			alert.text = text;
-			alertService.alerts.push(alert); 
+			
+			if (alertService.alerts[scope] == null) alertService.alerts[scope] = [];
+			
+			alertService.alerts[scope].push(alert); 
 			
 			$timeout(function () {
-				alertService.deleteAlert(alertService.alerts.indexOf(alert));
+				alertService.deleteAlert(scope, alertService.alerts[scope].indexOf(alert));
 			}, 5000);
 		}
 		
 		
-		alertService.deleteAlert = function (index) {
-			alertService.alerts.splice(index, 1);
+		alertService.deleteAlert = function (scope, index) {
+			alertService.alerts[scope].splice(index, 1);
 		}
 		
 		return alertService;

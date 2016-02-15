@@ -1,4 +1,5 @@
 angular.module('chargen.users', [
+		'ngMessages',
 		'ui.router',
 		'chargen.userService',
 		'chargen.alertService'
@@ -30,10 +31,12 @@ angular.module('chargen.users', [
 		$scope.showUserlistLoading = true;
 		/* Triggert die EditMask .*/
 		$scope.showEditMask = false;
-		/* Triggert in der EditMask den Create-Button.*/
-		$scope.showEditMaskCreateButton = false;
-		/* Triggert in der EditMask den Edit-Button.*/
-		$scope.showEditMaskEditButton = false;
+		/* Triggert in der EditMask den Create-Mode.*/
+		$scope.showEditMaskCreate = false;
+		/* Triggert in der EditMask den Edit-Mode.*/
+		$scope.showEditMaskEdit = false;
+		/* Triggert in der EditMask den Edit-Mode.*/
+		$scope.showErrorMessages = true;
 		
 		
 		$scope.init = function () {
@@ -55,11 +58,12 @@ angular.module('chargen.users', [
 		
 		
 		$scope.editUser = function (id) {
-			$scope.EditMaskModel = $scope.userService.getUser(id);
-			if ($scope.EditMaskModel != null) {				
-				$scope.showEditMaskCreateButton = false;
-				$scope.showEditMaskEditButton = true;
+			$scope.EditMaskModel = {user: $scope.userService.getUser(id)};
+			if ($scope.EditMaskModel.user != null) {				
+				$scope.showEditMaskCreate = false;
+				$scope.showEditMaskEdit = true;
 				$scope.showEditMask = true;
+				$scope.showErrorMessages = false;
 			}
 		}
 		
@@ -67,7 +71,7 @@ angular.module('chargen.users', [
 		$scope.deleteUser = function (id) {
 			$scope.showUserlistLoading = true;
 			
-			$scope.userService.deleteUser(id, function(success) {
+			$scope.userService.deleteUser(id, function(error) {
 				//$scope.updateUserlist();
 				$scope.showUserlistLoading = false;
 			});
@@ -76,47 +80,73 @@ angular.module('chargen.users', [
 		
 		$scope.newUser = function () {
 			$scope.EditMaskModel = null;
-			$scope.showEditMaskCreateButton = true;
-			$scope.showEditMaskEditButton = false;
+			$scope.showEditMaskCreate = true;
+			$scope.showEditMaskEdit = false;
 			$scope.showEditMask = true;
+			$scope.showErrorMessages = false;
 		}
 		
 		
-		$scope.cancelEditing = function () {
+		$scope.cancelEditing = function (form) {
 			$scope.EditMaskModel = null;
 			$scope.showEditMask = false;
+			$scope.closeAndResetForm(form);
+			$scope.showErrorMessages = true;
 			$scope.loadUserlist();
 		}
 		
 		
-		$scope.saveUser = function () {			
+		$scope.saveUser = function (form) {			
 			$scope.showUserlistLoading = true;
 			
-			$scope.userService.modifyUser($scope.EditMaskModel, function(success) {
+			$scope.userService.modifyUser($scope.EditMaskModel, function(error) {
 				//$scope.updateUserlist();
 				$scope.showUserlistLoading = false;
 				
 				// Reset EditMask.
 				$scope.EditMaskModel = null;
 				$scope.showEditMask = false;
+				$scope.closeAndResetForm(form);
+				$scope.showErrorMessages = true;
 				
 				// Show alert
-				$scope.alertService.addAlert('success', 'User wurde aktuallisiert.');
+				$scope.alertService.addAlert('userScope', 'success', 'User wurde aktuallisiert.');
 			});
 		}
 		
 		
-		$scope.createUser = function () {			
+		$scope.createUser = function (form) {			
 			$scope.showUserlistLoading = true;
 			
-			$scope.userService.createUser($scope.EditMaskModel, function(success) {
-				//$scope.updateUserlist();
-				$scope.showUserlistLoading = false;
+			$scope.userService.createUser($scope.EditMaskModel, function(error) {
 				
-				// Reset EditMask.
-				$scope.EditMaskModel = null;
-				$scope.showEditMask = false;
+				if (!error) {
+					$scope.showUserlistLoading = false;
+					
+					// Reset EditMask.
+					$scope.EditMaskModel = null;
+					$scope.showEditMask = false;
+					$scope.closeAndResetForm(form);
+					$scope.showErrorMessages = true;
+					
+					// Show alert
+					$scope.alertService.addAlert('userScope', 'success', 'User wurde erfolgreich angelegt.');
+				} else {
+					// TODO: Fehlerfall,... Error-Message ausgeben.
+					switch (error.code) {
+						case 'EMAIL_TAKEN':
+							$scope.alertService.addAlert('editMaskScope', 'error', 'Die E-Mail ist bereist vergeben.');
+						break;
+					}
+				}
 			});
+		}
+		
+		
+		$scope.closeAndResetForm = function (form) {			
+			$('#EditMaskModel-modal').modal('hide');
+			form.$setUntouched();
+			form.$setPristine();
 		}
 		
 		
