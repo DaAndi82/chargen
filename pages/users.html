@@ -7,11 +7,11 @@
 </section>
 
 <!-- Error-Box -->
-<div ng-controller="UsersController as uc" class="pad margin no-print" ng-show="alertService.alerts['userScope'].length > 0">
-	<div ng-repeat="message in alertService.alerts['userScope']" class="alert alert-{{message.class}} alert-dismissable" ng-style="{'margin-bottom': $last ? '0px' : ''}" >
-		<i class="fa fa-{{message.icon}}"></i>
-		<button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="alertService.deleteAlert('userScope' ,$index)">×</button>
-		{{message.text}}
+<div ng-controller="UsersController as uc" class="pad margin no-print" ng-show="alertService.alerts['globalScope'].length > 0">
+	<div ng-repeat="alert in alertService.alerts['globalScope']" class="alert alert-{{alert.class}} alert-dismissable" ng-style="{'margin-bottom': $last ? '0px' : ''}" >
+		<i class="fa fa-{{alert.icon}}"></i>
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="alertService.deleteAlert('globalScope' ,$index)" ng-show="alert.closeable">×</button>
+		{{alert.text}}
 	</div>
 </div>
 
@@ -36,15 +36,17 @@
                     <table id="userTable" class="table table-striped">
 						<thead>
 							<tr>
-								<th>Name</th>
 								<th>E-Mail</th>
+								<th>Name</th>
+								<th>Vor- & Nachname</th>
 								<th>Aktionen</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="user in userList | filter:suche">
-								<td>{{user.name}}</td>
 								<td>{{user.email}}</td>
+								<td>{{user.name}}</td>
+								<td>{{user.fullname}}</td>
 								<td style="width: 70px; text-align: center">
 									<div class="btn-group">
 										<button class="btn btn-warning btn-xs" type="button" data-toggle="modal" data-target="#EditMaskModel-modal" ng-click="editUser(user.$id)"><i class="fa fa-edit"></i></button>
@@ -66,7 +68,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" class="close" aria-hidden="true" ng-click="cancelEditing(userDetail)">&times;</button>
 					<h4 class="modal-title"><i class="fa fa-edit"></i> Detailansicht</h4>
 				</div>
 				<form id="userDetail" action="#" method="post" name="userDetail" novalidate>
@@ -78,9 +80,17 @@
 								{{message.text}}
 							</div>
 						</div>
+						<div class="form-group" ng-class="{'has-error': userDetail.email.$touched && userDetail.email.$invalid}">
+							<div class="input-group">
+								<label for="email">E-Mail *</label>
+								<input id="email" name="email" type="email" class="form-control" placeholder="E-Mail eingeben" ng-readonly="showEditMaskEdit"
+									ng-model="EditMaskModel.user.email"
+									required>
+							</div>
+						</div>
 						<div class="form-group" ng-class="{'has-error': userDetail.name.$touched && userDetail.name.$invalid}">
 							<div class="input-group">
-								<label for="name">Benutzername</label>
+								<label for="name">Benutzername *</label>
 								<input id="name" name="name" type="text" class="form-control" placeholder="Benutzername eingeben"
 									ng-model="EditMaskModel.user.name"
 									ng-minlength="3"
@@ -95,17 +105,9 @@
 									ng-model="EditMaskModel.user.fullname">
 							</div>
 						</div>
-						<div class="form-group" ng-class="{'has-error': userDetail.email.$touched && userDetail.email.$invalid}">
-							<div class="input-group">
-								<label for="email">E-Mail</label>
-								<input id="email" name="email" type="email" class="form-control" placeholder="E-Mail eingeben"
-									ng-model="EditMaskModel.user.email"
-									required>
-							</div>
-						</div>
 						<div class="form-group" ng-if="showEditMaskCreate" ng-class="{'has-error': userDetail.password.$touched && userDetail.password.$invalid}">
 							<div class="input-group">
-								<label for="password">Passwort</label>
+								<label for="password">Passwort *</label>
 								<input id="password" name="password" type="password" class="form-control" placeholder="Passwort eingeben"
 									ng-model="EditMaskModel.password"
 									required>
@@ -113,14 +115,14 @@
 						</div>
 						<div class="form-group" ng-if="showEditMaskCreate" ng-class="{'has-error': userDetail.confirmPassword.$touched && userDetail.confirmPassword.$invalid}">
 							<div class="input-group">
-								<label for="confirmPassword">Passwort wiederholen</label>
+								<label for="confirmPassword">Passwort wiederholen *</label>
 								<input id="confirmPassword" name="confirmPassword" type="password" class="form-control" placeholder="Passwort wiederholen"
 									ng-model="EditMaskModel.confirmPassword"
 									ng-pattern="EditMaskModel.password"
 									required>
 							</div>
 						</div>
-						<div class="form-group" ng-if="showEditMaskEdit" ng-class="{'has-error': userDetail.oldPassword.$touched && userDetail.oldPassword.$invalid}">
+						<!--div class="form-group" ng-if="showEditMaskEdit" ng-class="{'has-error': userDetail.oldPassword.$touched && userDetail.oldPassword.$invalid}">
 							<div class="input-group">
 								<label for="oldPassword">Altes Passwort</label>
 								<input id="oldPassword" name="oldPassword" type="password" class="form-control" placeholder="Altes Passwort eingeben"
@@ -142,7 +144,7 @@
 									ng-pattern="EditMaskModel.newPassword">
 							</div>
 						</div>
-					</div>
+					</div-->
 					<div class="modal-footer clearfix">
 						<button type="button" class="btn btn-danger" ng-click="cancelEditing(userDetail)"><i class="fa fa-times"></i> Abbrechen</button>
 						<button type="button" class="btn btn-warning pull-left" ng-show="showEditMaskEdit" ng-click="saveUser(userDetail)" ng-class="{'disabled': userDetail.$invalid}"><i class="fa fa-edit"></i> Ändern</button>

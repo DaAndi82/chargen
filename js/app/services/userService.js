@@ -50,16 +50,20 @@ angular.module('chargen.userService', [
 				
 				userService.signTransaction(userModel.user, false);
 				
-				userService.firebaseArray.$save(userModel.user).then(function() {
+				userService.firebaseArray.$save(userModel.user)
+				.then(function() {
 					console.log('UserService: User with id "' + userModel.user.$id + '" saved');
-					if (callback) callback(true);
+					if (callback) callback(null);
+				})
+				.catch (function(error) {
+					console.log('UserService: Could not modfy user with id "' + userModel.user.$id + '" (' + error.code + ')');
+					if (callback) callback(error);
 				});
 			}
 		}
 		
 		
 		userService.getUserList = function () {
-			// return angular.copy(userService.firebaseArray);
 			return userService.firebaseArray;
 		}
 		
@@ -70,7 +74,7 @@ angular.module('chargen.userService', [
 				
 				if (user != null) {
 					console.log('UserService: Delete user with id "' + id + '"');			
-				
+					
 					userService.firebaseArray.$remove(user).then(function() {
 						console.log('UserService: User with id "' + id + '" deleted');
 						if (callback) callback(null);
