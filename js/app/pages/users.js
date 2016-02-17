@@ -50,7 +50,7 @@ angular.module('chargen.users', [
 		
 		
 		$scope.editUser = function (id) {
-			$scope.EditMaskModel = {user: $scope.userService.getUser(id)};
+			$scope.EditMaskModel = {user: $scope.userService.getUser(id), password: null, confirmPassword: null};
 			if ($scope.EditMaskModel.user != null) {				
 				$scope.showEditMaskCreate = false;
 				$scope.showEditMaskEdit = true;
@@ -70,7 +70,7 @@ angular.module('chargen.users', [
 		
 		
 		$scope.newUser = function () {
-			$scope.EditMaskModel = null;
+			$scope.EditMaskModel = {user: null, password: null, confirmPassword: null};
 			$scope.showEditMaskCreate = true;
 			$scope.showEditMaskEdit = false;
 			$scope.showEditMask = true;
