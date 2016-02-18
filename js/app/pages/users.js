@@ -27,6 +27,8 @@ angular.module('chargen.users', [
 		$scope.userList = null;
 		/* EditMaskModel für die Edit-Maske */
 		$scope.EditMaskModel = null;
+		/* EditMaskModel für die Edit-Maske */
+		$scope.DeleteUserModel = null;
 		/* Triggert die Loading-Animation .*/
 		$scope.showUserlistLoading = true;
 		/* Triggert die EditMask .*/
@@ -35,6 +37,8 @@ angular.module('chargen.users', [
 		$scope.showEditMaskCreate = false;
 		/* Triggert in der EditMask den Edit-Mode.*/
 		$scope.showEditMaskEdit = false;
+		/* Triggert das DeleteUserWarning .*/
+		$scope.showDeleteUserWarning = false;
 		
 		
 		$scope.init = function () {
@@ -60,12 +64,10 @@ angular.module('chargen.users', [
 		
 		
 		$scope.deleteUser = function (id) {
-			$scope.showUserlistLoading = true;
-			
-			$scope.userService.deleteUser(id, function(error) {
-				//$scope.updateUserlist();
-				$scope.showUserlistLoading = false;
-			});
+			$scope.DeleteUserModel = $scope.userService.getUser(id);
+			if ($scope.DeleteUserModel != null) {
+				$scope.showDeleteUserWarning = true;
+			}
 		}
 		
 		
@@ -80,58 +82,41 @@ angular.module('chargen.users', [
 		$scope.cancelEditing = function (form) {
 			$scope.EditMaskModel = null;
 			$scope.showEditMask = false;
-			$scope.closeAndResetForm(form);
+			$scope.closeAndResetEditForm(form);
 			$scope.loadUserlist();
 		}
 		
+		$scope.cancelDeleting = function () {
+			$scope.closeDeleteAlert();
+			$scope.showDeleteUserWarning = false;
+			$scope.DeleteUserModel = null;
+		}		
 		
 		$scope.saveUser = function (form) {			
 			$scope.showUserlistLoading = true;
 			
 			$scope.userService.modifyUser($scope.EditMaskModel, function(error) {
-				//$scope.updateUserlist();
-				$scope.showUserlistLoading = false;
-				
-				// Reset EditMask.
-				$scope.EditMaskModel = null;
-				$scope.showEditMask = false;
-				$scope.closeAndResetForm(form);
-				
-				// Show alert
-				$scope.alertService.addAlert({
-					type: 'success',
-					text: 'User wurde aktuallisiert.'
-				});
-			});
-		}
-		
-		
-		$scope.createUser = function (form) {			
-			$scope.showUserlistLoading = true;
-			
-			$scope.userService.createUser($scope.EditMaskModel, function(error) {
-				
 				$scope.showUserlistLoading = false;
 				
 				if (!error) {
-					// Reset EditMask.
-					$scope.EditMaskModel = null;
-					$scope.showEditMask = false;
-					$scope.closeAndResetForm(form);
-					
 					// Show alert
 					$scope.alertService.addAlert({
 						type: 'success',
-						text: 'User wurde erfolgreich angelegt.'
+						text: 'Der User mit der E-Mail "' + $scope.EditMaskModel.user.email + '" wurde aktuallisiert.'
 					});
+				
+					// Reset EditMask.
+					$scope.closeAndResetEditForm(form);
+					$scope.showEditMask = false;
+					$scope.EditMaskModel = null;
 				} else {
 					switch (error.code) {
-						case 'EMAIL_TAKEN':
+						default:
 							$scope.alertService.addAlert({
 								scope: 'editMaskScope',
 								type: 'error',
-								text: 'Die E-Mail ist bereist vergeben.'
-								});
+								text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
+							});
 						break;
 					}
 				}
@@ -139,10 +124,80 @@ angular.module('chargen.users', [
 		}
 		
 		
-		$scope.closeAndResetForm = function (form) {			
+		$scope.createUser = function (form) {			
+			$scope.showUserlistLoading = true;
+			
+			$scope.userService.createUser($scope.EditMaskModel, function(error) {				
+				$scope.showUserlistLoading = false;
+				
+				if (!error) {
+					// Show alert
+					$scope.alertService.addAlert({
+						type: 'success',
+						text: 'Der User mit der E-Mail "' + $scope.EditMaskModel.user.email + '" wurde erfolgreich angelegt.'
+					});
+					
+					// Reset EditMask.
+					$scope.closeAndResetEditForm(form);
+					$scope.showEditMask = false;
+					$scope.EditMaskModel = null;
+				} else {
+					switch (error.code) {
+						case 'EMAIL_TAKEN':
+							$scope.alertService.addAlert({
+								scope: 'editMaskScope',
+								type: 'error',
+								text: 'Die E-Mail ist bereist vergeben.'
+							});
+						break;
+						
+						default:
+							$scope.alertService.addAlert({
+								scope: 'editMaskScope',
+								type: 'error',
+								text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
+							});
+						break;
+					}
+				}
+			});
+		}
+		
+		
+		$scope.removeUser = function () {
+			$scope.showUserlistLoading = true;
+			
+			$scope.userService.removeUser($scope.DeleteUserModel, function(error) {
+				
+				$scope.showUserlistLoading = false;
+				
+				if (!error) {
+					$scope.alertService.addAlert({
+						type: 'success',
+						text: 'Der User mit der E-Mail "' + $scope.DeleteUserModel.email + '" wurde erfolgreich gelöscht.'
+					});
+				} else {
+					$scope.alertService.addAlert({
+						type: 'error',
+						text: 'Es ist ein Fehler aufgetreten. Der User mit der E-Mail "' + $scope.DeleteUserModel.email + '" konnte nicht gelöscht werden.'
+					});
+				}
+				
+				$scope.closeDeleteAlert();
+				$scope.DeleteUserModel = null;
+			});
+		}
+		
+		
+		$scope.closeAndResetEditForm = function (form) {
 			$('#EditMaskModel-modal').modal('hide');
 			form.$setUntouched();
 			form.$setPristine();
+		}
+		
+		
+		$scope.closeDeleteAlert = function () {
+			$('#delete-modal').modal('hide');
 		}
 		
 		

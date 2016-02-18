@@ -68,18 +68,19 @@ angular.module('chargen.userService', [
 		}
 		
 		
-		userService.deleteUser = function (id, callback) {
-			if (id != null) {
-				var user = userService.getUser(id);
+		userService.removeUser = function (user, callback) {
+			if (user != null) {
+				console.log('UserService: Delete user with id "' + user.$id + '"');			
 				
-				if (user != null) {
-					console.log('UserService: Delete user with id "' + id + '"');			
-					
-					userService.firebaseArray.$remove(user).then(function() {
-						console.log('UserService: User with id "' + id + '" deleted');
+				userService.firebaseArray.$remove(user).then(function(ref) {
+					if (ref.key() === user.$id) {
+						console.log('UserService: User with id "' + user.$id + '" deleted');
 						if (callback) callback(null);
-					});
-				}
+					} else {
+						console.log('UserService: Could not delete user with id "' + user.$id + '"');
+						if (callback) callback(true);
+					}
+				});
 			}
 		}
 		

@@ -50,7 +50,7 @@
 								<td style="width: 70px; text-align: center">
 									<div class="btn-group">
 										<button class="btn btn-warning btn-xs" type="button" data-toggle="modal" data-target="#EditMaskModel-modal" ng-click="editUser(user.$id)"><i class="fa fa-edit"></i></button>
-										<button class="btn btn-danger btn-xs" type="button" style="width: 24px" ng-click="deleteUser(user.$id)"><i class="fa fa-trash-o"></i></button>
+										<button class="btn btn-danger btn-xs" type="button" style="width: 24px" data-toggle="modal" data-target="#delete-modal" ng-click="deleteUser(user.$id)"><i class="fa fa-trash-o"></i></button>
 									</div>
 								</td>
 							</tr>
@@ -63,8 +63,9 @@
 			</div><!-- /.box -->
 		</div>
 	</div>
+	
 	<!-- EditMaskModel MODAL -->
-	<div class="modal fade" id="EditMaskModel-modal" tabindex="-1" role="dialog" aria-hidden="true" ng-show="EditMaskModel != false" data-keyboard="false" data-backdrop="static">
+	<div class="modal fade" id="EditMaskModel-modal" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -146,12 +147,33 @@
 						</div-->
 					</div>
 					<div class="modal-footer clearfix">
-						<button type="button" class="btn btn-danger" ng-click="cancelEditing(userDetail)"><i class="fa fa-times"></i> Abbrechen</button>
+						<button type="button" class="btn btn-default" ng-click="cancelEditing(userDetail)"><i class="fa fa-times"></i> Abbrechen</button>
 						<button type="button" class="btn btn-warning pull-left" ng-show="showEditMaskEdit" ng-click="saveUser(userDetail)" ng-class="{'disabled': userDetail.$invalid}"><i class="fa fa-edit"></i> Ändern</button>
 						<button type="button" class="btn btn-success pull-left" ng-show="showEditMaskCreate" ng-click="createUser(userDetail)" ng-class="{'disabled': userDetail.$invalid}"><i class="fa fa-plus"></i> Erstellen</button>
 					</div>
 				</form>
 			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	<!-- Delete-Modal -->
+	<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="box box-solid box-danger">
+				<div class="box-header">
+					<h3 class="box-title">Warnung: Diese Änderung kann  nicht wieder rückgängig gemacht werden.</h3>
+				</div>
+				<div class="box-body">
+					<p>
+						Wollen Sie wirklich den Nutzer mit der E-Mail "{{DeleteUserModel.email}}" löschen?
+					</p>
+					<p>
+						Sie müssen anschließend den User auch manuell über die Firebase-Administration aus der Rubrik "Login & Auth" löschen.
+					</p>
+					<button type="button" class="btn btn-default pull-right" ng-click="cancelDeleting()"><i class="fa fa-times"></i> Abbrechen</button>
+					<button type="button" class="btn btn-danger pull-left" ng-click="removeUser()"><i class="fa fa-edit"></i> Löschen</button>
+				</div><!-- /.box-body -->
+			</div>
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 </section>
