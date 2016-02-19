@@ -10,8 +10,8 @@ angular.module('chargen.users', [
             url: '/users',
             templateUrl: 'pages/users.html',
 			resolve: {
-				"currentAuth": ["Auth", function(Auth) {
-					return Auth.$requireAuth();
+				"currentAuth": ["authService", function(authService) {
+					return authService.auth.$requireAuth();
 				}]
 			}
         })
@@ -19,8 +19,6 @@ angular.module('chargen.users', [
 	
 	.controller('UsersController',  function ($scope, $rootScope, $state, userService, alertService) {
 		
-		/* Hält den UserService. */
-		$scope.userService = userService;
 		/* Hält den AlertService. */
 		$scope.alertService = alertService;
 		/* Hält die Liste der User (nicht das FirebaseArray). */
@@ -31,8 +29,6 @@ angular.module('chargen.users', [
 		$scope.DeleteUserModel = null;
 		/* Triggert die Loading-Animation .*/
 		$scope.showUserlistLoading = true;
-		/* Triggert die EditMask .*/
-		$scope.showEditMask = false;
 		/* Triggert in der EditMask den Create-Mode.*/
 		$scope.showEditMaskCreate = false;
 		/* Triggert in der EditMask den Edit-Mode.*/
@@ -48,23 +44,22 @@ angular.module('chargen.users', [
 		
 		$scope.loadUserlist = function () {
 			$scope.showUserlistLoading = true;		
-			$scope.userList = $scope.userService.getUserList();
+			$scope.userList = userService.getUserList();
 			$scope.showUserlistLoading = false;
 		};
 		
 		
 		$scope.editUser = function (id) {
-			$scope.EditMaskModel = {user: $scope.userService.getUser(id), password: null, confirmPassword: null};
+			$scope.EditMaskModel = {user: userService.getUser(id), password: null, confirmPassword: null};
 			if ($scope.EditMaskModel.user != null) {				
 				$scope.showEditMaskCreate = false;
 				$scope.showEditMaskEdit = true;
-				$scope.showEditMask = true;
 			}
 		}
 		
 		
 		$scope.deleteUser = function (id) {
-			$scope.DeleteUserModel = $scope.userService.getUser(id);
+			$scope.DeleteUserModel = userService.getUser(id);
 			if ($scope.DeleteUserModel != null) {
 				$scope.showDeleteUserWarning = true;
 			}
@@ -75,13 +70,11 @@ angular.module('chargen.users', [
 			$scope.EditMaskModel = {user: null, password: null, confirmPassword: null};
 			$scope.showEditMaskCreate = true;
 			$scope.showEditMaskEdit = false;
-			$scope.showEditMask = true;
 		}
 		
 		
 		$scope.cancelEditing = function (form) {
 			$scope.EditMaskModel = null;
-			$scope.showEditMask = false;
 			$scope.closeAndResetEditForm(form);
 			$scope.loadUserlist();
 		}
@@ -95,24 +88,23 @@ angular.module('chargen.users', [
 		$scope.saveUser = function (form) {			
 			$scope.showUserlistLoading = true;
 			
-			$scope.userService.modifyUser($scope.EditMaskModel, function(error) {
+			userService.modifyUser($scope.EditMaskModel, function(error) {
 				$scope.showUserlistLoading = false;
 				
 				if (!error) {
 					// Show alert
-					$scope.alertService.addAlert({
+					alertService.addAlert({
 						type: 'success',
 						text: 'Der User mit der E-Mail "' + $scope.EditMaskModel.user.email + '" wurde aktuallisiert.'
 					});
 				
 					// Reset EditMask.
 					$scope.closeAndResetEditForm(form);
-					$scope.showEditMask = false;
 					$scope.EditMaskModel = null;
 				} else {
 					switch (error.code) {
 						default:
-							$scope.alertService.addAlert({
+							alertService.addAlert({
 								scope: 'editMaskScope',
 								type: 'error',
 								text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
@@ -127,24 +119,23 @@ angular.module('chargen.users', [
 		$scope.createUser = function (form) {			
 			$scope.showUserlistLoading = true;
 			
-			$scope.userService.createUser($scope.EditMaskModel, function(error) {				
+			userService.createUserWithAuth($scope.EditMaskModel, function(error) {				
 				$scope.showUserlistLoading = false;
 				
 				if (!error) {
 					// Show alert
-					$scope.alertService.addAlert({
+					alertService.addAlert({
 						type: 'success',
 						text: 'Der User mit der E-Mail "' + $scope.EditMaskModel.user.email + '" wurde erfolgreich angelegt.'
 					});
 					
 					// Reset EditMask.
 					$scope.closeAndResetEditForm(form);
-					$scope.showEditMask = false;
 					$scope.EditMaskModel = null;
 				} else {
 					switch (error.code) {
 						case 'EMAIL_TAKEN':
-							$scope.alertService.addAlert({
+							alertService.addAlert({
 								scope: 'editMaskScope',
 								type: 'error',
 								text: 'Die E-Mail ist bereist vergeben.'
@@ -152,7 +143,7 @@ angular.module('chargen.users', [
 						break;
 						
 						default:
-							$scope.alertService.addAlert({
+							alertService.addAlert({
 								scope: 'editMaskScope',
 								type: 'error',
 								text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
@@ -167,19 +158,19 @@ angular.module('chargen.users', [
 		$scope.removeUser = function () {
 			$scope.showUserlistLoading = true;
 			
-			$scope.userService.removeUser($scope.DeleteUserModel, function(error) {
+			userService.removeUser($scope.DeleteUserModel, function(error) {
 				
 				$scope.showUserlistLoading = false;
 				
 				if (!error) {
-					$scope.alertService.addAlert({
+					alertService.addAlert({
 						type: 'success',
-						text: 'Der User mit der E-Mail "' + $scope.DeleteUserModel.email + '" wurde erfolgreich gelöscht.'
+						text: 'User wurde erfolgreich angelegt.'
 					});
 				} else {
-					$scope.alertService.addAlert({
+					alertService.addAlert({
 						type: 'error',
-						text: 'Es ist ein Fehler aufgetreten. Der User mit der E-Mail "' + $scope.DeleteUserModel.email + '" konnte nicht gelöscht werden.'
+						text: 'Es ist ein Fehler aufgetreten. Der User mit der E-Mail "' + $scope.DeleteUserModel.email + '" konnte nicht gelöscht werden'
 					});
 				}
 				

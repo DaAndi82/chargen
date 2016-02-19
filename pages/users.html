@@ -19,7 +19,7 @@
 <section ng-controller="UsersController as uc" class="content">
 	<div class="row">
 		<div class="col-md-12">
-			<div class="box">
+			<div class="box box-primary">
 				<div class="overlay" ng-show="showUserlistLoading"></div>
 				<div class="loading-img" ng-show="showUserlistLoading"></div>
 				<div class="box-header">
@@ -70,7 +70,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" aria-hidden="true" ng-click="cancelEditing(userDetail)">&times;</button>
-					<h4 class="modal-title"><i class="fa fa-edit"></i> Detailansicht</h4>
+					<h4 class="modal-title"><i class="fa fa-edit"></i> {{showEditMaskCreate ? 'Neuen Benutzer anlegen' : 'Benutzer bearbeiten'}}</h4>
 				</div>
 				<form id="userDetail" action="#" method="post" name="userDetail" novalidate>
 					<div class="modal-body">
@@ -123,28 +123,6 @@
 									required>
 							</div>
 						</div>
-						<!--div class="form-group" ng-if="showEditMaskEdit" ng-class="{'has-error': userDetail.oldPassword.$touched && userDetail.oldPassword.$invalid}">
-							<div class="input-group">
-								<label for="oldPassword">Altes Passwort</label>
-								<input id="oldPassword" name="oldPassword" type="password" class="form-control" placeholder="Altes Passwort eingeben"
-									ng-model="EditMaskModel.oldPassword">
-							</div>
-						</div>
-						<div class="form-group" ng-if="showEditMaskEdit" ng-class="{'has-error': userDetail.newPassword.$touched && userDetail.newPassword.$invalid}">
-							<div class="input-group">
-								<label for="newPassword">Neues Passwort</label>
-								<input id="newPassword" name="newPassword" type="password" class="form-control" placeholder="Neues Passwort eingeben"
-									ng-model="EditMaskModel.newPassword">
-							</div>
-						</div>
-						<div class="form-group" ng-if="showEditMaskEdit" ng-class="{'has-error': userDetail.confirmNewPassword.$touched && userDetail.confirmNewPassword.$invalid}">
-							<div class="input-group">
-								<label for="confirmNewPassword">Neues Passwort wiederholen</label>
-								<input id="confirmNewPassword" name="confirmNewPassword" type="password" class="form-control" placeholder="Neues Passwort wiederholen"
-									ng-model="EditMaskModel.confirmNewPassword"
-									ng-pattern="EditMaskModel.newPassword">
-							</div>
-						</div-->
 					</div>
 					<div class="modal-footer clearfix">
 						<button type="button" class="btn btn-default" ng-click="cancelEditing(userDetail)"><i class="fa fa-times"></i> Abbrechen</button>
@@ -161,18 +139,20 @@
 		<div class="modal-dialog">
 			<div class="box box-solid box-danger">
 				<div class="box-header">
-					<h3 class="box-title">Warnung: Diese Änderung kann  nicht wieder rückgängig gemacht werden.</h3>
+					<h3 class="box-title">Warnung: Diese Änderung ist nicht rückgängig zu machen.</h3>
 				</div>
 				<div class="box-body">
 					<p>
-						Wollen Sie wirklich den Nutzer mit der E-Mail "{{DeleteUserModel.email}}" löschen?
+						<br />
+						Wollen Sie den Nutzer mit der E-Mail "{{DeleteUserModel.email}}" wirklich löschen?<br />
+						<br />
+						<b>Sie müssen anschließend den User auch manuell über die Firebase-Administration aus der Rubrik "Login & Auth" löschen!</b><br />
 					</p>
-					<p>
-						Sie müssen anschließend den User auch manuell über die Firebase-Administration aus der Rubrik "Login & Auth" löschen.
-					</p>
+				</div><!-- /.box-body -->
+				<div class="box-footer clearfix">
 					<button type="button" class="btn btn-default pull-right" ng-click="cancelDeleting()"><i class="fa fa-times"></i> Abbrechen</button>
 					<button type="button" class="btn btn-danger pull-left" ng-click="removeUser()"><i class="fa fa-edit"></i> Löschen</button>
-				</div><!-- /.box-body -->
+				</div>
 			</div>
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->

@@ -1,9 +1,9 @@
 angular.module('chargen.userService', [
 		'firebase',
-		'chargen.auth'
+		'chargen.authService'
 	])
 
-	.factory('userService', function ($firebaseArray, Auth) {
+	.factory('userService', function ($firebaseArray, authService) {
 		
 		var userService = this;
 		userService.firebaseArray = null;
@@ -45,6 +45,7 @@ angular.module('chargen.userService', [
 		
 		
 		userService.modifyUser = function(userModel, callback) {
+		
 			if (userModel != null) {
 				console.log('UserService: Save user with id "' + userModel.user.$id + '"');
 				
@@ -59,6 +60,70 @@ angular.module('chargen.userService', [
 					console.log('UserService: Could not modfy user with id "' + userModel.user.$id + '" (' + error.code + ')');
 					if (callback) callback(error);
 				});
+			}
+		}
+		
+		
+		userService.modifyUserWithAuth = function(userModel, callback) {
+		
+			if (userModel != null && userModel.password != null) {
+				console.log('UserService: Save User & FirebaseUser with id "' + userModel.user.$id + '"');
+				
+				userService.signTransaction(userModel.user, false);
+				
+				if (userModel.oldEmail != userModel.user.email) {
+					console.log('UserService: Change E-Mail from FirebaseUser with id "' + userModel.user.$id + '"');
+					
+					authService.auth.$changeEmail({
+						oldEmail: userModel.oldEmail,
+						newEmail: userModel.user.email,
+						password: userModel.password
+					}).then(function() {
+						console.log('UserService: E-Mail from FirebaseUser with id "' + userModel.user.$id + '" changed to "' + userModel.user.email + '"');
+						
+						if (userModel.newPassword != null) {
+							console.log('UserService: Change Password from FirebaseUser with id "' + userModel.user.$id + '"');
+							
+							authService.auth.$changePassword({
+								email: userModel.user.email,
+								oldPassword: userModel.password,
+								newPassword: newPassword
+							}).then(function() {
+								console.log('UserService: Password from FirebaseUser with id "' + userModel.user.$id + '" successfully changed');
+								userService.modifyUser(userModel, callback);							
+							}).catch(function(error) {
+								console.log('UserService: Could not change Password from FirebaseUser with id "' + userModel.user.$id + '" (' + error.code + ')');
+								if (callback) callback(error);
+							});
+						} else {
+							userService.modifyUser(userModel, callback);
+						}
+					}).catch(function(error) {
+						console.log('UserService: Could not change E-Mail from FirebaseUser with id "' + userModel.user.$id + '" (' + error.code + ')');
+						if (callback) callback(error);
+					});
+				} else {
+					console.log('UserService: Prove Password from FirebaseUser with id "' + userModel.user.$id + '"');
+					
+					authService.auth.$authWithPassword({
+						email: userModel.user.email,
+						password: userModel.password
+					}, {
+						rememberMe: "default"
+					}).then(function(user) {
+						console.log('UserService: Password correct from FirebaseUser with id "' + userModel.user.$id + '"');
+						
+						userService.modifyUser(userModel, callback);
+					}, function(error) {
+						if (angular.isObject(error) && error.code) {
+							console.log('UserService: Password incorrect from FirebaseUser with id "' + userModel.user.$id + '"');						
+							if (callback) callback(error);
+						} else {
+							console.log('UserService: Unknown Error (' + error.code + ')');						
+							if (callback) callback(error);
+						}
+					});				
+				}
 			}
 		}
 		
@@ -85,11 +150,11 @@ angular.module('chargen.userService', [
 		}
 		
 		
-		userService.createUser = function (userModel, callback) {
+		userService.createUserWithAuth = function (userModel, callback) {
 			if (userModel != null) {
 				console.log('UserService: Create user with name "' + userModel.user.name + '"');
 				
-				Auth.$createUser({
+				authService.auth.$createUser({
 					email: userModel.user.email,
 					password: userModel.password				
 				}).then ( function (userData) {

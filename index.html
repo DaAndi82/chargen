@@ -54,21 +54,21 @@
                         <li class="dropdown user user-menu">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="glyphicon glyphicon-user"></i>
-                                <span>{{user.name}} <i class="caret"></i></span>
+                                <span>{{profil.name}} <i class="caret"></i></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
-                                <li class="user-header bg-light-blue">
+                                <li class="user-header bg-black">
                                     <!--img src="img/avatar3.png" class="img-circle" alt="User Image" /-->
                                     <p>
-                                        {{user.fullname}} ({{user.name}})
+                                        {{profil.fullname}} ({{profil.name}})
                                         <small>Mitglied seit Nov. 2012</small>
                                     </p>
                                 </li>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                        <a href="" class="btn btn-default btn-flat" data-toggle="modal" data-target="#profil-modal" ng-click="editProfil()">Profil bearbeiten</a>
                                     </div>
                                     <div class="pull-right">
                                         <a href="" class="btn btn-default btn-flat" ng-click="logout()">Abmelden</a>
@@ -91,7 +91,7 @@
                             <!--img src="img/avatar3.png" class="img-circle" alt="User Image" /-->
                         </div>
                         <div class="pull-left info">
-                            <p>Hallo, {{user.name}}</p>
+                            <p>Hallo, {{profil.name}}</p>
 
                             <a ui-sref="login"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
@@ -185,16 +185,80 @@
             </form>
         </div>
 		
-		<div class="modal fade" id="test-modal" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" aria-hidden="true">&times;</button>
-						<h4 class="modal-title"><i class="fa fa-edit"></i> Modal</h4>
+	<!-- Profil Modal -->
+	<div class="modal fade" id="profil-modal" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" aria-hidden="true" ng-click="cancelEditing(profilDetail)">&times;</button>
+					<h4 class="modal-title"><i class="fa fa-edit"></i> Profil bearbeiten</h4>
+				</div>
+				<form id="profilDetail" action="#" method="post" name="profilDetail" novalidate>
+					<div class="modal-body">
+						<div class="form-group" ng-show="alertService.alerts['profileScope'].length > 0">
+							<div ng-repeat="message in alertService.alerts['profileScope']" class="alert alert-{{message.class}} alert-dismissable" ng-style="{'margin-bottom': $last ? '0px' : ''}" >
+								<i class="fa fa-{{message.icon}}"></i>
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="alertService.deleteAlert('profileScope', $index)">×</button>
+								{{message.text}}
+							</div>
+						</div>
+						<div class="form-group" ng-class="{'has-error': profilDetail.email.$touched && profilDetail.email.$invalid}">
+							<div class="input-group">
+								<label for="email">E-Mail *</label>
+								<input id="email" name="email" type="email" class="form-control" placeholder="E-Mail eingeben" 
+									ng-model="UserProfilModel.user.email"
+									required>
+							</div>
+						</div>
+						<div class="form-group" ng-class="{'has-error': profilDetail.name.$touched && profilDetail.name.$invalid}">
+							<div class="input-group">
+								<label for="name">Benutzername *</label>
+								<input id="name" name="name" type="text" class="form-control" placeholder="Benutzername eingeben"
+									ng-model="UserProfilModel.user.name"
+									ng-minlength="3"
+									ng-maxlength="20"
+									required>
+							</div>
+						</div>
+						<div class="form-group" ng-class="{'has-error': profilDetail.fullname.$touched && profilDetail.fullname.$invalid}">
+							<div class="input-group">
+								<label for="fullname">Vor- & Nachnahme</label>
+								<input id="fullname" name="fullname" type="text" class="form-control" placeholder="Vor- & Nachnahme eingeben"
+									ng-model="UserProfilModel.user.fullname">
+							</div>
+						</div>
+						<div class="form-group" ng-class="{'has-error': profilDetail.password.$touched && profilDetail.password.$invalid}">
+							<div class="input-group">
+								<label for="password">Altes Passwort *</label>
+								<input id="password" name="password" type="password" class="form-control" placeholder="Altes Passwort eingeben"
+									ng-model="UserProfilModel.password"
+									required>
+							</div>
+						</div>
+						<div class="form-group" ng-class="{'has-error': profilDetail.newPassword.$touched && profilDetail.newPassword.$invalid}">
+							<div class="input-group">
+								<label for="newPassword">Neues Passwort</label>
+								<input id="newPassword" name="newPassword" type="password" class="form-control" placeholder="Neues Passwort eingeben"
+									ng-model="UserProfilModel.newPassword">
+							</div>
+						</div>
+						<div class="form-group" ng-class="{'has-error': profilDetail.confirmNewPassword.$touched && profilDetail.confirmNewPassword.$invalid}">
+							<div class="input-group">
+								<label for="confirmNewPassword">Neues Passwort wiederholen</label>
+								<input id="confirmNewPassword" name="confirmNewPassword" type="password" class="form-control" placeholder="Neues Passwort wiederholen"
+									ng-model="UserProfilModel.confirmNewPassword"
+									ng-pattern="UserProfilModel.newPassword">
+							</div>
+						</div>
 					</div>
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
+					<div class="modal-footer clearfix">
+						<button type="button" class="btn btn-default" ng-click="cancelEditing(profilDetail)"><i class="fa fa-times"></i> Abbrechen</button>
+						<button type="button" class="btn btn-warning pull-left" ng-click="saveProfil(profilDetail)" ng-class="{'disabled': profilDetail.$invalid}"><i class="fa fa-edit"></i> Ändern</button>
+					</div>
+				</form>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
         
         <!-- Angular -->
         <script src="js/plugins/angularjs/1.4.8/angular.min.js"></script>
@@ -244,8 +308,7 @@
 		<!-- Services -->
 		<script src="js/app/services/userService.js"></script>
 		<script src="js/app/services/alertService.js"></script>
-        <!-- Conponents -->
-        <script src="js/app/components/auth/auth.js"></script>
+        <script src="js/app/services/authService.js"></script>
         <!-- Pages -->
         <script src="js/app/pages/overview.js"></script>
         <script src="js/app/pages/users.js"></script>

@@ -5,8 +5,8 @@
             url: '/overview',
             templateUrl: 'pages/overview.html',			
 			resolve: {
-				"currentAuth": ["Auth", function(Auth) {
-					return Auth.$requireAuth();
+				"currentAuth": ["authService", function(authService) {
+					return authService.auth.$requireAuth();
 				}]
 			}
         })
