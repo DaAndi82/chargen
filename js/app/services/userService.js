@@ -71,38 +71,37 @@ angular.module('chargen.userService', [
 				
 				userService.signTransaction(userModel.user, false);
 				
-				if (userModel.oldEmail != userModel.user.email) {
+				var changeEmail = function (userModel, callback) {
 					console.log('UserService: Change E-Mail from FirebaseUser with id "' + userModel.user.$id + '"');
-					
 					authService.auth.$changeEmail({
 						oldEmail: userModel.oldEmail,
 						newEmail: userModel.user.email,
 						password: userModel.password
 					}).then(function() {
 						console.log('UserService: E-Mail from FirebaseUser with id "' + userModel.user.$id + '" changed to "' + userModel.user.email + '"');
-						
-						if (userModel.newPassword != null) {
-							console.log('UserService: Change Password from FirebaseUser with id "' + userModel.user.$id + '"');
-							
-							authService.auth.$changePassword({
-								email: userModel.user.email,
-								oldPassword: userModel.password,
-								newPassword: newPassword
-							}).then(function() {
-								console.log('UserService: Password from FirebaseUser with id "' + userModel.user.$id + '" successfully changed');
-								userService.modifyUser(userModel, callback);							
-							}).catch(function(error) {
-								console.log('UserService: Could not change Password from FirebaseUser with id "' + userModel.user.$id + '" (' + error.code + ')');
-								if (callback) callback(error);
-							});
-						} else {
-							userService.modifyUser(userModel, callback);
-						}
+						if (callback) callback(null);
 					}).catch(function(error) {
-						console.log('UserService: Could not change E-Mail from FirebaseUser with id "' + userModel.user.$id + '" (' + error.code + ')');
+						console.log('UserService: Could not change E-Mail from FirebaseUser with id "' + userModel.user.$id + '" (' + error + ')');
 						if (callback) callback(error);
 					});
-				} else {
+				}
+				
+				var changePassword = function (userModel, callback) {
+					console.log('UserService: Change Password from FirebaseUser with id "' + userModel.user.$id + '"');							
+					authService.auth.$changePassword({
+						email: userModel.user.email,
+						oldPassword: userModel.password,
+						newPassword: userModel.newPassword
+					}).then(function() {
+						console.log('UserService: Password from FirebaseUser with id "' + userModel.user.$id + '" successfully changed');
+						if (callback) callback(null);
+					}).catch(function(error) {
+						console.log('UserService: Could not change Password from FirebaseUser with id "' + userModel.user.$id + '" (' + error.code + ')');
+						if (callback) callback(error);
+					});
+				}
+				
+				var changeOnlyUserDetails = function (userModel, callback) {
 					console.log('UserService: Prove Password from FirebaseUser with id "' + userModel.user.$id + '"');
 					
 					authService.auth.$authWithPassword({
@@ -112,17 +111,72 @@ angular.module('chargen.userService', [
 						rememberMe: "default"
 					}).then(function(user) {
 						console.log('UserService: Password correct from FirebaseUser with id "' + userModel.user.$id + '"');
-						
-						userService.modifyUser(userModel, callback);
+						if (callback) callback(null);
 					}, function(error) {
 						if (angular.isObject(error) && error.code) {
 							console.log('UserService: Password incorrect from FirebaseUser with id "' + userModel.user.$id + '"');						
 							if (callback) callback(error);
 						} else {
-							console.log('UserService: Unknown Error (' + error.code + ')');						
+							console.log('UserService: Unknown Error (' + error + ')');						
 							if (callback) callback(error);
 						}
-					});				
+					});
+				}
+				
+				switch (true) {
+					case userModel.oldEmail != userModel.user.email && userModel.newPassword != null:
+						changeEmail(userModel, function (error) {
+							if (!error) {
+								changePassword(userModel, function (error) {
+									if (!error) {
+										userService.modifyUser(userModel, function (error) {
+											if (callback) callback(error);
+										});
+									} else {
+										if (callback) callback(error);
+									}
+								});
+							} else {
+								if (callback) callback(error);
+							}
+						});
+					break;
+					
+					case userModel.oldEmail != userModel.user.email:
+						changeEmail(userModel, function (error) {
+							if (!error) {
+								userService.modifyUser(userModel, function (error) {
+									if (callback) callback(error);
+								});
+							} else {
+								if (callback) callback(error);
+							}
+						});
+					break;
+					
+					case userModel.newPassword != null:
+						changePassword(userModel, function (error) {
+							if (!error) {
+								userService.modifyUser(userModel, function (error) {
+									if (callback) callback(error);
+								});
+							} else {
+								if (callback) callback(error);
+							}
+						});
+					break;
+					
+					default:
+						changeOnlyUserDetails(userModel, function (error) {
+							if (!error) {
+								userService.modifyUser(userModel, function (error) {
+									if (callback) callback(error);
+								});
+							} else {
+								if (callback) callback(error);
+							}
+						});
+					break;
 				}
 			}
 		}

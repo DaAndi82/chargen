@@ -84,6 +84,9 @@
 		$scope.saveProfil = function (form) {
 			userService.modifyUserWithAuth($scope.UserProfilModel, function(error) {
 				if (!error) {
+					// Login aktuallisieren
+					$scope.relogin($scope.UserProfilModel);
+				
 					// Show alert
 					$scope.alertService.addAlert({
 						type: 'success',
@@ -100,6 +103,22 @@
 								scope: 'profileScope',
 								type: 'error',
 								text: 'Die E-Mail ist bereist vergeben.'
+							});
+						break;
+						
+						case 'INVALID_PASSWORD':
+							$scope.alertService.addAlert({
+								scope: 'profileScope',
+								type: 'error',
+								text: 'Das Passwort ist falsch.'
+							});
+						break;
+						
+						case undefined:
+							$scope.alertService.addAlert({
+								scope: 'profileScope',
+								type: 'error',
+								text: 'Es ist ein Fehler aufgetreten (' + error + ').'
 							});
 						break;
 						
@@ -140,6 +159,26 @@
 					}
 				}
 			);
+		}
+		
+		
+		$scope.relogin = function (userModel) {
+			authService.auth.$authWithPassword({
+				email: userModel.user.email,
+				password: userModel.password
+			}, {
+				rememberMe: "default"
+			}).then(function(user) {
+				console.log("ChargenController: User umgemeldet");
+				$rootScope.profil = userService.getUserByUID (user.uid);
+				$scope.authData = authService.auth.$getAuth();
+			}, function(error) {
+				if (angular.isObject(error) && error.code) {
+					console.log('UserService: Password incorrect from FirebaseUser with id "' + userModel.user.$id + '"');
+				} else {
+					console.log('UserService: Unknown Error (' + error + ')');
+				}
+			});	
 		}
 		
 		
