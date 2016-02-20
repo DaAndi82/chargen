@@ -43,10 +43,14 @@ angular.module('chargen.users', [
 		
 		
 		$scope.loadUserlist = function () {
-			$scope.showUserlistLoading = true;		
-			$scope.userList = userService.getUserList();
-			$scope.showUserlistLoading = false;
-		};
+			$scope.showUserlistLoading = true;
+		
+			/* Initalisierung des UserService */			
+			userService.init(function () {
+				$scope.userList = userService.getUserList();
+				$scope.showUserlistLoading = false;
+			});
+	};
 		
 		
 		$scope.editUser = function (id) {

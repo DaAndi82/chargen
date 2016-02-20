@@ -77,7 +77,9 @@
 		$scope.cancelEditing = function (form) {
 			$scope.closeAndResetProfilForm(form);
 			$scope.UserProfilModel = null;
-			$rootScope.profil = userService.getUserByUID ($scope.authData.uid);
+			userService.init(function(){
+				$rootScope.profil = userService.getUserByUID ($scope.authData.uid);
+			});
 		}
 		
 		
@@ -85,7 +87,7 @@
 			userService.modifyUserWithAuth($scope.UserProfilModel, function(error) {
 				if (!error) {
 					// Login aktuallisieren
-					$scope.relogin($scope.UserProfilModel);
+					$scope.login($scope.UserProfilModel.user.email, $scope.UserProfilModel.password, true);
 				
 					// Show alert
 					$scope.alertService.addAlert({
@@ -142,43 +144,40 @@
 		}
 		
 		
-		$scope.login = function (email, password, remember_me) {
+		$scope.login = function (email, password, relogin) {
 			console.log("ChargenController: User versucht sich anzumelden.");
 			
-			authService.auth.$authWithPassword({ email: email, password: password }, { rememberMe: remember_me ? "default" : "none"})
+			authService.auth.$authWithPassword({ email: email, password: password })
 				.then(function(user) {
 					console.log("ChargenController: User angemeldet");
 					$rootScope.profil = userService.getUserByUID (user.uid);
 					$scope.authData = authService.auth.$getAuth();
-					$state.go('overview');
-				}, function(err) {
-					if (angular.isObject(err) && err.code) {
-						console.log(err.code);
-					} else {
-						console.log("ChargenController: Fehler bei der Anmeldung.");
+					if (!relogin) $state.go('overview');
+				}, function(error) {
+					switch (error.code) {
+						case 'INVALID_PASSWORD':
+							$scope.alertService.addAlert({
+								type: 'error',
+								text: 'Das Passwort ist falsch.'
+							});
+						break;
+						
+						case undefined:
+							$scope.alertService.addAlert({
+								type: 'error',
+								text: 'Es ist ein Fehler aufgetreten (' + error + ').'
+							});
+						break;
+						
+						default:
+							$scope.alertService.addAlert({
+								type: 'error',
+								text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
+							});
+						break;
 					}
 				}
 			);
-		}
-		
-		
-		$scope.relogin = function (userModel) {
-			authService.auth.$authWithPassword({
-				email: userModel.user.email,
-				password: userModel.password
-			}, {
-				rememberMe: "default"
-			}).then(function(user) {
-				console.log("ChargenController: User umgemeldet");
-				$rootScope.profil = userService.getUserByUID (user.uid);
-				$scope.authData = authService.auth.$getAuth();
-			}, function(error) {
-				if (angular.isObject(error) && error.code) {
-					console.log('UserService: Password incorrect from FirebaseUser with id "' + userModel.user.$id + '"');
-				} else {
-					console.log('UserService: Unknown Error (' + error + ')');
-				}
-			});	
 		}
 		
 		

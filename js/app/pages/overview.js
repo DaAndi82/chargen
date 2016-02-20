@@ -1,4 +1,7 @@
-﻿angular.module('chargen.overview', ['ui.router'])
+﻿angular.module('chargen.overview', [
+		'ui.router',
+		'chargen.alertService'
+	])
 
     .config(function($stateProvider, $urlRouterProvider) {
 		$stateProvider.state('overview', {
@@ -10,4 +13,10 @@
 				}]
 			}
         })
-    });
+    })
+	
+	.controller('OverviewController',  function ($scope, alertService) {
+		
+		/* Hält den AlertService. */
+		$scope.alertService = alertService;
+	});

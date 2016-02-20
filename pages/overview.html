@@ -6,8 +6,18 @@
     </h1>
 </section>
 
+<!-- Error-Box -->
+<div ng-controller="OverviewController as oc" class="pad margin no-print" ng-show="alertService.alerts['globalScope'].length > 0">
+	<div ng-repeat="alert in alertService.alerts['globalScope']" class="alert alert-{{alert.class}} alert-dismissable" ng-style="{'margin-bottom': $last ? '0px' : ''}" >
+		<i class="fa fa-{{alert.icon}}"></i>
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="alertService.deleteAlert('globalScope' ,$index)" ng-show="alert.closeable">×</button>
+		{{alert.text}}
+	</div>
+</div>
+
 <!-- Main content -->
 <section class="content">
+	
     <p>Hier entsteht ein Char-Tool für Star Wars - Edge of the Empire</p>
 </section>
 <!-- /.content -->
