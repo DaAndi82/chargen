@@ -139,48 +139,80 @@
 		<div class="form-box" id="login-box" ng-show="showLogin()">
 		<!-- Login-Form -->
             <div class="header">Anmelden</div>
-            <form>
+            <form id="loginForm" name="loginForm">
                 <div class="body bg-gray">
-                    <div class="form-group">
-                        <input type="text" ng-model="email" class="form-control" placeholder="E-Mail"/>
+					<!-- Error-Box -->
+					<div class="form-group" ng-show="alertService.alerts['loginScope'].length > 0">
+						<div ng-repeat="message in alertService.alerts['loginScope']" class="alert alert-{{message.class}} alert-dismissable" ng-style="{'margin-bottom': $last ? '0px' : ''}" >
+							<i class="fa fa-{{message.icon}}"></i>
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="alertService.deleteAlert('loginScope', $index)">×</button>
+							{{message.text}}
+						</div>
+					</div>
+                    <div class="form-group" ng-class="{'has-error': loginForm.email.$touched && loginForm.email.$invalid}">
+                        <input id="email" name="email" type="text" class="form-control" placeholder="E-Mail"
+						ng-model="email"
+						required/>
                     </div>
-                    <div class="form-group">
-                        <input type="password" ng-model="password" class="form-control" placeholder="Passwort"/>
-                    </div>          
-                    <div class="form-group">
-                        <input type="checkbox" ng-model="remember_me"/> Angemeldet bleiben
+                    <div class="form-group" ng-class="{'has-error': loginForm.password.$touched && loginForm.password.$invalid}">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Passwort" 
+						ng-model="password"
+						required/>
                     </div>
                 </div>
                 <div class="footer">                                                               
-                    <button type="submit" class="btn bg-olive btn-block" ng-click="login(email, password, remember_me)">Anmelden</button>                    
-                    <!--p><a href="#">Ich hab mein Passwort vergessen</a></p>                    
-                    <a ui-sref="registration" class="text-center">Ich möchte mich registrieren</a-->
+                    <button type="submit" class="btn bg-olive btn-block" ng-click="login(email, password, remember_me)" ng-class="{'disabled': loginForm.$invalid}">Anmelden</button>                    
+                    <p><a href="" ng-click="resetPassword(email)">Ich hab mein Passwort vergessen</a></p>
+					<a ui-sref="registration" class="text-center">Ich möchte mich registrieren</a>
                 </div>
             </form>
         </div>
 		
-		<div class="form-box" id="login-box" ng-show="showRegistration()">
+		<div class="form-box" id="register-box" ng-show="showRegistration()">
             <div class="header">Registrierung</div>
-            <form>
+            <form id="registerForm" name="registerForm">
                 <div class="body bg-gray">
-                    <div class="form-group">
-                        <input type="text" name="name" class="form-control" placeholder="Vor- und Nachname"/>
+					<!-- Error-Box -->
+					<div class="form-group" ng-show="alertService.alerts['registerScope'].length > 0">
+						<div ng-repeat="message in alertService.alerts['registerScope']" class="alert alert-{{message.class}} alert-dismissable" ng-style="{'margin-bottom': $last ? '0px' : ''}" >
+							<i class="fa fa-{{message.icon}}"></i>
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="alertService.deleteAlert('registerScope', $index)">×</button>
+							{{message.text}}
+						</div>
+					</div>
+                    <div class="form-group" ng-class="{'has-error': registerForm.email.$touched && registerForm.email.$invalid}">
+                        <input id="email" name="email" type="text" class="form-control" placeholder="E-Mail *" 
+						ng-model="UserRegisterModel.user.email"
+						required/>
                     </div>
-                    <div class="form-group">
-                        <input type="text" name="userid" class="form-control" placeholder="Benutzername"/>
+                    <div class="form-group" ng-class="{'has-error': registerForm.name.$touched && registerForm.name.$invalid}">
+                        <input id="name" type="text" name="name" class="form-control" placeholder="Benutzername *"
+						ng-model="UserRegisterModel.user.name"
+						ng-minlength="3"
+						ng-maxlength="20"
+						required/>
                     </div>
-                    <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="Passwort"/>
+                    <div class="form-group" ng-class="{'has-error': registerForm.fullname.$touched && registerForm.fullname.$invalid}">
+                        <input id="fullname" type="text" name="fullname" class="form-control" placeholder="Vor- und Nachname"
+						ng-model="UserRegisterModel.user.fullname"/>
                     </div>
-                    <div class="form-group">
-                        <input type="password" name="password2" class="form-control" placeholder="Passwort wiederholen"/>
+                    <div class="form-group" ng-class="{'has-error': registerForm.password.$touched && registerForm.password.$invalid}">
+                        <input id="password" type="password" name="password" class="form-control" placeholder="Passwort *"
+						ng-model="UserRegisterModel.password"
+						required/>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': registerForm.confirmPassword.$touched && registerForm.confirmPassword.$invalid}">
+                        <input id="confirmPassword" type="password" name="confirmPassword" class="form-control" placeholder="Passwort wiederholen *"
+						ng-model="UserRegisterModel.confirmPassword"
+						ng-pattern="UserRegisterModel.password"
+						required/>
                     </div>
                 </div>
                 <div class="footer">                    
 
-                    <button type="submit" class="btn bg-olive btn-block">Registrieren</button>
+                    <button type="submit" class="btn bg-olive btn-block" ng-click="register(registerForm)" ng-class="{'disabled': registerForm.$invalid}">Registrieren</button>
 
-                    <a ui-sref="login" class="text-center">Ich bin bereits registriert</a>
+                    <a ui-sref="login" class="text-center" ng-click="resetRegistrationForm(registerForm)">Ich bin bereits registriert</a>
                 </div>
             </form>
         </div>

@@ -50,7 +50,7 @@
 								<td style="width: 70px; text-align: center">
 									<div class="btn-group">
 										<button class="btn btn-warning btn-xs" type="button" data-toggle="modal" data-target="#EditMaskModel-modal" ng-click="editUser(user.$id)"><i class="fa fa-edit"></i></button>
-										<button class="btn btn-danger btn-xs" type="button" style="width: 24px" data-toggle="modal" data-target="#delete-modal" ng-click="deleteUser(user.$id)"><i class="fa fa-trash-o"></i></button>
+										<button class="btn btn-danger btn-xs" type="button" style="width: 24px" data-toggle="modal" data-target="#delete-modal" ng-click="deleteUser(user.$id)" ng-disabled="user.$id == profil.$id"><i class="fa fa-trash-o"></i></button>
 									</div>
 								</td>
 							</tr>

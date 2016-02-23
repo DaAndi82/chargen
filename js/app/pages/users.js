@@ -38,6 +38,7 @@ angular.module('chargen.users', [
 		
 		
 		$scope.init = function () {
+			$rootScope.loadUserlist = $scope.loadUserlist;
 			$scope.loadUserlist();
 		}
 		
@@ -50,7 +51,7 @@ angular.module('chargen.users', [
 				$scope.userList = userService.getUserList();
 				$scope.showUserlistLoading = false;
 			});
-	};
+		}
 		
 		
 		$scope.editUser = function (id) {

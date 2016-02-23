@@ -7,6 +7,7 @@ angular.module('chargen.userService', [
 		
 		var userService = this;
 		userService.firebaseArray = null;
+		userService.registeredViews = [];
 		
 		
 		userService.init = function (callback) {

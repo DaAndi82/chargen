@@ -27,6 +27,8 @@
 		$scope.alertService = alertService;
 		/* UserProfilModel für die Profil-Maske */
 		$scope.UserProfilModel = null;
+		/* UserRegisterModel für die Registrierungs-Maske */
+		$scope.UserRegisterModel = null;
 		
 		$scope.showChargen = function () {
 			if ($state.is('login') || $state.is('registration')) {
@@ -80,6 +82,7 @@
 			userService.init(function(){
 				$rootScope.profil = userService.getUserByUID ($scope.authData.uid);
 			});
+			if ($rootScope.loadUserlist != null) $rootScope.loadUserlist();
 		}
 		
 		
@@ -87,7 +90,7 @@
 			userService.modifyUserWithAuth($scope.UserProfilModel, function(error) {
 				if (!error) {
 					// Login aktuallisieren
-					$scope.login($scope.UserProfilModel.user.email, $scope.UserProfilModel.password, true);
+					$scope.login($scope.UserProfilModel.user.email, $scope.UserProfilModel.newPassword ? $scope.UserProfilModel.newPassword : $scope.UserProfilModel.password, true);
 				
 					// Show alert
 					$scope.alertService.addAlert({
@@ -144,8 +147,15 @@
 		}
 		
 		
+		$scope.resetRegistrationForm = function (form) {			
+			$scope.UserRegisterModel = null;
+			form.$setUntouched();
+			form.$setPristine();
+		}
+		
+		
 		$scope.login = function (email, password, relogin) {
-			console.log("ChargenController: User versucht sich anzumelden.");
+			console.log("ChargenController: User versucht sich anzumelden");
 			
 			authService.auth.$authWithPassword({ email: email, password: password })
 				.then(function(user) {
@@ -154,16 +164,26 @@
 					$scope.authData = authService.auth.$getAuth();
 					if (!relogin) $state.go('overview');
 				}, function(error) {
-					switch (error.code) {
+					switch (error.code) {					
+						case 'INVALID_USER':
+							$scope.alertService.addAlert({
+								scope: 'loginScope',
+								type: 'error',
+								text: 'Der Benutzer oder das Passwort ist falsch.'
+							});
+						break;
+					
 						case 'INVALID_PASSWORD':
 							$scope.alertService.addAlert({
+								scope: 'loginScope',
 								type: 'error',
-								text: 'Das Passwort ist falsch.'
+								text: 'Der Benutzer oder das Passwort ist falsch.'
 							});
 						break;
 						
 						case undefined:
 							$scope.alertService.addAlert({
+								scope: 'loginScope',
 								type: 'error',
 								text: 'Es ist ein Fehler aufgetreten (' + error + ').'
 							});
@@ -171,6 +191,7 @@
 						
 						default:
 							$scope.alertService.addAlert({
+								scope: 'loginScope',
 								type: 'error',
 								text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
 							});
@@ -178,6 +199,96 @@
 					}
 				}
 			);
+		}
+		
+		
+		$scope.register = function (form) {
+			console.log("ChargenController: User versucht sich zu registrieren");
+			
+			userService.createUserWithAuth($scope.UserRegisterModel, function(error) {				
+				if (!error) {
+					console.log("ChargenController: User registriert");
+					// Show alert
+					alertService.addAlert({
+						scope: 'registerScope',
+						type: 'success',
+						text: 'Sie haben sich erfolgreich registriert. Sie werden zur Anmeldung weitergeleitet.'
+					});
+					
+					$timeout(function () {
+						$state.go('login');
+						$scope.resetRegistrationForm(form);
+					}, 2000);					
+				} else {
+					switch (error.code) {
+						case 'EMAIL_TAKEN':
+							alertService.addAlert({
+								scope: 'registerScope',
+								type: 'error',
+								text: 'Die E-Mail ist bereist vergeben.'
+							});
+						break;
+						
+						default:
+							alertService.addAlert({
+								scope: 'registerScope',
+								type: 'error',
+								text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
+							});
+						break;
+					}
+				}
+			});
+		}
+		
+		
+		$scope.resetPassword = function (email) {
+			if (email) {
+				console.log("ChargenController: Passwort-Reset angefordert");
+				authService.auth.$resetPassword({
+					email: email
+				}).then(function() {
+					console.log("ChargenController: Passwort an E-Mail \"" + email + "\" versendet");
+					$scope.alertService.addAlert({
+						scope: 'loginScope',
+						type: 'info',
+						text: 'Es wird versucht ihnen ein Passwort per Mail zu schicken. '
+					});
+				}).catch(function(error) {
+					switch (error.code) {					
+						case 'INVALID_USER':
+							$scope.alertService.addAlert({
+								scope: 'loginScope',
+								type: 'info',
+								text: 'Es wird versucht ihnen ein Passwort per Mail zu schicken. '
+							});
+						break;
+						
+						case undefined:
+							$scope.alertService.addAlert({
+								scope: 'loginScope',
+								type: 'error',
+								text: 'Es ist ein Fehler aufgetreten (' + error + ').'
+							});
+						break;
+						
+						default:
+							$scope.alertService.addAlert({
+								scope: 'loginScope',
+								type: 'error',
+								text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
+							});
+						break;
+					}
+				});
+			} else {
+				alertService.addAlert({
+					scope: 'loginScope',
+					type: 'error',
+					text: 'Bitte gib deine E-Mail an.'
+				});
+			
+			}
 		}
 		
 		

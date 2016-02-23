@@ -2295,10 +2295,11 @@ Component: timeline
 .form-box .footer > .form-group {
   margin-top: 20px;
 }
+/* Vorübergehend deaktiviert (für Errors in der Login-Box
 .form-box .body > .form-group > input,
 .form-box .footer > .form-group > input {
   border: #fff;
-}
+}*/
 .form-box .body > .btn,
 .form-box .footer > .btn {
   margin-bottom: 10px;
