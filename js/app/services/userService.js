@@ -1,9 +1,10 @@
 angular.module('chargen.userService', [
 		'firebase',
+		'ngFileUpload',
 		'chargen.authService'
 	])
 
-	.factory('userService', function ($firebaseArray, authService) {
+	.factory('userService', function ($firebaseArray, Upload, authService) {
 		
 		var userService = this;
 		userService.firebaseArray = null;
@@ -13,7 +14,7 @@ angular.module('chargen.userService', [
 		userService.init = function (callback) {
 			console.log('UserService: Loading users');
 			
-			userService.firebaseArray = $firebaseArray(new Firebase('https://chargen.firebaseio.com/users'));			
+			userService.firebaseArray = $firebaseArray(new Firebase('https://chargen.firebaseio.com/users'));
 			userService.firebaseArray.$loaded()
 				.then(function () {
 					console.log('UserService: Users loaded');
@@ -50,7 +51,7 @@ angular.module('chargen.userService', [
 			if (userModel != null) {
 				console.log('UserService: Save user with id "' + userModel.user.$id + '"');
 				
-				userService.signTransaction(userModel.user, false);
+				userService.signTransaction(userModel.user, userModel.initiator, false);
 				
 				userService.firebaseArray.$save(userModel.user)
 				.then(function() {
@@ -69,8 +70,6 @@ angular.module('chargen.userService', [
 		
 			if (userModel != null && userModel.password != null) {
 				console.log('UserService: Save User & FirebaseUser with id "' + userModel.user.$id + '"');
-				
-				userService.signTransaction(userModel.user, false);
 				
 				var changeEmail = function (userModel, callback) {
 					console.log('UserService: Change E-Mail from FirebaseUser with id "' + userModel.user.$id + '"');
@@ -108,8 +107,6 @@ angular.module('chargen.userService', [
 					authService.auth.$authWithPassword({
 						email: userModel.user.email,
 						password: userModel.password
-					}, {
-						rememberMe: "default"
 					}).then(function(user) {
 						console.log('UserService: Password correct from FirebaseUser with id "' + userModel.user.$id + '"');
 						if (callback) callback(null);
@@ -125,7 +122,7 @@ angular.module('chargen.userService', [
 				}
 				
 				switch (true) {
-					case userModel.oldEmail != userModel.user.email && userModel.newPassword != null:
+					case userModel.oldEmail.toLowerCase() != userModel.user.email.toLowerCase() && userModel.newPassword != null:
 						changeEmail(userModel, function (error) {
 							if (!error) {
 								changePassword(userModel, function (error) {
@@ -143,7 +140,7 @@ angular.module('chargen.userService', [
 						});
 					break;
 					
-					case userModel.oldEmail != userModel.user.email:
+					case userModel.oldEmail.toLowerCase() != userModel.user.email.toLowerCase():
 						changeEmail(userModel, function (error) {
 							if (!error) {
 								userService.modifyUser(userModel, function (error) {
@@ -215,11 +212,29 @@ angular.module('chargen.userService', [
 				}).then ( function (userData) {
 					console.log ('UserService: FirebaseUser created with uid "' + userData.uid + '"')
 					userModel.user.uid = userData.uid;
-					userService.signTransaction(userModel.user, true);
+					
+					// Nicht bei der Registrierung, da hier noch keine $id verfügbar ist.
+					if (userModel.initiator)	userService.signTransaction(userModel.user, userModel.initiator, true);
 				
 					userService.firebaseArray.$add(userModel.user).then(function(ref) {
-						console.log('UserService: User with name "' + userModel.user.name + '" created (id: ' + ref.$id + ')');
-						if (callback) callback(null);
+						console.log('UserService: User with name "' + userModel.user.name + '" created (id: ' + ref.key() + ')');
+						
+						if (!userModel.initiator) {
+							var user = userService.getUser(ref.key());
+							userService.signTransaction(user, user.$id, true);
+							
+							userService.firebaseArray.$save(user)
+								.then(function() {
+									console.log('UserService: User with id "' + user.$id + '" saved');
+									if (callback) callback(null);
+								})
+								.catch (function(error) {
+									console.log('UserService: Could not modfy user with id "' + user.$id + '" (' + error.code + ')');
+									if (callback) callback(error);
+								});
+						} else {
+							if (callback) callback(null);
+						}
 					});				
 				}).catch (function (error) {
 						console.log('UserService: Could not create user with name "' + userModel.user.name + '" (' + error.code + ')');
@@ -229,18 +244,15 @@ angular.module('chargen.userService', [
 		}
 		
 		
-		userService.signTransaction = function (user, isCreation) {
+		userService.signTransaction = function (user, initiator, isCreation) {
 			var now = Date.now();
 			
 			user.dataLastModified = now;
-			user.dataLastModifier = "Da.Andi";
+			user.dataLastModifier = initiator;
 			
 			if (isCreation) {
 				user.dataCreation = now;
-				user.dataCreator = "Da.Andi";
-			} else {
-				if (user.dataCreation == null) user.dataCreation = now;
-				if (user.dataCreator == null) user.dataCreator = "Da.Andi";;
+				user.dataCreator = initiator;
 			}
 		}
 		

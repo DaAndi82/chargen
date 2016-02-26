@@ -92,6 +92,7 @@ angular.module('chargen.users', [
 		
 		$scope.saveUser = function (form) {			
 			$scope.showUserlistLoading = true;
+			$scope.EditMaskModel.initiator = $rootScope.profil.$id;
 			
 			userService.modifyUser($scope.EditMaskModel, function(error) {
 				$scope.showUserlistLoading = false;
@@ -123,8 +124,9 @@ angular.module('chargen.users', [
 		
 		$scope.createUser = function (form) {			
 			$scope.showUserlistLoading = true;
+			$scope.EditMaskModel.initiator = $rootScope.profil.$id;
 			
-			userService.createUserWithAuth($scope.EditMaskModel, function(error) {				
+			userService.createUserWithAuth($scope.EditMaskModel, function(error) {
 				$scope.showUserlistLoading = false;
 				
 				if (!error) {

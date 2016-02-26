@@ -1,6 +1,8 @@
 ﻿angular.module('chargen', [
 		'ngMessages',
         'ui.router',
+		'ngFileUpload',
+		'ngImgCrop',
         'chargen.overview',
         'chargen.users',
 		'chargen.userService',
@@ -21,7 +23,7 @@
 	})
 	
 	
-	.controller('ChargenController',  function ($rootScope, $scope, $state, $timeout, authService, userService, alertService) {
+	.controller('ChargenController',  function ($rootScope, $scope, $state, $timeout, Upload, authService, userService, alertService) {
 	
 		/* Hält den AlertService. */
 		$scope.alertService = alertService;
@@ -29,6 +31,8 @@
 		$scope.UserProfilModel = null;
 		/* UserRegisterModel für die Registrierungs-Maske */
 		$scope.UserRegisterModel = null;
+		/*Zeigt den Avatar-Edit-Bereich im Profil an. */
+		$scope.showEditAvatar = true;
 		
 		$scope.showChargen = function () {
 			if ($state.is('login') || $state.is('registration')) {
@@ -72,7 +76,26 @@
 		
 		
 		$scope.editProfil = function () {
-			$scope.UserProfilModel = {user: $rootScope.profil, oldEmail: $scope.authData.password.email, password: null, newPassword: null, confirmNewPassword: null};
+		$scope.showEditAvatar = false;
+			$scope.UserProfilModel = {user: $rootScope.profil, oldEmail: $scope.authData.password.email, password: null, newPassword: null, confirmNewPassword: null, editAvatar: null, cropedAvatar: null};
+		}
+		
+		
+		$scope.editAvatar = function () {
+			$scope.showEditAvatar = true;
+		}
+		
+		
+		$scope.changeAvatar = function () {
+			$scope.UserProfilModel.user.avatar = $scope.UserProfilModel.cropedAvatar;
+			$scope.UserProfilModel.editAvatar = null;
+			$scope.showEditAvatar = false;
+		}
+		
+		
+		$scope.cancelAvatar = function () {
+			$scope.UserProfilModel.editAvatar = null;
+			$scope.showEditAvatar = false;
 		}
 		
 		
@@ -87,6 +110,7 @@
 		
 		
 		$scope.saveProfil = function (form) {
+			$scope.UserProfilModel.initiator = $scope.UserProfilModel.user.$id;
 			userService.modifyUserWithAuth($scope.UserProfilModel, function(error) {
 				if (!error) {
 					// Login aktuallisieren
@@ -138,7 +162,6 @@
 				}
 			});
 		}
-		
 		
 		$scope.closeAndResetProfilForm = function (form) {
 			$('#profil-modal').modal('hide');

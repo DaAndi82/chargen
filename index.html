@@ -24,6 +24,11 @@
         <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
 		<!-- DATA TABLES -->
         <link href="css/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+		<!-- Angular-Image-Crop -->
+		<link href="css/angular-image-crop/0.3.2/ng-img-crop.css" rel="stylesheet" type="text/css" />
+		
+		<!-- Chargen -->
+		<link href="css/chargen.css" rel="stylesheet" type="text/css" />
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -59,7 +64,7 @@
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-black">
-                                    <!--img src="img/avatar3.png" class="img-circle" alt="User Image" /-->
+									<img ng-src="{{profil.avatar}}" class="img-circle" alt="Avatar">
                                     <p>
                                         {{profil.fullname}} ({{profil.name}})
                                         <small>Mitglied seit Nov. 2012</small>
@@ -79,7 +84,7 @@
                     </ul>
                 </div>
             </nav>
-        </header>		
+        </header>
         <div class="wrapper row-offcanvas row-offcanvas-left" ng-show="showChargen()">
             <!-- Left side column. contains the logo and sidebar -->
             <aside class="left-side sidebar-offcanvas">
@@ -89,6 +94,9 @@
                     <div class="user-panel">
                         <div class="pull-left image">
                             <!--img src="img/avatar3.png" class="img-circle" alt="User Image" /-->
+                        </div>
+						<div class="pull-left image">
+							<img ng-src="{{profil.avatar}}" class="img-circle" alt="Avatar">
                         </div>
                         <div class="pull-left info">
                             <p>Hallo, {{profil.name}}</p>
@@ -227,59 +235,97 @@
 				</div>
 				<form id="profilDetail" action="#" method="post" name="profilDetail" novalidate>
 					<div class="modal-body">
-						<div class="form-group" ng-show="alertService.alerts['profileScope'].length > 0">
-							<div ng-repeat="message in alertService.alerts['profileScope']" class="alert alert-{{message.class}} alert-dismissable" ng-style="{'margin-bottom': $last ? '0px' : ''}" >
-								<i class="fa fa-{{message.icon}}"></i>
-								<button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="alertService.deleteAlert('profileScope', $index)">×</button>
-								{{message.text}}
+						<div class="row">
+							<div class="col-md-7">
+								<div class="form-group" ng-show="alertService.alerts['profileScope'].length > 0">
+									<div ng-repeat="message in alertService.alerts['profileScope']" class="alert alert-{{message.class}} alert-dismissable" ng-style="{'margin-bottom': $last ? '0px' : ''}" >
+										<i class="fa fa-{{message.icon}}"></i>
+										<button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="alertService.deleteAlert('profileScope', $index)">×</button>
+										{{message.text}}
+									</div>
+								</div>
+								<div class="form-group" ng-class="{'has-error': profilDetail.email.$touched && profilDetail.email.$invalid}">
+									<div class="input-group">
+										<label for="email">E-Mail *</label>
+										<input id="email" name="email" type="email" class="form-control" placeholder="E-Mail eingeben" 
+											ng-model="UserProfilModel.user.email"
+											required>
+									</div>
+								</div>
+								<div class="form-group" ng-class="{'has-error': profilDetail.name.$touched && profilDetail.name.$invalid}">
+									<div class="input-group">
+										<label for="name">Benutzername *</label>
+										<input id="name" name="name" type="text" class="form-control" placeholder="Benutzername eingeben"
+											ng-model="UserProfilModel.user.name"
+											ng-minlength="3"
+											ng-maxlength="20"
+											required>
+									</div>
+								</div>
+								<div class="form-group" ng-class="{'has-error': profilDetail.fullname.$touched && profilDetail.fullname.$invalid}">
+									<div class="input-group">
+										<label for="fullname">Vor- & Nachnahme</label>
+										<input id="fullname" name="fullname" type="text" class="form-control" placeholder="Vor- & Nachnahme eingeben"
+											ng-model="UserProfilModel.user.fullname">
+									</div>
+								</div>
+								<div class="form-group" ng-class="{'has-error': profilDetail.password.$touched && profilDetail.password.$invalid}">
+									<div class="input-group">
+										<label for="password">Altes Passwort *</label>
+										<input id="password" name="password" type="password" class="form-control" placeholder="Altes Passwort eingeben"
+											ng-model="UserProfilModel.password"
+											required>
+									</div>
+								</div>
+								<div class="form-group" ng-class="{'has-error': profilDetail.newPassword.$touched && profilDetail.newPassword.$invalid}">
+									<div class="input-group">
+										<label for="newPassword">Neues Passwort</label>
+										<input id="newPassword" name="newPassword" type="password" class="form-control" placeholder="Neues Passwort eingeben"
+											ng-model="UserProfilModel.newPassword">
+									</div>
+								</div>
+								<div class="form-group" ng-class="{'has-error': profilDetail.confirmNewPassword.$touched && profilDetail.confirmNewPassword.$invalid}">
+									<div class="input-group">
+										<label for="confirmNewPassword">Neues Passwort wiederholen</label>
+										<input id="confirmNewPassword" name="confirmNewPassword" type="password" class="form-control" placeholder="Neues Passwort wiederholen"
+											ng-model="UserProfilModel.confirmNewPassword"
+											ng-pattern="UserProfilModel.newPassword">
+									</div>
+								</div>
 							</div>
-						</div>
-						<div class="form-group" ng-class="{'has-error': profilDetail.email.$touched && profilDetail.email.$invalid}">
-							<div class="input-group">
-								<label for="email">E-Mail *</label>
-								<input id="email" name="email" type="email" class="form-control" placeholder="E-Mail eingeben" 
-									ng-model="UserProfilModel.user.email"
-									required>
-							</div>
-						</div>
-						<div class="form-group" ng-class="{'has-error': profilDetail.name.$touched && profilDetail.name.$invalid}">
-							<div class="input-group">
-								<label for="name">Benutzername *</label>
-								<input id="name" name="name" type="text" class="form-control" placeholder="Benutzername eingeben"
-									ng-model="UserProfilModel.user.name"
-									ng-minlength="3"
-									ng-maxlength="20"
-									required>
-							</div>
-						</div>
-						<div class="form-group" ng-class="{'has-error': profilDetail.fullname.$touched && profilDetail.fullname.$invalid}">
-							<div class="input-group">
-								<label for="fullname">Vor- & Nachnahme</label>
-								<input id="fullname" name="fullname" type="text" class="form-control" placeholder="Vor- & Nachnahme eingeben"
-									ng-model="UserProfilModel.user.fullname">
-							</div>
-						</div>
-						<div class="form-group" ng-class="{'has-error': profilDetail.password.$touched && profilDetail.password.$invalid}">
-							<div class="input-group">
-								<label for="password">Altes Passwort *</label>
-								<input id="password" name="password" type="password" class="form-control" placeholder="Altes Passwort eingeben"
-									ng-model="UserProfilModel.password"
-									required>
-							</div>
-						</div>
-						<div class="form-group" ng-class="{'has-error': profilDetail.newPassword.$touched && profilDetail.newPassword.$invalid}">
-							<div class="input-group">
-								<label for="newPassword">Neues Passwort</label>
-								<input id="newPassword" name="newPassword" type="password" class="form-control" placeholder="Neues Passwort eingeben"
-									ng-model="UserProfilModel.newPassword">
-							</div>
-						</div>
-						<div class="form-group" ng-class="{'has-error': profilDetail.confirmNewPassword.$touched && profilDetail.confirmNewPassword.$invalid}">
-							<div class="input-group">
-								<label for="confirmNewPassword">Neues Passwort wiederholen</label>
-								<input id="confirmNewPassword" name="confirmNewPassword" type="password" class="form-control" placeholder="Neues Passwort wiederholen"
-									ng-model="UserProfilModel.confirmNewPassword"
-									ng-pattern="UserProfilModel.newPassword">
+							<div class="col-md-5">
+								<div class="form-group">
+									<div class="input-group" ng-show="showEditAvatar">
+										<label for="avatar">Avatar</label>
+										<div class="dropAndCropArea" ngf-drop ngf-select
+											ng-model="UserProfilModel.editAvatar"
+											ngf-capture="'camera'" 
+											ngf-pattern="'image/*'"
+											ngf-accept="'image/*'"
+											ngf-select-disabled="UserProfilModel.editAvatar"
+											ngf-drag-over-class="{accept:'dragOverAccept', reject:'dragOverReject'}"
+											ngf-validate="{size: {min: 10, max: '1MB'}, width: {min: 200, max:10000}, height: {min: 200, max: 10000}}">
+											<div ng-hide="UserProfilModel.editAvatar" style="margin-top:50px">
+												<span>Bild auswählen <br /><b>ODER</b> hier reinziehen.</span>
+											</div>
+											<img-crop image="UserProfilModel.editAvatar | ngfDataUrl" result-image="UserProfilModel.cropedAvatar"></img-crop>
+										</div>
+										<div style="margin-top: 10px">
+											<button type="button" class="btn btn-warning pull-left" ng-click="changeAvatar()" ng-show="UserProfilModel.editAvatar">Übernehmen</button>
+											<button type="button" class="btn btn-default pull-right" ng-click="cancelAvatar()">Abbrechen</button>
+										</div>
+									</div>
+									<div class="input-group" ng-hide="showEditAvatar">
+										<label for="avatar">Avatar</label>
+										<img ng-src="{{UserProfilModel.user.avatar}}" />
+										<button type="button" class="btn btn-default" ng-click="editAvatar()" style="margin-top: 10px">Avatar ändern</button>										
+									</div>
+									<!--div class="input-group" ng-hide="!UserProfilModel.user.avatar">		
+										<button type="button" class="btn btn-default" ngf-select ng-model="picFile" accept="image/*">Bild auswählen</button><br />
+											<b>ODER</b> hier her ziehen.
+										<button type="button" class="btn btn-default" ng-click="upload(croppedDataUrl)">Submit</button> 
+									</div-->
+								</div>
 							</div>
 						</div>
 					</div>
@@ -327,7 +373,12 @@
         <!-- Firebase -->
         <script src="js/plugins/firebase/2.3.2/firebase.js"></script>
         <script src="js/plugins/angularfire/1.1.3/angularfire.min.js"></script>
-
+		<!-- Angular-File-Upload -->
+		<script src="js/plugins/angular-file-upload/12.0.1/ng-file-upload-shim.js"></script>
+		<script src="js/plugins/angular-file-upload/12.0.1/ng-file-upload.js"></script>
+		<!-- Angular-Image-Crop -->
+		<script src="js/plugins/angular-image-crop/0.3.2/ng-img-crop.js"></script>
+		
         <!-- AdminLTE App -->
         <script src="js/AdminLTE/app.js" type="text/javascript"></script>        
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->

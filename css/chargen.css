@@ -1,0 +1,17 @@
+.dropAndCropArea {
+    padding: 15px;
+    border: 2px #f1f1f1 dashed;
+    border-radius: 5px;
+    line-height: 34px;
+	overflow: hidden;
+    width:200px;
+    height:200px;
+}
+
+.dropAndCropArea.dragOverAccept{
+    border-color: #00a65a !important;
+}
+
+.dropAndCropArea.dragOverReject{
+    border-color: #f56954 !important;
+}
