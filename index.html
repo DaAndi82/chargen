@@ -64,7 +64,8 @@
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-black">
-									<img ng-src="{{profil.avatar}}" class="img-circle" alt="Avatar">
+									<img ng-src="{{profil.avatar}}" class="img-circle" alt="Avatar" ng-show="profil.avatar" />
+									<img class="img-circle" src="img/avatar.jpg" ng-hide="profil.avatar" />
                                     <p>
                                         {{profil.fullname}} ({{profil.name}})
                                         <small>Mitglied seit Nov. 2012</small>
@@ -96,7 +97,8 @@
                             <!--img src="img/avatar3.png" class="img-circle" alt="User Image" /-->
                         </div>
 						<div class="pull-left image">
-							<img ng-src="{{profil.avatar}}" class="img-circle" alt="Avatar">
+							<img ng-src="{{profil.avatar}}" class="img-circle" alt="Avatar" ng-show="profil.avatar" />
+							<img class="img-circle" src="img/avatar.jpg" ng-hide="profil.avatar" />
                         </div>
                         <div class="pull-left info">
                             <p>Hallo, {{profil.name}}</p>
@@ -271,7 +273,7 @@
 								</div>
 								<div class="form-group" ng-class="{'has-error': profilDetail.password.$touched && profilDetail.password.$invalid}">
 									<div class="input-group">
-										<label for="password">Altes Passwort *</label>
+										<label for="password">Passwort *</label>
 										<input id="password" name="password" type="password" class="form-control" placeholder="Altes Passwort eingeben"
 											ng-model="UserProfilModel.password"
 											required>
@@ -304,7 +306,7 @@
 											ngf-accept="'image/*'"
 											ngf-select-disabled="UserProfilModel.editAvatar"
 											ngf-drag-over-class="{accept:'dragOverAccept', reject:'dragOverReject'}"
-											ngf-validate="{size: {min: 10, max: '1MB'}, width: {min: 200, max:10000}, height: {min: 200, max: 10000}}">
+											ngf-validate="{size: {min: 10, max: '5MB'}, width: {min: 200, max:10000}, height: {min: 200, max: 10000}}">
 											<div ng-hide="UserProfilModel.editAvatar" style="margin-top:50px">
 												<span>Bild auswählen <br /><b>ODER</b> hier reinziehen.</span>
 											</div>
@@ -317,7 +319,8 @@
 									</div>
 									<div class="input-group" ng-hide="showEditAvatar">
 										<label for="avatar">Avatar</label>
-										<img ng-src="{{UserProfilModel.user.avatar}}" />
+										<img class="img-circle" ng-src="{{UserProfilModel.user.avatar}}" ng-show="UserProfilModel.user.avatar" />
+										<img class="img-circle" src="img/avatar.jpg" ng-hide="UserProfilModel.user.avatar" />
 										<button type="button" class="btn btn-default" ng-click="editAvatar()" style="margin-top: 10px">Avatar ändern</button>										
 									</div>
 									<!--div class="input-group" ng-hide="!UserProfilModel.user.avatar">		
