@@ -14,20 +14,19 @@ angular.module('chargen.charService', [
 			console.log('CharService: Loading chars');
 			
 			var firebaseRef = new Firebase('https://chargen.firebaseio.com/chars')
-				.startAt($rootScope.profil.$id)
-				.endAt($rootScope.profil.$id)
-				.once('value', function(snap) {
-					charService.firebaseArray = $firebaseArray(new Firebase('https://chargen.firebaseio.com/chars'));
-					charService.firebaseArray.$loaded()
-						.then(function () {
-							console.log('CharService: Chars loaded');
-							if (callback) callback();
-						});					
-				});
+				.orderByChild('dataCreator')
+				.equalTo($rootScope.profil.$id);
+			
+			charService.firebaseArray = $firebaseArray(firebaseRef);
+			charService.firebaseArray.$loaded()
+				.then(function () {
+					console.log('CharService: Chars loaded');
+					if (callback) callback();
+				});	
 		}
 		
 		
-		charService.getCharList = function () {
+		charService.getCharList = function () {			
 			return charService.firebaseArray;
 		}
 		
