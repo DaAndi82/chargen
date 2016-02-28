@@ -25,7 +25,7 @@ angular.module('chargen.users', [
 		$scope.userList = null;
 		/* EditMaskModel für die Edit-Maske */
 		$scope.EditMaskModel = null;
-		/* EditMaskModel für die Edit-Maske */
+		/* DeleteUserModel für die Delete-Maske */
 		$scope.DeleteUserModel = null;
 		/* Triggert die Loading-Animation .*/
 		$scope.showUserlistLoading = true;
@@ -165,19 +165,18 @@ angular.module('chargen.users', [
 		$scope.removeUser = function () {
 			$scope.showUserlistLoading = true;
 			
-			userService.removeUser($scope.DeleteUserModel, function(error) {
-				
+			userService.removeUser($scope.DeleteUserModel, function(error) {				
 				$scope.showUserlistLoading = false;
 				
 				if (!error) {
 					alertService.addAlert({
 						type: 'success',
-						text: 'User wurde erfolgreich angelegt.'
+						text: 'Der User mit der E-Mail "' + $scope.DeleteUserModel.email + '" wurde erfolgreich gelöscht.'
 					});
 				} else {
 					alertService.addAlert({
 						type: 'error',
-						text: 'Es ist ein Fehler aufgetreten. Der User mit der E-Mail "' + $scope.DeleteUserModel.email + '" konnte nicht gelöscht werden'
+						text: 'Es ist ein Fehler aufgetreten. Der User mit der E-Mail "' + $scope.DeleteUserModel.email + '" konnte nicht gelöscht werden.'
 					});
 				}
 				

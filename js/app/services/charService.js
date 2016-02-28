@@ -31,6 +31,17 @@ angular.module('chargen.charService', [
 		}
 		
 		
+		charService.getChar = function (id) {
+			var char = charService.firebaseArray.$getRecord(id);
+				if (char != null) {
+					console.log('CharService: Char with id "' + id + '" founded');
+				} else {
+					console.log('CharService: No char with id "' + id + '" founded');
+				}
+			return char;
+		}
+		
+		
 		charService.createChar = function (charModel, callback) {
 			if (charModel != null) {
 				console.log('CharService: Create char with name "' + charModel.char.name + '"');
@@ -40,6 +51,23 @@ angular.module('chargen.charService', [
 				charService.firebaseArray.$add(charModel.char).then(function(ref) {
 					console.log('CharService: Char with name "' + charModel.char.name + '" created (id: ' + ref.key() + ')');					
 					if (callback) callback(null);
+				});
+			}
+		}
+		
+		
+		charService.removeChar = function (char, callback) {
+			if (char != null) {
+				console.log('CharService: Delete char with id "' + char.$id + '"');			
+				
+				charService.firebaseArray.$remove(char).then(function(ref) {
+					if (ref.key() === char.$id) {
+						console.log('CharService: Char with id "' + char.$id + '" deleted');
+						if (callback) callback(null);
+					} else {
+						console.log('CharService: Could not delete char with id "' + char.$id + '"');
+						if (callback) callback(true);
+					}
 				});
 			}
 		}

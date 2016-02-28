@@ -23,7 +23,7 @@
 				<div class="box-header">
 					<h3 class="box-title">{{char.name}}</h3>
 					<div class="box-tools pull-right">
-						<button class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+						<button class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#delete-modal" ng-click="deleteChar(char.$id)"><i class="fa fa-trash-o"></i></button>
 					</div>
 				</div>
 				<div class="box-body">
@@ -36,7 +36,7 @@
 		<div class="col-md-4">
 			<div class="box box-solid box-success">
 				<div class="box-header">
-					<h3 class="box-title">Name des Chars</h3>
+					<h3 class="box-title" editable-text="newCharModel.name">{{newCharModel.name || 'Name des Chars eingeben'}}</h3>
 				</div>
 				<div class="box-body text-center">
 					<a class="btn btn-app" ng-click="createChar()">
@@ -46,5 +46,27 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Delete-Modal -->
+	<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="box box-solid box-danger">
+				<div class="box-header">
+					<h3 class="box-title">Warnung: Diese Änderung ist nicht rückgängig zu machen.</h3>
+				</div>
+				<div class="box-body">
+					<p>
+						<br />
+						Wollen Sie den Char mit dem Namen "{{DeleteCharModel.name}}" wirklich löschen?<br />
+						<br />
+					</p>
+				</div><!-- /.box-body -->
+				<div class="box-footer clearfix">
+					<button type="button" class="btn btn-default pull-right" ng-click="cancelDeleting()"><i class="fa fa-times"></i> Abbrechen</button>
+					<button type="button" class="btn btn-danger pull-left" ng-click="removeChar()"><i class="fa fa-edit"></i> Löschen</button>
+				</div>
+			</div>
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 </section>
 <!-- /.content -->

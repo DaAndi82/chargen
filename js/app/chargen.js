@@ -3,6 +3,7 @@
         'ui.router',
 		'ngFileUpload',
 		'ngImgCrop',
+		'xeditable',
         'chargen.overview',
         'chargen.users',
 		'chargen.chars',
@@ -332,7 +333,7 @@
 		$scope.init()
 	})
 	
-	.run(function($rootScope, $state, authService, $timeout, userService) {		
+	.run(function($rootScope, $state, authService, $timeout, editableOptions, userService) {		
 		$rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
 			// We can catch the error thrown when the $requireAuth promise is rejected
 			// and redirect the user back to the home page
@@ -341,6 +342,8 @@
 				$state.reload();
 			}
 		});
+		
+		editableOptions.theme = 'bs3';
 	});
  
     /*.value('fbURL', 'https://chargen.firebaseio.com/')
