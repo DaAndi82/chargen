@@ -108,14 +108,14 @@
                     </div>
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li class="active">
+                        <li class="{{state.is('overview') ? 'active' : ''}}">
                             <a ui-sref="overview">
                                 <i class="fa  fa-home"></i> <span>Overview</span>
                             </a>
                         </li>
-                        <li>
-                            <a href=".">
-                                <i class="fa fa-android"></i> <span>Chars</span> <small class="badge pull-right bg-red">coming soon</small>
+                        <li class="{{state.is('chars') ? 'active' : ''}}">
+                            <a ui-sref="chars">
+                                <i class="fa fa-android"></i> <span>Chars</span>
                             </a>
                         </li>
                         <li>
@@ -130,7 +130,7 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a ui-sref="users"><i class="fa fa-users"></i>Users </a></li>
+                                <li class="{{state.is('users') ? 'active' : ''}}"><a ui-sref="users"><i class="fa fa-users"></i>Users </a></li>
                                 <li><a href="."><i class="fa fa-android"></i>Games <small class="badge pull-right bg-red">coming soon</small></a></li> 
                                 <li><a href="."><i class="fa fa-angle-double-right"></i>Data <small class="badge pull-right bg-red">coming soon</small></a></li>
                             </ul>
@@ -298,30 +298,54 @@
 							<div class="col-md-5">
 								<div class="form-group">
 									<div class="input-group" ng-show="showEditAvatar">
-										<label for="avatar">Avatar</label>
-										<div class="dropAndCropArea" ngf-drop ngf-select
-											ng-model="UserProfilModel.editAvatar"
-											ngf-capture="'camera'" 
-											ngf-pattern="'image/*'"
-											ngf-accept="'image/*'"
-											ngf-select-disabled="UserProfilModel.editAvatar"
-											ngf-drag-over-class="{accept:'dragOverAccept', reject:'dragOverReject'}"
-											ngf-validate="{size: {min: 10, max: '5MB'}, width: {min: 200, max:10000}, height: {min: 200, max: 10000}}">
-											<div ng-hide="UserProfilModel.editAvatar" style="margin-top:50px">
-												<span>Bild auswählen <br /><b>ODER</b> hier reinziehen.</span>
+										<div class="row">
+											<div class="col-md-12">
+												<label for="avatar">Avatar</label>
 											</div>
-											<img-crop image="UserProfilModel.editAvatar | ngfDataUrl" result-image="UserProfilModel.cropedAvatar"></img-crop>
 										</div>
-										<div style="margin-top: 10px">
-											<button type="button" class="btn btn-warning pull-left" ng-click="changeAvatar()" ng-show="UserProfilModel.editAvatar">Übernehmen</button>
-											<button type="button" class="btn btn-default pull-right" ng-click="cancelAvatar()">Abbrechen</button>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="dropAndCropArea" ngf-drop ngf-select
+													ng-model="UserProfilModel.editAvatar"
+													ngf-capture="'camera'" 
+													ngf-pattern="'image/*'"
+													ngf-accept="'image/*'"
+													ngf-select-disabled="UserProfilModel.editAvatar"
+													ngf-drag-over-class="{accept:'dragOverAccept', reject:'dragOverReject'}"
+													ngf-validate="{size: {min: 10, max: '5MB'}, width: {min: 200, max:10000}, height: {min: 200, max: 10000}}">
+													<div ng-hide="UserProfilModel.editAvatar" style="margin-top:50px">
+														<span>Bild auswählen <br /><b>ODER</b> hier reinziehen.</span>
+													</div>
+													<img-crop image="UserProfilModel.editAvatar | ngfDataUrl" result-image="UserProfilModel.cropedAvatar"></img-crop>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div style="margin-top: 10px">
+													<button type="button" class="btn btn-warning pull-left" ng-click="changeAvatar()" ng-show="UserProfilModel.editAvatar">Übernehmen</button>
+													<button type="button" class="btn btn-default pull-right" ng-click="cancelAvatar()">Abbrechen</button>
+												</div>
+											</div>
 										</div>
 									</div>
 									<div class="input-group" ng-hide="showEditAvatar">
-										<label for="avatar">Avatar</label>
-										<img class="img-circle" ng-src="{{UserProfilModel.user.avatar}}" ng-show="UserProfilModel.user.avatar" />
-										<img class="img-circle" src="img/avatar.jpg" ng-hide="UserProfilModel.user.avatar" />
-										<button type="button" class="btn btn-default" ng-click="editAvatar()" style="margin-top: 10px">Avatar ändern</button>										
+										<div class="row">
+											<div class="col-md-12">
+												<label for="avatar">Avatar</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<img class="img-circle" ng-src="{{UserProfilModel.user.avatar}}" ng-show="UserProfilModel.user.avatar" />
+												<img class="img-circle" src="img/avatar.jpg" ng-hide="UserProfilModel.user.avatar" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<button type="button" class="btn btn-default" ng-click="editAvatar()" style="margin-top: 10px">Avatar ändern</button>	
+											</div>
+										</div>								
 									</div>
 									<!--div class="input-group" ng-hide="!UserProfilModel.user.avatar">		
 										<button type="button" class="btn btn-default" ngf-select ng-model="picFile" accept="image/*">Bild auswählen</button><br />
@@ -393,10 +417,12 @@
         <script src="js/app/chargen.js"></script>
 		<!-- Services -->
 		<script src="js/app/services/userService.js"></script>
+		<script src="js/app/services/charService.js"></script>
 		<script src="js/app/services/alertService.js"></script>
         <script src="js/app/services/authService.js"></script>
         <!-- Pages -->
         <script src="js/app/pages/overview.js"></script>
         <script src="js/app/pages/users.js"></script>
+		<script src="js/app/pages/chars.js"></script>
     </body>
 </html>

@@ -5,7 +5,9 @@
 		'ngImgCrop',
         'chargen.overview',
         'chargen.users',
+		'chargen.chars',
 		'chargen.userService',
+		'chargen.charService',
 		'chargen.authService',
 		'chargen.alertService'
     ])
@@ -33,6 +35,8 @@
 		$scope.UserRegisterModel = null;
 		/*Zeigt den Avatar-Edit-Bereich im Profil an. */
 		$scope.showEditAvatar = true;
+		
+		$scope.state = $state;
 		
 		$scope.showChargen = function () {
 			if ($state.is('login') || $state.is('registration')) {
@@ -62,7 +66,7 @@
 				// User aus authService zuweisen
 				$scope.authData = authService.auth.$getAuth();
 				if ($scope.authData) {
-					console.log('ChargenController - Init: User zuweisen.')
+					console.log('ChargenController - Init: User zuweisen.');
 					$rootScope.profil = userService.getUserByUID ($scope.authData.uid);
 				}
 				

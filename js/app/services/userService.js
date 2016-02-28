@@ -8,7 +8,6 @@ angular.module('chargen.userService', [
 		
 		var userService = this;
 		userService.firebaseArray = null;
-		userService.registeredViews = [];
 		
 		
 		userService.init = function (callback) {
@@ -255,18 +254,6 @@ angular.module('chargen.userService', [
 				user.dataCreator = initiator;
 			}
 		}
-		
-		
-		/*userService.userOutOfSync = function (user) {
-			var syncUser = userService.firebaseArray.$getRecord(user.$id);			
-			if (syncUser.lastModified != null && user.lastModified !== syncUser.lastModified) {
-				console.log('UserService: User with id "' + user.$id + '" is out of in sync');
-				return true;
-			} else {
-				console.log('UserService: User with id "' + user.$id + '" is in sync');
-				return false;
-			}
-		}*/
 		
 		
 		return userService;
