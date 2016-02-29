@@ -20,15 +20,6 @@ a {
 }
 
 
-.char a.editable-click {
-	color: #428bca;
-	border-bottom: dashed 1px #428bca;
-}
-.char a.editable-click:hover {
-	color: #428bca;
-	border-bottom: solid 1px #428bca;
-}
-
 .box.box-solid.box-success > .box-header a {
 	color: #fff;
 }
@@ -42,6 +33,15 @@ a {
   background: #fff;
 }
 
+
+.char a.editable-click {
+	color: #428bca;
+	border-bottom: dashed 1px #428bca;
+}
+.char a.editable-click:hover {
+	color: #428bca;
+	border-bottom: solid 1px #428bca;
+}
 
 .char-character {
 	background-color: #ddd;

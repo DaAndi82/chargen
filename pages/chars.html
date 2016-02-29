@@ -20,7 +20,7 @@
 
 	<!-- Char-Auwswahl -->
 	<div class="row" ng-hide="SelectedCharModel">
-		<div class="col-md-4" ng-repeat="char in charList">
+		<div class="col-sm-6 col-md-4 col-lg-3" ng-repeat="char in charList">
 			<div class="box box-solid box-primary">
 				<div class="box-header">
 					<h3 class="box-title" ng-click="selectChar(char.$id)">{{char.name}}</h3>
@@ -30,25 +30,25 @@
 				</div>
 				<div class="box-body" ng-click="selectChar(char.$id)">
 					<div class="row">
-						<div class="col-md-3">
+						<div class="col-xs-3">
 							<p>SPEZIES:</p>
 						</div>
-						<div class="col-md-9">
+						<div class="col-xs-9">
 							{{char.species || 'leer'}}
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-3">
+						<div class="col-xs-3">
 							<p>BERUF:</p>
 						</div>
-						<div class="col-md-9">
+						<div class="col-xs-9">
 							{{char.career || 'leer'}}
 						</div>
 					</div>
 				</div><!-- /.box-body -->
 			</div>
 		</div>
-		<div class="col-md-4">
+		<div class="col-sm-6 col-md-4 col-lg-3">
 			<div class="box box-solid box-success">
 				<div class="box-header">
 					<h3 class="box-title"><a href="" editable-text="newCharModel.name">{{newCharModel.name || 'Name des Chars eingeben'}}</a></h3>
@@ -87,23 +87,23 @@
 				<div class="tab-content">
 					<div class="tab-pane active" id="identity">
 						<div class="row">
-							<div class="col-md-9">
+							<div class="col-sm-9">
 								<div class="row char-character">
-									<div class="col-md-12">
+									<div class="col-xs-12">
 										<h4>CHARAKTER</h4>
 										<div class="row">
-											<div class="col-md-2">
+											<div class="col-xs-4 col-sm-3 col-md-2">
 												<p>NAME:</p>
 											</div>
-											<div class="col-md-10">
+											<div class="col-xs-8 col-sm-9 col-md-10">
 												<a editable-text="SelectedCharModel.char.name" onaftersave="updateChar()">{{SelectedCharModel.char.name || 'leer'}}</a>
 											</div>
 										</div>
 										<div class="row">
-											<div class="col-md-2">
+											<div class="col-xs-4 col-sm-3 col-md-2">
 												<p>SPEZIES:</p>
 											</div>
-											<div class="col-md-10">
+											<div class="col-xs-8 col-sm-9 col-md-10">
 												<a editable-select="SelectedCharModel.char.species"
 													e-ng-options="species.value_de as species.value_de for species in charData.species"
 													onaftersave="updateChar()">
@@ -112,10 +112,10 @@
 											</div>
 										</div>
 										<div class="row">
-											<div class="col-md-2">
+											<div class="col-xs-4 col-sm-3 col-md-2">
 												<p>BERUF:</p>
 											</div>
-											<div class="col-md-10">
+											<div class="col-xs-8 col-sm-9 col-md-10">
 												<a editable-select="SelectedCharModel.char.career"
 													e-ng-options="career.value_de as career.value_de for career in charData.career"
 													onaftersave="updateChar()">
@@ -126,7 +126,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-sm-3">
 								Hier kommt das Bild.
 							</div>
 						</div>
