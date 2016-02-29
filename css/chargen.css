@@ -1,3 +1,8 @@
+a {
+	cursor: pointer;
+}
+
+
 .dropAndCropArea {
     padding: 15px;
     border: 2px #f1f1f1 dashed;
@@ -7,11 +12,52 @@
     width:200px;
     height:200px;
 }
-
 .dropAndCropArea.dragOverAccept{
     border-color: #00a65a !important;
 }
-
 .dropAndCropArea.dragOverReject{
     border-color: #f56954 !important;
+}
+
+
+.char a.editable-click {
+	color: #428bca;
+	border-bottom: dashed 1px #428bca;
+}
+.char a.editable-click:hover {
+	color: #428bca;
+	border-bottom: solid 1px #428bca;
+}
+
+.box.box-solid.box-success > .box-header a {
+	color: #fff;
+}
+.box.box-solid.box-success > .box-header a.editable-click {
+	border-bottom: dashed 1px #fff;
+}
+.box.box-solid.box-success > .box-header a.editable-click:hover {
+	border-bottom: solid 1px #fff;
+}
+.box.box-solid > .box-header .editable-buttons .btn.btn-default {
+  background: #fff;
+}
+
+
+.char-character {
+	background-color: #ddd;
+	border-radius: 0px 0px 0px 15px;
+	padding-bottom: 15px;
+	margin-right: 0px;
+	margin-left: 0px;
+}
+.char-character .row {
+	border-bottom: solid black 1px;
+}
+.char .editable-controls input,
+.char .editable-controls select {
+	height: 20px;
+	padding: 0px;
+}
+.char .editable-controls button {
+	padding: 1px 6px;
 }

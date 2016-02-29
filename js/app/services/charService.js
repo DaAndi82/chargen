@@ -56,6 +56,26 @@ angular.module('chargen.charService', [
 		}
 		
 		
+		charService.modifyChar = function(charModel, callback) {
+		
+			if (charModel != null) {
+				console.log('CharService: Save char with id "' + charModel.char.$id + '"');
+				
+				charService.signTransaction(charModel.char, charModel.initiator, false);
+				
+				charService.firebaseArray.$save(charModel.char)
+				.then(function() {
+					console.log('CharService: Char with id "' + charModel.char.$id + '" saved');
+					if (callback) callback(null);
+				})
+				.catch (function(error) {
+					console.log('CharService: Could not modfy char with id "' + charModel.char.$id + '" (' + error.code + ')');
+					if (callback) callback(error);
+				});
+			}
+		}
+		
+		
 		charService.removeChar = function (char, callback) {
 			if (char != null) {
 				console.log('CharService: Delete char with id "' + char.$id + '"');			

@@ -2,7 +2,7 @@
 <section class="content-header">
     <h1>
         Chars
-        <small>Auswahl</small>
+        <small>{{SelectedCharModel == null ? 'Auswahl' : 'Detailansicht'}}</small>
     </h1>
 </section>
 
@@ -17,26 +17,41 @@
 
 <!-- Main content -->
 <section ng-controller="CharController as cc" class="content">
-	<div class="row">
+
+	<!-- Char-Auwswahl -->
+	<div class="row" ng-hide="SelectedCharModel">
 		<div class="col-md-4" ng-repeat="char in charList">
 			<div class="box box-solid box-primary">
 				<div class="box-header">
-					<h3 class="box-title">{{char.name}}</h3>
+					<h3 class="box-title" ng-click="selectChar(char.$id)">{{char.name}}</h3>
 					<div class="box-tools pull-right">
 						<button class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#delete-modal" ng-click="deleteChar(char.$id)"><i class="fa fa-trash-o"></i></button>
 					</div>
 				</div>
-				<div class="box-body">
-					<p>
-						Infos über den Char
-					</p>
+				<div class="box-body" ng-click="selectChar(char.$id)">
+					<div class="row">
+						<div class="col-md-3">
+							<p>SPEZIES:</p>
+						</div>
+						<div class="col-md-9">
+							{{char.species || 'leer'}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
+							<p>BERUF:</p>
+						</div>
+						<div class="col-md-9">
+							{{char.career || 'leer'}}
+						</div>
+					</div>
 				</div><!-- /.box-body -->
 			</div>
 		</div>
 		<div class="col-md-4">
 			<div class="box box-solid box-success">
 				<div class="box-header">
-					<h3 class="box-title" editable-text="newCharModel.name">{{newCharModel.name || 'Name des Chars eingeben'}}</h3>
+					<h3 class="box-title"><a href="" editable-text="newCharModel.name">{{newCharModel.name || 'Name des Chars eingeben'}}</a></h3>
 				</div>
 				<div class="box-body text-center">
 					<a class="btn btn-app" ng-click="createChar()">
@@ -44,6 +59,89 @@
 					</a>
 				</div><!-- /.box-body -->
 			</div>
+		</div>
+	</div>
+	
+	<!-- Char-DetailView -->
+	<div class="row char" ng-show="SelectedCharModel">
+		<div class="col-md-12">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				<ul class="nav nav-tabs">
+					<li class="active"><a data-target="#identity" data-toggle="tab">Identität</a></li>
+					<!--li><a data-target="#tab_2" data-toggle="tab">Tab 2</a></li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown">
+							Dropdown <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+							<li role="presentation" class="divider"></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+						</ul>
+					</li-->
+					<li class="pull-right"><a class="text-muted" ng-click="deselectChar()"><i class="fa fa-gear"></i> Anderen Char auswählen</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="identity">
+						<div class="row">
+							<div class="col-md-9">
+								<div class="row char-character">
+									<div class="col-md-12">
+										<h4>CHARAKTER</h4>
+										<div class="row">
+											<div class="col-md-2">
+												<p>NAME:</p>
+											</div>
+											<div class="col-md-10">
+												<a editable-text="SelectedCharModel.char.name" onaftersave="updateChar()">{{SelectedCharModel.char.name || 'leer'}}</a>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<p>SPEZIES:</p>
+											</div>
+											<div class="col-md-10">
+												<a editable-select="SelectedCharModel.char.species"
+													e-ng-options="species.value_de as species.value_de for species in charData.species"
+													onaftersave="updateChar()">
+													{{SelectedCharModel.char.species || 'leer'}}
+												</a>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<p>BERUF:</p>
+											</div>
+											<div class="col-md-10">
+												<a editable-select="SelectedCharModel.char.career"
+													e-ng-options="career.value_de as career.value_de for career in charData.career"
+													onaftersave="updateChar()">
+													{{SelectedCharModel.char.career || 'leer'}}
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								Hier kommt das Bild.
+							</div>
+						</div>
+					</div><!-- /.tab-pane -->
+					<!--div class="tab-pane" id="tab_2">
+						The European languages are members of the same family. Their separate existence is a myth.
+						For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+						in their grammar, their pronunciation and their most common words. Everyone realizes why a
+						new common language would be desirable: one could refuse to pay expensive translators. To
+						achieve this, it would be necessary to have uniform grammar, pronunciation and more common
+						words. If several languages coalesce, the grammar of the resulting language is more simple
+						and regular than that of the individual languages.
+					</div--><!-- /.tab-pane -->
+				</div><!-- /.tab-content -->
+			</div><!-- nav-tabs-custom -->
 		</div>
 	</div>
 	

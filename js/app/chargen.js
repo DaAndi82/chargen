@@ -69,6 +69,8 @@
 				if ($scope.authData) {
 					console.log('ChargenController - Init: User zuweisen.');
 					$rootScope.profil = userService.getUserByUID ($scope.authData.uid);
+				} else {
+					$state.go('login');
 				}
 				
 				// Damit  der Body erst nach der Initialisierung von Angular angezeigt wird.

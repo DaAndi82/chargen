@@ -20,8 +20,6 @@
 		
 		/* Hält den AlertService. */
 		$scope.alertService = alertService;
-		/* Hält die Liste der Chars (nicht das FirebaseArray). */
-		$scope.charList = null;
 		/* Neuer Char */
 		$scope.newCharModel = null;
 		/* DeleteCharModel für die Delete-Maske */
@@ -29,10 +27,34 @@
 		/* Triggert das DeleteCharWarning .*/
 		$scope.showDeleteCharWarning = false;
 		
+		/* charData - dummy */
+		$scope.charData = {
+			species: {
+				droid: {
+					value_de: 'Droide',
+					value_en: 'Droid'
+				},
+				human: {
+					value_de: 'Mensch',
+					value_en: 'Human'
+				}
+			},
+			career: {
+				bounty_hunter: {
+					value_de: 'Kopfgeldjäger',
+					value_en: 'Bounty Hunter'
+				},
+				pilot: {
+					value_de: 'Pilot',
+					value_en: 'Pilot'
+				}
+			}
+		}
+		
 		$rootScope.$watch('profil', function () {
-			if ($scope.charList == null && $rootScope.profil != null) {
+			if ($rootScope.charList == null && $rootScope.profil != null) {
 				charService.init(function () {
-					$scope.charList = charService.getCharList();
+					$rootScope.charList = charService.getCharList();
 				});
 			}
 		});
@@ -84,6 +106,43 @@
 				$scope.closeDeleteAlert();
 				$scope.DeleteCharModel = null;
 			});
+		}
+		
+		
+		$scope.selectChar = function (id) {
+			$rootScope.SelectedCharModel = {
+				char: charService.getChar(id),
+				initiator: null
+			};
+			
+			if ($rootScope.SelectedCharModel.char == null) {
+				alertService.addAlert({
+						type: 'error',
+						text: 'Der Char mit der ID "' + id + '" existriert nicht.'
+					});
+			}
+		}
+		
+		$scope.updateChar = function (id) {
+			$rootScope.SelectedCharModel.initiator = $rootScope.profil.$id;
+			
+			charService.modifyChar($rootScope.SelectedCharModel, function(error) {
+				if (error) {
+					switch (error.code) {
+						default:
+							alertService.addAlert({
+								type: 'error',
+								text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
+							});
+						break;
+					}
+				}
+			});
+		}
+		
+		
+		$scope.deselectChar = function () {
+			$rootScope.SelectedCharModel = null;
 		}
 		
 		
