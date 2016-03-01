@@ -4,6 +4,7 @@
 		'ngFileUpload',
 		'ngImgCrop',
 		'xeditable',
+		'pascalprecht.translate',
         'chargen.overview',
         'chargen.users',
 		'chargen.chars',
@@ -14,7 +15,7 @@
     ])
 	
     
-	.config(function($stateProvider, $urlRouterProvider) {
+	.config(function($stateProvider, $urlRouterProvider, $translateProvider) {
 		$urlRouterProvider.otherwise('/overview');
 		$stateProvider
 			.state('login', {
@@ -23,10 +24,18 @@
 			.state('registration', {
 				url: '/registration',
 			});
+			
+		$translateProvider.useLoader('$translatePartialLoader', {
+		  urlTemplate: 'i18n/{part}/{lang}.json'
+		});
+		
+		$translateProvider.preferredLanguage('en');
+		$translateProvider.fallbackLanguage('en');
+		$translateProvider.useSanitizeValueStrategy('escape');
 	})
 	
 	
-	.controller('ChargenController',  function ($rootScope, $scope, $state, $timeout, Upload, authService, userService, alertService) {
+	.controller('ChargenController',  function ($rootScope, $scope, $state, $timeout, $translate, Upload, authService, userService, alertService) {
 	
 		/* Hält den AlertService. */
 		$scope.alertService = alertService;
@@ -36,8 +45,19 @@
 		$scope.UserRegisterModel = null;
 		/*Zeigt den Avatar-Edit-Bereich im Profil an. */
 		$scope.showEditAvatar = true;
+		/* Ausgewählte Sprache */
+		$rootScope.selectedLanguage = 'en';
+
 		
 		$scope.state = $state;
+		
+		
+		$rootScope.changeLanguage = function (lang) {
+			console.log('ChargenController - changeLaungage: Sprache auf "' + lang + '" gestellt.');
+			$rootScope.selectedLanguage = lang;
+			$translate.use(lang);
+		}
+		
 		
 		$scope.showChargen = function () {
 			if ($state.is('login') || $state.is('registration')) {
@@ -335,7 +355,7 @@
 		$scope.init()
 	})
 	
-	.run(function($rootScope, $state, authService, $timeout, editableOptions, userService) {		
+	.run(function($rootScope, $state, $translate, authService, $timeout, editableOptions, userService) {		
 		$rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
 			// We can catch the error thrown when the $requireAuth promise is rejected
 			// and redirect the user back to the home page
@@ -343,6 +363,10 @@
 				$state.go("login");
 				$state.reload();
 			}
+		});
+		
+		$rootScope.$on('$translatePartialLoaderStructureChanged', function () {
+			$translate.refresh();
 		});
 		
 		editableOptions.theme = 'bs3';

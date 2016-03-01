@@ -16,7 +16,7 @@
         })
     })
 	
-	.controller('CharController',  function ($scope, $rootScope, $state, charService, alertService) {
+	.controller('CharController',  function ($scope, $rootScope, $state, $translatePartialLoader, charService, alertService) {
 		
 		/* Hält den AlertService. */
 		$scope.alertService = alertService;
@@ -26,9 +26,11 @@
 		$scope.DeleteCharModel = null;
 		/* Triggert das DeleteCharWarning .*/
 		$scope.showDeleteCharWarning = false;
+		/* Lädt die Lokalisation */
+		$translatePartialLoader.addPart('chars');
 		
-		/* charData - dummy */
-		$scope.charData = {
+		/* charData - dummy: Perhaps in a later Version. */
+		/*$scope.charData = {
 			species: {
 				droid: {
 					value_de: 'Droide',
@@ -49,7 +51,7 @@
 					value_en: 'Pilot'
 				}
 			}
-		}
+		}*/
 		
 		$rootScope.$watch('profil', function () {
 			if ($rootScope.charList == null && $rootScope.profil != null) {

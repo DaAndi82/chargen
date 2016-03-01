@@ -1,0 +1,20 @@
+﻿{
+	"character":
+	{
+		"character" : "CHARAKTER",
+		"name": "NAME",
+		"species": "SPEZIES",
+		"specialisation": "BERUF"
+	},
+	"gameValues":
+	{
+		"soak": "ABSORPTION",
+		"strain": "ERSCHÖPFUNG",
+		"wound": "WUNDEN",
+		"defense": "VERTEIDIGUNG",
+		"limit": "LIMIT",
+		"current": "AKTUELL",
+		"ranged": "FERNKAMPF",
+		"melee": "NAHKAMPF"
+	}
+}

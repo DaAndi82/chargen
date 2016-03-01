@@ -1,0 +1,20 @@
+﻿{
+	"character":
+	{
+		"character" : "CHARACTER",
+		"name": "NAME",
+		"species": "SPECIES",
+		"specialisation": "SPECIALISATION"
+	},
+	"gameValues":
+	{
+		"soak": "SOAK",
+		"strain": "STRAIN",
+		"wound": "WOUND",
+		"defense": "DEFENSE",
+		"limit": "LIMIT",
+		"current": "CURRENT",
+		"ranged": "RANGED",
+		"melee": "MELEE"
+	}
+}
