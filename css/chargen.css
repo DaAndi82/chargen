@@ -34,15 +34,6 @@ a {
 }
 
 
-.char a.editable-click {
-	color: #428bca;
-	border-bottom: dashed 1px #428bca;
-}
-.char a.editable-click:hover {
-	color: #428bca;
-	border-bottom: solid 1px #428bca;
-}
-
 .char-character {
 	background-color: #d6d6d6;
 	border-radius: 0px 0px 0px 15px;
@@ -51,17 +42,23 @@ a {
 	margin-right: 0px;
 	margin-left: 0px;
 }
+.char-character p {
+	font-style: normal !important;
+	border: 0px !important;
+}
 .char-character .row {
 	border-bottom: solid black 1px;
 }
+
 .char .editable-controls input,
 .char .editable-controls select {
 	height: 24px;
 	padding: 0px;
 }
-.char .editable-controls button {
+/* Aktuell deaktiviert */
+/*.char .editable-controls button {
 	padding: 1px 6px;
-}
+}*/
 
 .char-image {
 	background-color: #d6d6d6;
@@ -101,20 +98,10 @@ a {
 .char-gameValuesValues p {
 	font-size: 20pt;
 	font-style: normal !important;
-	color: #000 !important;
 	border: 0px !important;
-	padding: 0px !important;
 }
 .char-gameValuesValues div.editable-controls {
 	padding-top: 12px;
-}
-.char-gameValuesValues a.editable-click {
-	color: #428bca;
-	border-bottom: dashed 1px #428bca;
-}
-.char-gameValuesValues a.editable-click:hover {
-	color: #428bca;
-	border-bottom: solid 1px #428bca;
 }
 .char-gameValuesFooterLeft {
 	color: #fff;
@@ -126,6 +113,25 @@ a {
 .char-gameValuesFooterRight {
 	color: #000;
 	background-color: #7DCCDB;
+	border-radius: 30px;
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+.char-attributes {
+	border-radius: 30px;
+	border: 4px solid #9E998B;
+	margin-right: 0px;
+	margin-left: 0px;
+	margin-top: 10px;
+	padding: 5px;
+}
+.char-attributes p{
+	margin: 5px;
+}
+.char-attributesHeader {
+	color: #fff;
+	background-color: #394457;
 	border-radius: 30px;
 	margin-right: 0px;
 	margin-left: 0px;
