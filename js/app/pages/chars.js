@@ -1,5 +1,6 @@
 ﻿angular.module('chargen.chars', [
 		'ui.router',
+		'xeditable',
 		'chargen.charService',
 		'chargen.alertService'
 	])
@@ -124,24 +125,28 @@
 						type: 'error',
 						text: 'Der Char mit der ID "' + id + '" existriert nicht.'
 					});
+			} else {
+				if (!$rootScope.SelectedCharModel.char.attributes) $rootScope.SelectedCharModel.char.attributes = {};
 			}
 		}
 		
-		$scope.updateChar = function (id) {
-			$rootScope.SelectedCharModel.initiator = $rootScope.profil.$id;
-			
-			charService.modifyChar($rootScope.SelectedCharModel, function(error) {
-				if (error) {
-					switch (error.code) {
-						default:
-							alertService.addAlert({
-								type: 'error',
-								text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
-							});
-						break;
+		$scope.updateChar = function (fieldValue) {
+			if (fieldValue) {
+				$rootScope.SelectedCharModel.initiator = $rootScope.profil.$id;
+				
+				charService.modifyChar($rootScope.SelectedCharModel, function(error) {
+					if (error) {
+						switch (error.code) {
+							default:
+								alertService.addAlert({
+									type: 'error',
+									text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
+								});
+							break;
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 		
 		

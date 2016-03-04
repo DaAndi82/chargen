@@ -20,6 +20,16 @@
 	},
 	"attributes":
 	{
-		"attributes": "ATTRIBUTES"
+		"attributes": "ATTRIBUTES",
+		"brawn": "BRAWN",
+		"agility": "AGILITY",
+		"intellect": "INTELLECT",
+		"cunning": "CUNNING",
+		"willpower": "WILLPOWER",
+		"presence": "PRESENCE"
+	},
+	"skills":
+	{
+		"skills": "SKILLS"
 	}
 }

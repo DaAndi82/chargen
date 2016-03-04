@@ -20,6 +20,16 @@
 	},
 	"attributes":
 	{
-		"attributes": "EIGENSCHAFTEN"
+		"attributes": "EIGENSCHAFTEN",
+		"brawn": "STÄRKE",
+		"agility": "GEWANDHEIT",
+		"intellect": "INTELLIGENZ",
+		"cunning": "LIST",
+		"willpower": "WILLENSKRAFT",
+		"presence": "CHARISMA"
+	},
+	"skills":
+	{
+		"skills": "TALENTE"
 	}
 }

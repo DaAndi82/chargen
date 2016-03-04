@@ -99,6 +99,7 @@
 				</ul>
 				<div class="tab-content">
 					<div class="tab-pane active" id="identity">
+					<!-- CHAR - CHARACTER -->
 						<div class="row">
 							<div class="col-sm-9">
 								<div class="row char-character">
@@ -158,7 +159,7 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> 
 							<div class="col-sm-3">
 								<div class="row char-image">
 									<div class="col-xs-12">
@@ -168,7 +169,8 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div><!-- // CHAR - CHARACTER -->
+						<!-- CHAR - GAMEVALUES -->
 						<div class="row">
 							<div class="col-sm-6 col-lg-3">
 								<div class="row char-gameValues">
@@ -184,7 +186,7 @@
 													{{SelectedCharModel.char.soak || 0}}
 												</p>
 												<p ng-hide="showCharEditing">
-													{{SelectedCharModel.char.soak || ''}}
+													{{SelectedCharModel.char.soak || 0}}
 												</p>
 											</div>
 										</div>
@@ -205,7 +207,7 @@
 													{{SelectedCharModel.char.wound.limit || 0}}
 												</p>
 												<p ng-hide="showCharEditing">
-													{{SelectedCharModel.char.wound.limit || ''}}
+													{{SelectedCharModel.char.wound.limit || 0}}
 												</p>
 											</div>
 											<div class="col-xs-6 text-center">
@@ -213,7 +215,7 @@
 													{{SelectedCharModel.char.wound.current || 0}}
 												</p>
 												<p ng-hide="showCharEditing">
-													{{SelectedCharModel.char.wound.current || ''}}
+													{{SelectedCharModel.char.wound.current || 0}}
 												</p>
 											</div>
 										</div>
@@ -242,7 +244,7 @@
 													{{SelectedCharModel.char.strain.limit || 0}}
 												</p>
 												<p ng-hide="showCharEditing">
-													{{SelectedCharModel.char.strain.limit || ''}}
+													{{SelectedCharModel.char.strain.limit || 0}}
 												</p>
 											</div>
 											<div class="col-xs-6 text-center">
@@ -250,7 +252,7 @@
 													{{SelectedCharModel.char.strain.current || 0}}
 												</p>
 												<p ng-hide="showCharEditing">
-													{{SelectedCharModel.char.strain.current || ''}}
+													{{SelectedCharModel.char.strain.current || 0}}
 												</p>
 											</div>
 										</div>
@@ -279,7 +281,7 @@
 													{{SelectedCharModel.char.defense.ranged || 0}}
 												</p>
 												<p ng-hide="showCharEditing">
-													{{SelectedCharModel.char.defense.ranged || ''}}
+													{{SelectedCharModel.char.defense.ranged || 0}}
 												</p>
 											</div>
 											<div class="col-xs-6 text-center">
@@ -287,7 +289,7 @@
 													{{SelectedCharModel.char.defense.melee || 0}}
 												</p>
 												<p ng-hide="showCharEditing">
-													{{SelectedCharModel.char.defense.melee || ''}}
+													{{SelectedCharModel.char.defense.melee || 0}}
 												</p>
 											</div>
 										</div>
@@ -302,7 +304,8 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div><!-- // CHAR - GAMEVALUES -->
+						<!-- CHAR - ATTRIBUTES -->
 						<div class="row">
 							<div class="col-xs-12">
 								<div class="row char-attributes">
@@ -310,6 +313,196 @@
 										<div class="row">
 											<div class="col-xs-12 text-center char-attributesHeader">
 												<p translate>attributes.attributes<p>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-6 col-sm-4 col-md-4 col-lg-2">
+												<div class="row char-singleAttributeContainer">
+													<div class="col-xs-12 char-singleAttribute">
+														<div class="row">
+															<div class="col-xs-12">
+																<div class="img-circle" ng-show="showCharEditing">
+																	<p editable-number="SelectedCharModel.char.attributes.brawn" onaftersave="updateChar(SelectedCharModel.char.attributes.brawn)" buttons="no" blur="submit">
+																		{{SelectedCharModel.char.attributes.brawn || 0}}
+																	</p>
+																</div>
+																<div class="img-circle" ng-hide="showCharEditing">
+																	<p>
+																		{{SelectedCharModel.char.attributes.brawn || 0}}
+																	</p>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-xs-12 text-center char-singleAttributeFooter">
+																<p translate>attributes.brawn</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-6 col-sm-4 col-md-4 col-lg-2">
+												<div class="row char-singleAttributeContainer">
+													<div class="col-xs-12 char-singleAttribute">
+														<div class="row">
+															<div class="col-xs-12">
+																<div class="img-circle" ng-show="showCharEditing">
+																	<p editable-number="SelectedCharModel.char.attributes.agility" onaftersave="updateChar(SelectedCharModel.char.attributes.agility)" buttons="no" blur="submit">
+																		{{SelectedCharModel.char.attributes.agility || 0}}
+																	</p>
+																</div>
+																<div class="img-circle" ng-hide="showCharEditing">
+																	<p>
+																		{{SelectedCharModel.char.attributes.agility || 0}}
+																	</p>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-xs-12 text-center char-singleAttributeFooter">
+																<p translate>attributes.agility</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-6 col-sm-4 col-md-4 col-lg-2">
+												<div class="row char-singleAttributeContainer">
+													<div class="col-xs-12 char-singleAttribute">
+														<div class="row">
+															<div class="col-xs-12">
+																<div class="img-circle" ng-show="showCharEditing">
+																	<p editable-number="SelectedCharModel.char.attributes.intellect" onaftersave="updateChar(SelectedCharModel.char.attributes.intellect)" buttons="no" blur="submit">
+																		{{SelectedCharModel.char.attributes.intellect || 0}}
+																	</p>
+																</div>
+																<div class="img-circle" ng-hide="showCharEditing">
+																	<p>
+																		{{SelectedCharModel.char.attributes.intellect || 0}}
+																	</p>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-xs-12 text-center char-singleAttributeFooter">
+																<p translate>attributes.intellect</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-6 col-sm-4 col-md-4 col-lg-2">
+												<div class="row char-singleAttributeContainer">
+													<div class="col-xs-12 char-singleAttribute">
+														<div class="row">
+															<div class="col-xs-12">
+																<div class="img-circle" ng-show="showCharEditing">
+																	<p editable-number="SelectedCharModel.char.attributes.cunning" onaftersave="updateChar(SelectedCharModel.char.attributes.cunning)" buttons="no" blur="submit">
+																		{{SelectedCharModel.char.attributes.cunning || 0}}
+																	</p>
+																</div>
+																<div class="img-circle" ng-hide="showCharEditing">
+																	<p>
+																		{{SelectedCharModel.char.attributes.cunning || 0}}
+																	</p>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-xs-12 text-center char-singleAttributeFooter">
+																<p translate>attributes.cunning</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-6 col-sm-4 col-md-4 col-lg-2">
+												<div class="row char-singleAttributeContainer">
+													<div class="col-xs-12 char-singleAttribute">
+														<div class="row">
+															<div class="col-xs-12">
+																<div class="img-circle" ng-show="showCharEditing">
+																	<p editable-number="SelectedCharModel.char.attributes.willpower" onaftersave="updateChar(SelectedCharModel.char.attributes.willpower)" buttons="no" blur="submit">
+																		{{SelectedCharModel.char.attributes.willpower || 0}}
+																	</p>
+																</div>
+																<div class="img-circle" ng-hide="showCharEditing">
+																	<p>
+																		{{SelectedCharModel.char.attributes.willpower || 0}}
+																	</p>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-xs-12 text-center char-singleAttributeFooter">
+																<p translate>attributes.willpower</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-6 col-sm-4 col-md-4 col-lg-2">
+												<div class="row char-singleAttributeContainer">
+													<div class="col-xs-12 char-singleAttribute">
+														<div class="row">
+															<div class="col-xs-12">
+																<div class="img-circle" ng-show="showCharEditing">
+																	<p editable-number="SelectedCharModel.char.attributes.presence" onaftersave="updateChar(SelectedCharModel.char.attributes.presence)" buttons="no" blur="submit">
+																		{{SelectedCharModel.char.attributes.presence || 0}}
+																	</p>
+																</div>
+																<div class="img-circle" ng-hide="showCharEditing">
+																	<p>
+																		{{SelectedCharModel.char.attributes.presence || 0}}
+																	</p>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-xs-12 text-center char-singleAttributeFooter">
+																<p translate>attributes.presence</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div><!-- // CHAR - ATTRIBUTES -->
+						<!-- CHAR - SKILLS -->
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="row char-skills">
+									<div class="col-xs-12">
+										<div class="row">
+											<div class="col-xs-12 text-center char-skillsHeader">
+												<p translate>skills.skills<p>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-12 col-lg-6">
+												<div class="row char-skillsColumnContainer">
+													<div class="col-xs-12 char-skillsColumn">
+														<div class="row">
+															<div class="col-xs-12">
+																<p>Spalte 1</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-12 col-lg-6">
+												<div class="row char-skillsColumnContainer">
+													<div class="col-xs-12 char-skillsColumn">
+														<div class="row">
+															<div class="col-xs-12">
+																<p>Spalte 2</p>
+															</div>
+														</div>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>

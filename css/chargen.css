@@ -36,7 +36,7 @@ a {
 
 .char-character {
 	background-color: #d6d6d6;
-	border-radius: 0px 0px 0px 15px;
+	border-radius: 15px;
 	padding-top: 30px;
 	padding-bottom: 15px;
 	margin-right: 0px;
@@ -60,9 +60,10 @@ a {
 	padding: 1px 6px;
 }*/
 
+
 .char-image {
 	background-color: #d6d6d6;
-	border-radius: 0px 0px 15px 0px;
+	border-radius: 15px;
 	padding-bottom: 15px;
 	margin-right: 0px;
 	margin-left: 0px;
@@ -73,6 +74,7 @@ a {
 	border: 1px solid #000;
 	width: 135px;
 }
+
 
 .char-gameValues {
 	border-radius: 30px;
@@ -103,6 +105,10 @@ a {
 .char-gameValuesValues div.editable-controls {
 	padding-top: 12px;
 }
+.char-gameValuesValues div.editable-controls input{
+	height: 26px;
+	text-align: center;
+}
 .char-gameValuesFooterLeft {
 	color: #fff;
 	background-color: #71081E;
@@ -118,6 +124,7 @@ a {
 	margin-left: 0px;
 }
 
+
 .char-attributes {
 	border-radius: 30px;
 	border: 4px solid #9E998B;
@@ -125,6 +132,7 @@ a {
 	margin-left: 0px;
 	margin-top: 10px;
 	padding: 5px;
+	background-color: #B3AB94;
 }
 .char-attributes p{
 	margin: 5px;
@@ -135,4 +143,79 @@ a {
 	border-radius: 30px;
 	margin-right: 0px;
 	margin-left: 0px;
+} 
+.char-singleAttributeContainer {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.char-singleAttribute {
+	background-color: #496348;
+	border: 10px solid #496348;
+	border-radius: 30px;
+	margin-right: 0px;
+	margin-left: 0px;
+	margin-top: 5px;
+}
+.char-singleAttribute div.img-circle {
+	background-color: #fff;
+	border-radius: 50px;
+	border: 4px solid #394457;
+	width:100px;
+	height:100px;
+	font-size: 30pt;
+	text-align: center;
+	margin: auto;
+	padding-top: 11px;
+}
+.char-singleAttribute div.img-circle p{
+	font-style: normal !important;
+	border: 0px !important;
+}
+.char-singleAttribute div.img-circle input{
+	width: 50px;
+	height: 50px;
+	font-size: 20pt;
+	text-align: center;
+	
+}
+.char-singleAttributeFooter {
+	color: #fff;
+	background-color: #71081E;
+	border-radius: 30px;
+	margin-right: 0px;
+	margin-left: 0px;
+	margin-top: 10px;
+}
+
+
+.char-skills {
+	border-radius: 30px;
+	border: 4px solid #9E998B;
+	margin-right: 0px;
+	margin-left: 0px;
+	margin-top: 10px;
+	padding: 5px;
+}
+.char-skills p{
+	margin: 5px;
+}
+.char-skillsHeader {
+	color: #fff;
+	background-color: #394457;
+	border-radius: 30px;
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+.char-skillsColumnContainer {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.char-skillsColumn {
+	background-color: #d6d6d6;
+	border: 10px solid #d6d6d6;
+	border-radius: 30px;
+	margin-right: 0px;
+	margin-left: 0px;
+	margin-top: 5px;
 }
