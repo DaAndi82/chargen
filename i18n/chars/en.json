@@ -16,5 +16,9 @@
 		"current": "CURRENT",
 		"ranged": "RANGED",
 		"melee": "MELEE"
+	},
+	"attributes":
+	{
+		"attributes": "ATTRIBUTES"
 	}
 }

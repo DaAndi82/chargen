@@ -26,6 +26,8 @@
 		$scope.DeleteCharModel = null;
 		/* Triggert das DeleteCharWarning .*/
 		$scope.showDeleteCharWarning = false;
+		/* Triggert das Bearbeiten eines Chars .*/
+		$scope.showCharEditing = false;
 		/* Lädt die Lokalisation */
 		$translatePartialLoader.addPart('chars');
 		
@@ -160,6 +162,16 @@
 			$scope.closeDeleteAlert();
 			$scope.showDeleteCharWarning = false;
 			$scope.DeleteCharModel = null;
+		}
+		
+		
+		$scope.beginEditChar = function () {
+			$scope.showCharEditing = true;
+		}
+		
+		
+		$scope.endEditChar = function () {
+			$scope.showCharEditing = false;
 		}
 		
 		

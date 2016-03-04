@@ -16,5 +16,9 @@
 		"current": "AKTUELL",
 		"ranged": "FERNKAMPF",
 		"melee": "NAHKAMPF"
+	},
+	"attributes":
+	{
+		"attributes": "EIGENSCHAFTEN"
 	}
 }
