@@ -4,7 +4,8 @@
 		"character" : "CHARAKTER",
 		"name": "NAME",
 		"species": "SPEZIES",
-		"specialisation": "BERUF"
+		"career": "BERUF",
+		"specialisation" : "TALENTBAUM"
 	},
 	"gameValues":
 	{

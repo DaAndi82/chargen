@@ -132,7 +132,7 @@
 										</div>
 										<div class="row">
 											<div class="col-xs-4 col-sm-3 col-md-2">
-												<p translate>character.specialisation</p>
+												<p translate>character.career</p>
 											</div>
 											<div class="col-xs-8 col-sm-9 col-md-10">
 												<p editable-text="SelectedCharModel.char.career" onaftersave="updateChar()" buttons="no" blur="submit" ng-show="showCharEditing">
@@ -140,6 +140,19 @@
 												</p>
 												<p ng-hide="showCharEditing">
 													{{SelectedCharModel.char.career || ''}}
+												</p>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-4 col-sm-3 col-md-2">
+												<p translate>character.specialisation</p>
+											</div>
+											<div class="col-xs-8 col-sm-9 col-md-10">
+												<p editable-text="SelectedCharModel.char.specialisation" onaftersave="updateChar()" buttons="no" blur="submit" ng-show="showCharEditing">
+													{{SelectedCharModel.char.specialisation || 'Bitte eingeben'}}
+												</p>
+												<p ng-hide="showCharEditing">
+													{{SelectedCharModel.char.specialisation || ''}}
 												</p>
 											</div>
 										</div>

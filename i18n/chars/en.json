@@ -4,7 +4,8 @@
 		"character" : "CHARACTER",
 		"name": "NAME",
 		"species": "SPECIES",
-		"specialisation": "SPECIALISATION"
+		"career": "CAREER",
+		"specialisation" : "SPECIALISATION"
 	},
 	"gameValues":
 	{
