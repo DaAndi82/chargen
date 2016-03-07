@@ -1,6 +1,5 @@
 ﻿angular.module('chargen.chars', [
 		'ui.router',
-		'xeditable',
 		'chargen.charService',
 		'chargen.alertService'
 	])
@@ -31,6 +30,8 @@
 		$scope.showCharEditing = false;
 		/* Lädt die Lokalisation */
 		$translatePartialLoader.addPart('chars');
+		/* Zeige Buttons bei xeditable */
+		$scope.buttons = (!/iPad|iPhone|iPod/g.test(navigator.userAgent)) ? 'no' : 'right';
 		
 		/* charData - dummy: Perhaps in a later Version. */
 		/*$scope.charData = {
@@ -127,8 +128,47 @@
 					});
 			} else {
 				if (!$rootScope.SelectedCharModel.char.attributes) $rootScope.SelectedCharModel.char.attributes = {};
+				if (!$rootScope.SelectedCharModel.char.skills) $rootScope.SelectedCharModel.char.skills = {};
+				if (!$rootScope.SelectedCharModel.char.skills.basic) $rootScope.SelectedCharModel.char.skills.basic = {};
+				if (!$rootScope.SelectedCharModel.char.skills.basic) $rootScope.SelectedCharModel.char.skills.battle = {};
+				if (!$rootScope.SelectedCharModel.char.skills.basic) $rootScope.SelectedCharModel.char.skills.knowledge = {};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.astronavigation) $rootScope.SelectedCharModel.char.skills.basic.astronavigation = {"name": "astronavigation", "i18n": "skills.basic.astronavigation", "attribute": {"name": "intellect", "i18n": "attributes.intellectSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.athletic) $rootScope.SelectedCharModel.char.skills.basic.athletic = {"name": "athletic", "i18n": "skills.basic.athletic", "attribute": {"name": "brawn", "i18n": "attributes.brawnSmall"}};
 			}
 		}
+		
+		
+		$scope.getDice = function (skill) {
+			var diceString = "";
+		
+			if (skill) {
+				var skillValue = skill.rank || 0;
+				var attributeValue = $rootScope.SelectedCharModel.char.attributes[skill.attribute.name] || 0;
+				var loopGe = 0;
+				var loopGr = 0;
+				
+				if (skillValue > 0 || attributeValue > 0) {
+					if (skillValue > attributeValue) {
+						loopGe = attributeValue;
+						loopGr = skillValue - attributeValue;
+					} else {
+						loopGe = skillValue;
+						loopGr = attributeValue - skillValue;
+					}
+					
+					for (i = 0; i < loopGe; i++) {
+						diceString += "G";
+					}
+					
+					for (i = 0; i < loopGr; i++) {
+						diceString += "g";
+					}
+				}
+			}
+			
+			return diceString;
+		}
+		
 		
 		$scope.updateChar = function (fieldValue) {
 			if (fieldValue) {

@@ -41,6 +41,7 @@ a {
 	padding-bottom: 15px;
 	margin-right: 0px;
 	margin-left: 0px;
+	margin-top: 10px;
 }
 .char-character p {
 	font-style: normal !important;
@@ -55,11 +56,12 @@ a {
 	height: 24px;
 	padding: 0px;
 }
-/* Aktuell deaktiviert */
-/*.char .editable-controls button {
-	padding: 1px 6px;
-}*/
 
+/* Speziell für iPhone-Buttons */
+.char-character .editable-controls button {
+	padding: 1px 6px;
+}
+/* // Speziell für iPhone-Buttons */
 
 .char-image {
 	background-color: #d6d6d6;
@@ -68,6 +70,7 @@ a {
 	margin-right: 0px;
 	margin-left: 0px;
 	height: 208px;
+	margin-top: 10px;
 }
 .char-image .thumbnail {
 	margin: 20px auto;
@@ -84,6 +87,14 @@ a {
 	margin-top: 10px;
 	padding: 5px;
 }
+/* Speziell für iPhone-Buttons */
+.char-gameValues .editable-controls button {
+	padding: 2px 6px;
+}
+.char-gameValues  input.editable-has-buttons {
+	width: 50%;
+}
+/* // Speziell für iPhone-Buttons */
 .char-gameValues p{
 	margin: 5px;
 }
@@ -134,6 +145,14 @@ a {
 	padding: 5px;
 	background-color: #B3AB94;
 }
+/* Speziell für iPhone-Buttons */
+.char-attributes .editable-controls button {
+	padding: 14px 16px;
+}
+.char-attributes input.editable-has-buttons {
+	margin-left: 22px;
+}
+/* // Speziell für iPhone-Buttons */
 .char-attributes p{
 	margin: 5px;
 }
@@ -218,4 +237,22 @@ a {
 	margin-right: 0px;
 	margin-left: 0px;
 	margin-top: 5px;
+}
+.char-skillsColumn p{
+	font-size: 10pt;
+}
+.char-skillsTable {
+	/*border: 1px solid #9E998B;*/
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+.char-skillsTableHeader {
+	border-bottom: 2px solid #9E998B;
+}
+.char-skillsTableHeader p {
+	font-weight: bold;
+	color: #000;
+}
+.char-skillsTableRow {
+	border-top: 1px solid #9E998B;
 }

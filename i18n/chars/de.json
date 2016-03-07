@@ -22,14 +22,31 @@
 	{
 		"attributes": "EIGENSCHAFTEN",
 		"brawn": "STÄRKE",
+		"brawnSmall": "ST",
 		"agility": "GEWANDHEIT",
+		"agilitySmall": "GE",
 		"intellect": "INTELLIGENZ",
+		"intellectSmall": "IN",
 		"cunning": "LIST",
+		"cunningSmall": "LI",
 		"willpower": "WILLENSKRAFT",
-		"presence": "CHARISMA"
+		"willpowerSmall": "WI",
+		"presence": "CHARISMA",
+		"presenceSmall": "CH"
 	},
 	"skills":
 	{
-		"skills": "TALENTE"
+		"skills": "TALENTE",
+		"basicSkills": "BASIS-TALENTE",
+		"battleSkills": "KAMPF-TALENTE",
+		"knowledgeSkills": "WISSENS-TALENTE",
+		"career": "BERUF",
+		"rank": "RANG",
+		"dice": "WÜRFEL",
+		"basic":
+		{
+			"astronavigation": "Astronavigation",
+			"athletic": "Athletik"
+		}
 	}
 }

@@ -22,14 +22,31 @@
 	{
 		"attributes": "ATTRIBUTES",
 		"brawn": "BRAWN",
+		"brawnSmall": "BR",
 		"agility": "AGILITY",
+		"agilitySmall": "AG",
 		"intellect": "INTELLECT",
+		"intellectSmall": "INT",
 		"cunning": "CUNNING",
+		"cunningSmall": "CUN",
 		"willpower": "WILLPOWER",
-		"presence": "PRESENCE"
+		"willpowerSmall": "WIL",
+		"presence": "PRESENCE",
+		"presenceSmall": "PR"
 	},
 	"skills":
 	{
-		"skills": "SKILLS"
+		"skills": "SKILLS",
+		"basicSkills": "BASIC-SKILLS",
+		"battleSkills": "BATTLE-SKILLS",
+		"knowledgeSkills": "KNOWLEDGE-SKILLS",
+		"career": "CAREER",
+		"rank": "RANK",
+		"dice": "DICE",
+		"basic":
+		{
+			"astronavigation": "Astronavigation",
+			"athletic": "Athletic"
+		}
 	}
 }
