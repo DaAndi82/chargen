@@ -45,8 +45,44 @@
 		"dice": "WÜRFEL",
 		"basic":
 		{
-			"astronavigation": "Astronavigation",
-			"athletic": "Athletik"
+			"astrogation": "Astronavigation",
+			"athletic": "Athletik",
+			"charm": "Charme",
+			"coercion": "Einschüchterung",
+			"computers": "Computertechnik",
+			"cool": "Coolness",
+			"coordination": "Körperbeherschung",
+			"deception": "Täuschung",
+			"discipline": "Disziplin",
+			"mechanics": "Mechanik",
+			"medicine": "Medizin",
+			"negotiation": "Verhandeln",
+			"perception": "Wahrnehmung",
+			"pilotingPlanetary": "Pilot (Planetar)",
+			"pilotingSpace": "Pilot (Weltraum)",
+			"resilience": "Widerstandskraft",
+			"skulduggery": "Infiltration",
+			"stealth": "Heimlichkeit",
+			"streetwise": "Straßenwissen",
+			"survival": "Überleben",
+			"vigilance": "Wachsamkeit"
+		},
+		"battle":
+		{
+			"brawl": "Handgemenge",
+			"gunnery": "Artillerie",
+			"melee": "Nahkampf",
+			"rangedLight": "Leichte Fernkampfw.",
+			"rangedHeavy": "Schwere Fernkampfw."
+		},
+		"knowledge":
+		{
+			"coreWorlds": "Kernwelten",
+			"education": "Allgemeinbildung",
+			"lore": "Altes Wissen",
+			"outerRim": "Äußerer Rand",
+			"underworld": "Unterwelt",
+			"xenology": "Xenologie"
 		}
 	}
 }

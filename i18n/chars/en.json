@@ -45,8 +45,44 @@
 		"dice": "DICE",
 		"basic":
 		{
-			"astronavigation": "Astronavigation",
-			"athletic": "Athletic"
+			"astrogation": "Astrogation",
+			"athletic": "Athletic",
+			"charm": "Charm",
+			"coercion": "Coercion",
+			"computers": "Computers",
+			"cool": "Cool",
+			"coordination": "Coordination",
+			"deception": "Deception",
+			"discipline": "Discipline",
+			"mechanics": "Mechanics",
+			"medicine": "Medicine",
+			"negotiation": "Negotiation",
+			"perception": "Perception",
+			"pilotingPlanetary": "Piloting - Planetary",
+			"pilotingSpace": "Piloting - Space",
+			"resilience": "Resilience",
+			"skulduggery": "Skulduggery",
+			"stealth": "Stealth",
+			"streetwise": "Streetwise",
+			"survival": "Survival",
+			"vigilance": "Vigilance"
+		},
+		"battle":
+		{
+			"brawl": "Brawl",
+			"gunnery": "Gunnery",
+			"melee": "Melee",
+			"rangedLight": "Ranged - Light",
+			"rangedHeavy": "Ranged - Heavy"
+		},
+		"knowledge":
+		{
+			"coreWorlds": "Core Worlds",
+			"education": "Education",
+			"lore": "Lore",
+			"outerRim": "Outer Rim",
+			"underworld": "Underworld",
+			"xenology": "Xenology"
 		}
 	}
 }

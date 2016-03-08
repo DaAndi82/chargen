@@ -256,3 +256,16 @@ a {
 .char-skillsTableRow {
 	border-top: 1px solid #9E998B;
 }
+
+.char-skillsTableRow p {
+	font-style: normal !important;
+	border: 0px !important;
+}
+/* Speziell für iPhone-Buttons */
+.char-skillsTableRow .editable-controls button {
+	padding: 1px 4px;
+}
+.char-skillsTableRow  input.editable-has-buttons {
+	width: 50%;
+}
+/* // Speziell für iPhone-Buttons */
