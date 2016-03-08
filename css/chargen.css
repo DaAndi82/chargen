@@ -269,3 +269,11 @@ a {
 	width: 50%;
 }
 /* // Speziell für iPhone-Buttons */
+.char-skillsTableHeader div,
+.char-skillsTableRow div {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.char-skillTableDice {
+	height:20px;
+}
