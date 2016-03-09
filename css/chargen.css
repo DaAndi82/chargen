@@ -273,6 +273,7 @@ a {
 .char-skillsTableRow div {
 	padding-left: 5px;
 	padding-right: 5px;
+	height: 28px;
 }
 .char-skillTableDice {
 	height:20px;
