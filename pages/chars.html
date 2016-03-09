@@ -110,7 +110,7 @@
 												<p translate>character.name</p>
 											</div>
 											<div class="col-xs-8 col-sm-9 col-md-10">
-												<p editable-text="SelectedCharModel.char.name" onaftersave="updateChar(SelectedCharModel.char.name)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
+												<p editable-text="SelectedCharModel.char.name" onaftersave="updateChar(SelectedCharModel.char.name)" onbeforesave="validateCharacterValues($data)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
 													{{SelectedCharModel.char.name || 'Bitte eingeben'}}
 												</p>
 												<p ng-hide="showCharEditing">
@@ -123,7 +123,7 @@
 												<p translate>character.species</p>
 											</div>
 											<div class="col-xs-8 col-sm-9 col-md-10">
-												<p editable-text="SelectedCharModel.char.species"	onaftersave="updateChar(SelectedCharModel.char.species)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
+												<p editable-text="SelectedCharModel.char.species"	onaftersave="updateChar(SelectedCharModel.char.species)" onbeforesave="validateCharacterValues($data)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
 													{{SelectedCharModel.char.species || 'Bitte eingeben'}}
 												</p>
 												<p ng-hide="showCharEditing">
@@ -136,7 +136,7 @@
 												<p translate>character.career</p>
 											</div>
 											<div class="col-xs-8 col-sm-9 col-md-10">
-												<p editable-text="SelectedCharModel.char.career" onaftersave="updateChar(SelectedCharModel.char.career)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
+												<p editable-text="SelectedCharModel.char.career" onaftersave="updateChar(SelectedCharModel.char.career)" onbeforesave="validateCharacterValues($data)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
 													{{SelectedCharModel.char.career || 'Bitte eingeben'}}
 												</p>
 												<p ng-hide="showCharEditing">
@@ -149,7 +149,7 @@
 												<p translate>character.specialisation</p>
 											</div>
 											<div class="col-xs-8 col-sm-9 col-md-10">
-												<p editable-text="SelectedCharModel.char.specialisation" onaftersave="updateChar(SelectedCharModel.char.specialisation)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
+												<p editable-text="SelectedCharModel.char.specialisation" onaftersave="updateChar(SelectedCharModel.char.specialisation)" onbeforesave="validateCharacterValues($data)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
 													{{SelectedCharModel.char.specialisation || 'Bitte eingeben'}}
 												</p>
 												<p ng-hide="showCharEditing">
@@ -182,7 +182,7 @@
 										</div>
 										<div class="row char-gameValuesValues">
 											<div class="col-xs-12 text-center">
-												<p editable-number="SelectedCharModel.char.soak" onaftersave="updateChar(SelectedCharModel.char.soak)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
+												<p editable-number="SelectedCharModel.char.soak" onaftersave="updateChar(SelectedCharModel.char.soak)" onbeforesave="validateGameValues($data)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
 													{{SelectedCharModel.char.soak || 0}}
 												</p>
 												<p ng-hide="showCharEditing">
@@ -203,7 +203,7 @@
 										</div>
 										<div class="row char-gameValuesValues">
 											<div class="col-xs-6 text-center">
-												<p editable-number="SelectedCharModel.char.wound.limit" onaftersave="updateChar(SelectedCharModel.char.wound.limit)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
+												<p editable-number="SelectedCharModel.char.wound.limit" onaftersave="updateChar(SelectedCharModel.char.wound.limit)" onbeforesave="validateGameValues($data)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
 													{{SelectedCharModel.char.wound.limit || 0}}
 												</p>
 												<p ng-hide="showCharEditing">
@@ -211,7 +211,7 @@
 												</p>
 											</div>
 											<div class="col-xs-6 text-center">
-												<p editable-number="SelectedCharModel.char.wound.current" onaftersave="updateChar(SelectedCharModel.char.wound.current)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
+												<p editable-number="SelectedCharModel.char.wound.current" onaftersave="updateChar(SelectedCharModel.char.wound.current)" onbeforesave="validateGameValues($data)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
 													{{SelectedCharModel.char.wound.current || 0}}
 												</p>
 												<p ng-hide="showCharEditing">
@@ -240,7 +240,7 @@
 										</div>
 										<div class="row char-gameValuesValues">
 											<div class="col-xs-6 text-center">
-												<p editable-number="SelectedCharModel.char.strain.limit" onaftersave="updateChar(SelectedCharModel.char.strain.limit)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
+												<p editable-number="SelectedCharModel.char.strain.limit" onaftersave="updateChar(SelectedCharModel.char.strain.limit)" onbeforesave="validateGameValues($data)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
 													{{SelectedCharModel.char.strain.limit || 0}}
 												</p>
 												<p ng-hide="showCharEditing">
@@ -248,7 +248,7 @@
 												</p>
 											</div>
 											<div class="col-xs-6 text-center">
-												<p editable-number="SelectedCharModel.char.strain.current" onaftersave="updateChar(SelectedCharModel.char.strain.current)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
+												<p editable-number="SelectedCharModel.char.strain.current" onaftersave="updateChar(SelectedCharModel.char.strain.current)" onbeforesave="validateGameValues($data)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
 													{{SelectedCharModel.char.strain.current || 0}}
 												</p>
 												<p ng-hide="showCharEditing">
@@ -277,7 +277,7 @@
 										</div>
 										<div class="row char-gameValuesValues">
 											<div class="col-xs-6 text-center">
-												<p editable-number="SelectedCharModel.char.defense.ranged" onaftersave="updateChar(SelectedCharModel.char.defense.ranged)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
+												<p editable-number="SelectedCharModel.char.defense.ranged" onaftersave="updateChar(SelectedCharModel.char.defense.ranged)" onbeforesave="validateGameValues($data)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
 													{{SelectedCharModel.char.defense.ranged || 0}}
 												</p>
 												<p ng-hide="showCharEditing">
@@ -285,7 +285,7 @@
 												</p>
 											</div>
 											<div class="col-xs-6 text-center">
-												<p editable-number="SelectedCharModel.char.defense.melee" onaftersave="updateChar(SelectedCharModel.char.defense.melee)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
+												<p editable-number="SelectedCharModel.char.defense.melee" onaftersave="updateChar(SelectedCharModel.char.defense.melee)" onbeforesave="validateGameValues($data)" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
 													{{SelectedCharModel.char.defense.melee || 0}}
 												</p>
 												<p ng-hide="showCharEditing">
@@ -322,7 +322,7 @@
 														<div class="row">
 															<div class="col-xs-12">
 																<div class="img-circle" ng-show="showCharEditing">
-																	<p editable-number="SelectedCharModel.char.attributes.brawn" onaftersave="updateChar(SelectedCharModel.char.attributes.brawn)" buttons="{{buttons}}" blur="submit">
+																	<p editable-number="SelectedCharModel.char.attributes.brawn" onaftersave="updateChar(SelectedCharModel.char.attributes.brawn)" onbeforesave="validateAttribute($data)" buttons="{{buttons}}" blur="submit">
 																		{{SelectedCharModel.char.attributes.brawn || 0}}
 																	</p>
 																</div>
@@ -347,7 +347,7 @@
 														<div class="row">
 															<div class="col-xs-12">
 																<div class="img-circle" ng-show="showCharEditing">
-																	<p editable-number="SelectedCharModel.char.attributes.agility" onaftersave="updateChar(SelectedCharModel.char.attributes.agility)" buttons="{{buttons}}" blur="submit">
+																	<p editable-number="SelectedCharModel.char.attributes.agility" onaftersave="updateChar(SelectedCharModel.char.attributes.agility)" onbeforesave="validateAttribute($data)" buttons="{{buttons}}" blur="submit">
 																		{{SelectedCharModel.char.attributes.agility || 0}}
 																	</p>
 																</div>
@@ -372,7 +372,7 @@
 														<div class="row">
 															<div class="col-xs-12">
 																<div class="img-circle" ng-show="showCharEditing">
-																	<p editable-number="SelectedCharModel.char.attributes.intellect" onaftersave="updateChar(SelectedCharModel.char.attributes.intellect)" buttons="{{buttons}}" blur="submit">
+																	<p editable-number="SelectedCharModel.char.attributes.intellect" onaftersave="updateChar(SelectedCharModel.char.attributes.intellect)" onbeforesave="validateAttribute($data)" buttons="{{buttons}}" blur="submit">
 																		{{SelectedCharModel.char.attributes.intellect || 0}}
 																	</p>
 																</div>
@@ -397,7 +397,7 @@
 														<div class="row">
 															<div class="col-xs-12">
 																<div class="img-circle" ng-show="showCharEditing">
-																	<p editable-number="SelectedCharModel.char.attributes.cunning" onaftersave="updateChar(SelectedCharModel.char.attributes.cunning)" buttons="{{buttons}}" blur="submit">
+																	<p editable-number="SelectedCharModel.char.attributes.cunning" onaftersave="updateChar(SelectedCharModel.char.attributes.cunning)" onbeforesave="validateAttribute($data)" buttons="{{buttons}}" blur="submit">
 																		{{SelectedCharModel.char.attributes.cunning || 0}}
 																	</p>
 																</div>
@@ -422,7 +422,7 @@
 														<div class="row">
 															<div class="col-xs-12">
 																<div class="img-circle" ng-show="showCharEditing">
-																	<p editable-number="SelectedCharModel.char.attributes.willpower" onaftersave="updateChar(SelectedCharModel.char.attributes.willpower)" buttons="{{buttons}}" blur="submit">
+																	<p editable-number="SelectedCharModel.char.attributes.willpower" onaftersave="updateChar(SelectedCharModel.char.attributes.willpower)" onbeforesave="validateAttribute($data)" buttons="{{buttons}}" blur="submit">
 																		{{SelectedCharModel.char.attributes.willpower || 0}}
 																	</p>
 																</div>
@@ -447,7 +447,7 @@
 														<div class="row">
 															<div class="col-xs-12">
 																<div class="img-circle" ng-show="showCharEditing">
-																	<p editable-number="SelectedCharModel.char.attributes.presence" onaftersave="updateChar(SelectedCharModel.char.attributes.presence)" buttons="{{buttons}}" blur="submit">
+																	<p editable-number="SelectedCharModel.char.attributes.presence" onaftersave="updateChar(SelectedCharModel.char.attributes.presence)" onbeforesave="validateAttribute($data)" buttons="{{buttons}}" blur="submit">
 																		{{SelectedCharModel.char.attributes.presence || 0}}
 																	</p>
 																</div>
@@ -510,7 +510,7 @@
 																			{{skill.career || 'Eingeben'}}
 																		</p>
 																		<p ng-hide="showCharEditing">
-																			{{skill.career || ''}}
+																			{{skill.career || ''}}<br />
 																		</p>
 																	</div>
 																	<div class="col-xs-6 col-sm-2">
@@ -561,7 +561,7 @@
 																			{{skill.career || 'Eingeben'}}
 																		</p>
 																		<p ng-hide="showCharEditing">
-																			{{skill.career || ''}}
+																			{{skill.career || ''}}<br />
 																		</p>
 																	</div>
 																	<div class="col-xs-6 col-sm-2">
@@ -610,7 +610,7 @@
 																			{{skill.career || 'Eingeben'}}
 																		</p>
 																		<p ng-hide="showCharEditing">
-																			{{skill.career || ''}}
+																			{{skill.career || ''}}<br />
 																		</p>
 																	</div>
 																	<div class="col-xs-6 col-sm-2">

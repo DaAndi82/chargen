@@ -80,6 +80,27 @@
 				var charModel = {
 					char: {
 						name: $scope.newCharModel.name,
+						soak: 0,
+						wound: {
+							limit: 0,
+							current: 0
+						},
+						strain: {
+							limit: 0,
+							current: 0
+						},
+						defense: {
+							ranged: 0,
+							melee: 0
+						},
+						attributes: {
+							brawn: 0,
+							agility: 0,
+							intellect: 0,
+							cunning: 0,
+							willpower: 0,
+							presence: 0
+						},
 						skills: {
 							basic: {
 								astrogation: {
@@ -442,7 +463,23 @@
 					});
 			} else {
 				/* Legacy - Für Alte Chars die noch nicht über die jeweiligen Werte verfügen. */
+				if (!$rootScope.SelectedCharModel.char.soak) $rootScope.SelectedCharModel.char.soak = 0;
+				if (!$rootScope.SelectedCharModel.char.defense) $rootScope.SelectedCharModel.char.defense = {};
+				if (!$rootScope.SelectedCharModel.char.defense.ranged) $rootScope.SelectedCharModel.char.defense.ranged = 0;
+				if (!$rootScope.SelectedCharModel.char.defense.melee) $rootScope.SelectedCharModel.char.defense.melee = 0;
+				if (!$rootScope.SelectedCharModel.char.strain) $rootScope.SelectedCharModel.char.strain = {};
+				if (!$rootScope.SelectedCharModel.char.strain.current) $rootScope.SelectedCharModel.char.strain.current = 0;
+				if (!$rootScope.SelectedCharModel.char.strain.limit) $rootScope.SelectedCharModel.char.strain.limit = 0;
+				if (!$rootScope.SelectedCharModel.char.wound) $rootScope.SelectedCharModel.char.wound = {};
+				if (!$rootScope.SelectedCharModel.char.wound.current) $rootScope.SelectedCharModel.char.wound.current = 0;
+				if (!$rootScope.SelectedCharModel.char.wound.limit) $rootScope.SelectedCharModel.char.wound.limit = 0;
 				if (!$rootScope.SelectedCharModel.char.attributes) $rootScope.SelectedCharModel.char.attributes = {};
+				if (!$rootScope.SelectedCharModel.char.attributes.brawn) $rootScope.SelectedCharModel.char.attributes.brawn = 0;
+				if (!$rootScope.SelectedCharModel.char.attributes.agility) $rootScope.SelectedCharModel.char.attributes.agility = 0;
+				if (!$rootScope.SelectedCharModel.char.attributes.intellect) $rootScope.SelectedCharModel.char.attributes.intellect = 0;
+				if (!$rootScope.SelectedCharModel.char.attributes.cunning) $rootScope.SelectedCharModel.char.attributes.cunning = 0;
+				if (!$rootScope.SelectedCharModel.char.attributes.willpower) $rootScope.SelectedCharModel.char.attributes.willpower = 0;
+				if (!$rootScope.SelectedCharModel.char.attributes.presence) $rootScope.SelectedCharModel.char.attributes.presence = 0;
 				if (!$rootScope.SelectedCharModel.char.skills) $rootScope.SelectedCharModel.char.skills = {};
 				if (!$rootScope.SelectedCharModel.char.skills.basic) $rootScope.SelectedCharModel.char.skills.basic = {};
 				if (!$rootScope.SelectedCharModel.char.skills.battle) $rootScope.SelectedCharModel.char.skills.battle = {};
@@ -481,10 +518,25 @@
 				if (!$rootScope.SelectedCharModel.char.skills.knowledge.xenology) $rootScope.SelectedCharModel.char.skills.knowledge.xenology = {name: "xenology", i18n: "skills.knowledge.xenology", rank: 0, attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
 			}
 		}
+
+		
+		$scope.validateCharacterValues = function (characterValue) {
+			if (!characterValue) return '';
+		}
+		
+		
+		$scope.validateGameValues = function (gameValue) {
+			if (!gameValue && gameValue != 0) return '';
+		}
+		
+		
+		$scope.validateAttribute = function (attribute) {
+			if (!attribute && attribute != 0) return '';
+		}
 		
 		
 		$scope.validateSkillRank = function (skillRank) {
-			if (!skillRank) return '';
+			if (!skillRank && skillRank != 0) return '';
 		}
 		
 		
