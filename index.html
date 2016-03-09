@@ -69,7 +69,7 @@
 									<img class="img-circle" src="img/avatar.jpg" ng-hide="profil.avatar" />
                                     <p>
                                         {{profil.fullname}} ({{profil.name}})
-                                        <small>Mitglied seit Nov. 2012</small>
+                                        <small>Mitglied seit {{dateFormat(profil.dataCreation)}}</small>
                                     </p>
                                 </li>
                                 <!-- Menu Footer-->

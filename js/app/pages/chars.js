@@ -80,6 +80,9 @@
 				var charModel = {
 					char: {
 						name: $scope.newCharModel.name,
+						species: "",
+						career: "",
+						specialisation: "",
 						soak: 0,
 						wound: {
 							limit: 0,
@@ -107,6 +110,7 @@
 									name: "astrogation",
 									i18n: "skills.basic.astrogation",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "intellect",
 										i18n: "attributes.intellectSmall"
@@ -116,6 +120,7 @@
 									name: "athletic",
 									i18n: "skills.basic.athletic",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "brawn",
 										i18n: "attributes.brawnSmall"
@@ -125,6 +130,7 @@
 									name: "charm",
 									i18n: "skills.basic.charm",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "presence",
 										i18n: "attributes.presenceSmall"
@@ -134,6 +140,7 @@
 									name: "coercion",
 									i18n: "skills.basic.coercion",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "willpower",
 										i18n: "attributes.willpowerSmall"
@@ -143,6 +150,7 @@
 									name: "computers",
 									i18n: "skills.basic.computers",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "intellect",
 										i18n: "attributes.intellectSmall"
@@ -152,6 +160,7 @@
 									name: "computers",
 									i18n: "skills.basic.computers",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "intellect",
 										i18n: "attributes.intellectSmall"
@@ -161,6 +170,7 @@
 									name: "cool",
 									i18n: "skills.basic.cool",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "presence",
 										i18n: "attributes.presenceSmall"
@@ -170,6 +180,7 @@
 									name: "coordination",
 									i18n: "skills.basic.coordination",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "agility",
 										i18n: "attributes.agilitySmall"
@@ -179,6 +190,7 @@
 									name: "deception",
 									i18n: "skills.basic.deception",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "cunning",
 										i18n: "attributes.cunningSmall"
@@ -188,6 +200,7 @@
 									name: "discipline",
 									i18n: "skills.basic.discipline",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "willpower",
 										i18n: "attributes.willpowerSmall"
@@ -197,6 +210,7 @@
 									name: "mechanics",
 									i18n: "skills.basic.mechanics",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "intellect",
 										i18n: "attributes.intellectSmall"
@@ -206,6 +220,7 @@
 									name: "medicine",
 									i18n: "skills.basic.medicine",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "intellect",
 										i18n: "attributes.intellectSmall"
@@ -215,6 +230,7 @@
 									name: "negotiation",
 									i18n: "skills.basic.negotiation",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "presence",
 										i18n: "attributes.presenceSmall"
@@ -224,6 +240,7 @@
 									name: "perception",
 									i18n: "skills.basic.perception",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "cunning",
 										i18n: "attributes.cunningSmall"
@@ -233,6 +250,7 @@
 									name: "pilotingPlanetary",
 									i18n: "skills.basic.pilotingPlanetary",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "agility",
 										i18n: "attributes.agilitySmall"
@@ -242,6 +260,7 @@
 									name: "pilotingSpace",
 									i18n: "skills.basic.pilotingSpace",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "agility",
 										i18n: "attributes.agilitySmall"
@@ -251,6 +270,7 @@
 									name: "resilience",
 									i18n: "skills.basic.resilience",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "brawn",
 										i18n: "attributes.brawnSmall"
@@ -260,6 +280,7 @@
 									name: "skulduggery",
 									i18n: "skills.basic.skulduggery",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "cunning",
 										i18n: "attributes.cunningSmall"
@@ -269,6 +290,7 @@
 									name: "stealth",
 									i18n: "skills.basic.stealth",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "agility",
 										i18n: "attributes.agilitySmall"
@@ -278,6 +300,7 @@
 									name: "streetwise",
 									i18n: "skills.basic.streetwise",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "cunning",
 										i18n: "attributes.cunningSmall"
@@ -287,6 +310,7 @@
 									name: "survival",
 									i18n: "skills.basic.survival",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "cunning",
 										i18n: "attributes.cunningSmall"
@@ -296,6 +320,7 @@
 									name: "vigilance",
 									i18n: "skills.basic.vigilance",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "willpower",
 										i18n: "attributes.willpowerSmall"
@@ -307,6 +332,7 @@
 									name: "brawl",
 									i18n: "skills.battle.brawl",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "brawn",
 										i18n: "attributes.brawnSmall"
@@ -316,15 +342,27 @@
 									name: "gunnery",
 									i18n: "skills.battle.gunnery",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "agility",
 										i18n: "attributes.agilitySmall"
+									}
+								},
+								lightsaber: {
+									name: "lightsaber",
+									i18n: "skills.battle.lightsaber",
+									rank: 0,
+									career: "",
+									attribute: {
+										name: "brawn",
+										i18n: "attributes.brawnSmall"
 									}
 								},
 								melee: {
 									name: "melee",
 									i18n: "skills.battle.melee",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "brawn",
 										i18n: "attributes.brawnSmall"
@@ -334,6 +372,7 @@
 									name: "rangedLight",
 									i18n: "skills.battle.rangedLight",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "agility",
 										i18n: "attributes.agilitySmall"
@@ -343,6 +382,7 @@
 									name: "rangedHeavy",
 									i18n: "skills.battle.rangedHeavy",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "agility",
 										i18n: "attributes.agilitySmall"
@@ -354,6 +394,7 @@
 									name: "coreWorlds",
 									i18n: "skills.knowledge.coreWorlds",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "intellect",
 										i18n: "attributes.intellectSmall"
@@ -363,6 +404,7 @@
 									name: "education",
 									i18n: "skills.knowledge.education",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "intellect",
 										i18n: "attributes.intellectSmall"
@@ -372,6 +414,7 @@
 									name: "lore",
 									i18n: "skills.knowledge.lore",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "intellect",
 										i18n: "attributes.intellectSmall"
@@ -381,6 +424,7 @@
 									name: "outerRim",
 									i18n: "skills.knowledge.outerRim",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "intellect",
 										i18n: "attributes.intellectSmall"
@@ -390,6 +434,7 @@
 									name: "underworld",
 									i18n: "skills.knowledge.underworld",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "intellect",
 										i18n: "attributes.intellectSmall"
@@ -399,6 +444,7 @@
 									name: "xenology",
 									i18n: "skills.knowledge.xenology",
 									rank: 0,
+									career: "",
 									attribute: {
 										name: "intellect",
 										i18n: "attributes.intellectSmall"
@@ -484,101 +530,83 @@
 				if (!$rootScope.SelectedCharModel.char.skills.basic) $rootScope.SelectedCharModel.char.skills.basic = {};
 				if (!$rootScope.SelectedCharModel.char.skills.battle) $rootScope.SelectedCharModel.char.skills.battle = {};
 				if (!$rootScope.SelectedCharModel.char.skills.knowledge) $rootScope.SelectedCharModel.char.skills.knowledge = {};
-				if (!$rootScope.SelectedCharModel.char.skills.basic.astrogation) $rootScope.SelectedCharModel.char.skills.basic.astrogation = {name: "astrogation", i18n: "skills.basic.astrogation", rank: 0, attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.astrogation) $rootScope.SelectedCharModel.char.skills.basic.astrogation = {name: "astrogation", i18n: "skills.basic.astrogation", rank: 0, career: "", attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.astrogation.rank) $rootScope.SelectedCharModel.char.skills.basic.astrogation.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.athletic) $rootScope.SelectedCharModel.char.skills.basic.athletic = {name: "athletic", i18n: "skills.basic.athletic", rank: 0, attribute: {name: "brawn", i18n: "attributes.brawnSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.athletic) $rootScope.SelectedCharModel.char.skills.basic.athletic = {name: "athletic", i18n: "skills.basic.athletic", rank: 0, career: "", attribute: {name: "brawn", i18n: "attributes.brawnSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.athletic.rank) $rootScope.SelectedCharModel.char.skills.basic.athletic.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.charm) $rootScope.SelectedCharModel.char.skills.basic.charm = {name: "charm", i18n: "skills.basic.charm", rank: 0, attribute: {name: "presence", i18n: "attributes.presenceSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.charm) $rootScope.SelectedCharModel.char.skills.basic.charm = {name: "charm", i18n: "skills.basic.charm", rank: 0, career: "", attribute: {name: "presence", i18n: "attributes.presenceSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.charm.rank) $rootScope.SelectedCharModel.char.skills.basic.charm.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.coercion) $rootScope.SelectedCharModel.char.skills.basic.coercion = {name: "coercion", i18n: "skills.basic.coercion", rank: 0, attribute: {name: "willpower", i18n: "attributes.willpowerSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.coercion) $rootScope.SelectedCharModel.char.skills.basic.coercion = {name: "coercion", i18n: "skills.basic.coercion", rank: 0, career: "", attribute: {name: "willpower", i18n: "attributes.willpowerSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.coercion.rank) $rootScope.SelectedCharModel.char.skills.basic.coercion.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.computers) $rootScope.SelectedCharModel.char.skills.basic.computers = {name: "computers", i18n: "skills.basic.computers", rank: 0, attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.computers) $rootScope.SelectedCharModel.char.skills.basic.computers = {name: "computers", i18n: "skills.basic.computers", rank: 0, career: "", attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.computers.rank) $rootScope.SelectedCharModel.char.skills.basic.computers.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.cool) $rootScope.SelectedCharModel.char.skills.basic.cool = {name: "cool", i18n: "skills.basic.cool", rank: 0, attribute: {name: "presence", i18n: "attributes.presenceSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.cool) $rootScope.SelectedCharModel.char.skills.basic.cool = {name: "cool", i18n: "skills.basic.cool", rank: 0, career: "", attribute: {name: "presence", i18n: "attributes.presenceSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.cool.rank) $rootScope.SelectedCharModel.char.skills.basic.cool.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.coordination) $rootScope.SelectedCharModel.char.skills.basic.coordination = {name: "coordination", i18n: "skills.basic.coordination", rank: 0, attribute: {name: "agility", i18n: "attributes.agilitySmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.coordination) $rootScope.SelectedCharModel.char.skills.basic.coordination = {name: "coordination", i18n: "skills.basic.coordination", rank: 0, career: "", attribute: {name: "agility", i18n: "attributes.agilitySmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.coordination.rank) $rootScope.SelectedCharModel.char.skills.basic.coordination.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.deception) $rootScope.SelectedCharModel.char.skills.basic.deception = {name: "deception", i18n: "skills.basic.deception", rank: 0, attribute: {name: "cunning", i18n: "attributes.cunningSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.deception) $rootScope.SelectedCharModel.char.skills.basic.deception = {name: "deception", i18n: "skills.basic.deception", rank: 0, career: "", attribute: {name: "cunning", i18n: "attributes.cunningSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.deception.rank) $rootScope.SelectedCharModel.char.skills.basic.deception.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.discipline) $rootScope.SelectedCharModel.char.skills.basic.discipline = {name: "discipline", i18n: "skills.basic.discipline", rank: 0, attribute: {name: "willpower", i18n: "attributes.willpowerSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.discipline) $rootScope.SelectedCharModel.char.skills.basic.discipline = {name: "discipline", i18n: "skills.basic.discipline", rank: 0, career: "", attribute: {name: "willpower", i18n: "attributes.willpowerSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.discipline.rank) $rootScope.SelectedCharModel.char.skills.basic.discipline.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.mechanics) $rootScope.SelectedCharModel.char.skills.basic.mechanics = {name: "mechanics", i18n: "skills.basic.mechanics", rank: 0, attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.mechanics) $rootScope.SelectedCharModel.char.skills.basic.mechanics = {name: "mechanics", i18n: "skills.basic.mechanics", rank: 0, career: "", attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.mechanics.rank) $rootScope.SelectedCharModel.char.skills.basic.mechanics.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.medicine) $rootScope.SelectedCharModel.char.skills.basic.medicine = {name: "medicine", i18n: "skills.basic.medicine", rank: 0, attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.medicine) $rootScope.SelectedCharModel.char.skills.basic.medicine = {name: "medicine", i18n: "skills.basic.medicine", rank: 0, career: "", attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.medicine.rank) $rootScope.SelectedCharModel.char.skills.basic.medicine.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.negotiation) $rootScope.SelectedCharModel.char.skills.basic.negotiation = {name: "negotiation", i18n: "skills.basic.negotiation", rank: 0, attribute: {name: "presence", i18n: "attributes.presenceSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.negotiation) $rootScope.SelectedCharModel.char.skills.basic.negotiation = {name: "negotiation", i18n: "skills.basic.negotiation", rank: 0, career: "", attribute: {name: "presence", i18n: "attributes.presenceSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.negotiation.rank) $rootScope.SelectedCharModel.char.skills.basic.negotiation.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.perception) $rootScope.SelectedCharModel.char.skills.basic.perception = {name: "perception", i18n: "skills.basic.perception", rank: 0, attribute: {name: "cunning", i18n: "attributes.cunningSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.perception) $rootScope.SelectedCharModel.char.skills.basic.perception = {name: "perception", i18n: "skills.basic.perception", rank: 0, career: "", attribute: {name: "cunning", i18n: "attributes.cunningSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.perception.rank) $rootScope.SelectedCharModel.char.skills.basic.perception.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.pilotingPlanetary) $rootScope.SelectedCharModel.char.skills.basic.pilotingPlanetary = {name: "pilotingPlanetary", i18n: "skills.basic.pilotingPlanetary", rank: 0, attribute: {name: "agility", i18n: "attributes.agilitySmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.pilotingPlanetary) $rootScope.SelectedCharModel.char.skills.basic.pilotingPlanetary = {name: "pilotingPlanetary", i18n: "skills.basic.pilotingPlanetary", rank: 0, career: "", attribute: {name: "agility", i18n: "attributes.agilitySmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.pilotingPlanetary.rank) $rootScope.SelectedCharModel.char.skills.basic.pilotingPlanetary.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.pilotingSpace) $rootScope.SelectedCharModel.char.skills.basic.pilotingSpace = {name: "pilotingSpace", i18n: "skills.basic.pilotingSpace", rank: 0, attribute: {name: "agility", i18n: "attributes.agilitySmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.pilotingSpace) $rootScope.SelectedCharModel.char.skills.basic.pilotingSpace = {name: "pilotingSpace", i18n: "skills.basic.pilotingSpace", rank: 0, career: "", attribute: {name: "agility", i18n: "attributes.agilitySmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.pilotingSpace.rank) $rootScope.SelectedCharModel.char.skills.basic.pilotingSpace.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.resilience) $rootScope.SelectedCharModel.char.skills.basic.resilience = {name: "resilience", i18n: "skills.basic.resilience", rank: 0, attribute: {name: "brawn", i18n: "attributes.brawnSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.resilience) $rootScope.SelectedCharModel.char.skills.basic.resilience = {name: "resilience", i18n: "skills.basic.resilience", rank: 0, career: "", attribute: {name: "brawn", i18n: "attributes.brawnSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.resilience.rank) $rootScope.SelectedCharModel.char.skills.basic.resilience.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.skulduggery) $rootScope.SelectedCharModel.char.skills.basic.skulduggery = {name: "skulduggery", i18n: "skills.basic.skulduggery", rank: 0, attribute: {name: "cunning", i18n: "attributes.cunningSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.skulduggery) $rootScope.SelectedCharModel.char.skills.basic.skulduggery = {name: "skulduggery", i18n: "skills.basic.skulduggery", rank: 0, career: "", attribute: {name: "cunning", i18n: "attributes.cunningSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.skulduggery.rank) $rootScope.SelectedCharModel.char.skills.basic.skulduggery.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.stealth) $rootScope.SelectedCharModel.char.skills.basic.stealth = {name: "stealth", i18n: "skills.basic.stealth", rank: 0, attribute: {name: "agility", i18n: "attributes.agilitySmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.stealth) $rootScope.SelectedCharModel.char.skills.basic.stealth = {name: "stealth", i18n: "skills.basic.stealth", rank: 0, career: "", attribute: {name: "agility", i18n: "attributes.agilitySmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.stealth.rank) $rootScope.SelectedCharModel.char.skills.basic.stealth.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.streetwise) $rootScope.SelectedCharModel.char.skills.basic.streetwise = {name: "streetwise", i18n: "skills.basic.streetwise", rank: 0, attribute: {name: "cunning", i18n: "attributes.cunningSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.streetwise) $rootScope.SelectedCharModel.char.skills.basic.streetwise = {name: "streetwise", i18n: "skills.basic.streetwise", rank: 0, career: "", attribute: {name: "cunning", i18n: "attributes.cunningSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.streetwise.rank) $rootScope.SelectedCharModel.char.skills.basic.streetwise.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.survival) $rootScope.SelectedCharModel.char.skills.basic.survival = {name: "survival", i18n: "skills.basic.survival", rank: 0, attribute: {name: "cunning", i18n: "attributes.cunningSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.survival) $rootScope.SelectedCharModel.char.skills.basic.survival = {name: "survival", i18n: "skills.basic.survival", rank: 0, career: "", attribute: {name: "cunning", i18n: "attributes.cunningSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.survival.rank) $rootScope.SelectedCharModel.char.skills.basic.survival.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.basic.vigilance) $rootScope.SelectedCharModel.char.skills.basic.vigilance = {name: "vigilance", i18n: "skills.basic.vigilance", rank: 0, attribute: {name: "willpower", i18n: "attributes.willpowerSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.basic.vigilance) $rootScope.SelectedCharModel.char.skills.basic.vigilance = {name: "vigilance", i18n: "skills.basic.vigilance", rank: 0, career: "", attribute: {name: "willpower", i18n: "attributes.willpowerSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.basic.vigilance.rank) $rootScope.SelectedCharModel.char.skills.basic.vigilance.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.battle.brawl) $rootScope.SelectedCharModel.char.skills.battle.brawl = {name: "brawl", i18n: "skills.battle.brawl", rank: 0, attribute: {name: "brawn", i18n: "attributes.brawnSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.battle.brawl) $rootScope.SelectedCharModel.char.skills.battle.brawl = {name: "brawl", i18n: "skills.battle.brawl", rank: 0, career: "", attribute: {name: "brawn", i18n: "attributes.brawnSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.battle.brawl.rank) $rootScope.SelectedCharModel.char.skills.battle.brawl.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.battle.gunnery) $rootScope.SelectedCharModel.char.skills.battle.gunnery = {name: "gunnery", i18n: "skills.battle.gunnery", rank: 0, attribute: {name: "agility", i18n: "attributes.agilitySmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.battle.gunnery) $rootScope.SelectedCharModel.char.skills.battle.gunnery = {name: "gunnery", i18n: "skills.battle.gunnery", rank: 0, career: "", attribute: {name: "agility", i18n: "attributes.agilitySmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.battle.gunnery.rank) $rootScope.SelectedCharModel.char.skills.battle.gunnery.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.battle.melee) $rootScope.SelectedCharModel.char.skills.battle.melee = {name: "melee", i18n: "skills.battle.melee", rank: 0, attribute: {name: "brawn", i18n: "attributes.brawnSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.battle.lightsaber) $rootScope.SelectedCharModel.char.skills.battle.lightsaber = {name: "lightsaber", i18n: "skills.battle.lightsaber", rank: 0, career: "", attribute: {name: "brawn", i18n: "attributes.brawnSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.battle.lightsaber.rank) $rootScope.SelectedCharModel.char.skills.battle.lightsaber.rank = 0;
+				if (!$rootScope.SelectedCharModel.char.skills.battle.melee) $rootScope.SelectedCharModel.char.skills.battle.melee = {name: "melee", i18n: "skills.battle.melee", rank: 0, career: "", attribute: {name: "brawn", i18n: "attributes.brawnSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.battle.melee.rank) $rootScope.SelectedCharModel.char.skills.battle.melee.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.battle.rangedLight) $rootScope.SelectedCharModel.char.skills.battle.rangedLight = {name: "rangedLight", i18n: "skills.battle.rangedLight", rank: 0, attribute: {name: "agility", i18n: "attributes.agilitySmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.battle.rangedLight) $rootScope.SelectedCharModel.char.skills.battle.rangedLight = {name: "rangedLight", i18n: "skills.battle.rangedLight", rank: 0, career: "", attribute: {name: "agility", i18n: "attributes.agilitySmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.battle.rangedLight.rank) $rootScope.SelectedCharModel.char.skills.battle.rangedLight.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.battle.rangedHeavy) $rootScope.SelectedCharModel.char.skills.battle.rangedHeavy = {name: "rangedHeavy", i18n: "skills.battle.rangedHeavy", rank: 0, attribute: {name: "agility", i18n: "attributes.agilitySmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.battle.rangedHeavy) $rootScope.SelectedCharModel.char.skills.battle.rangedHeavy = {name: "rangedHeavy", i18n: "skills.battle.rangedHeavy", rank: 0, career: "", attribute: {name: "agility", i18n: "attributes.agilitySmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.battle.rangedHeavy.rank) $rootScope.SelectedCharModel.char.skills.battle.rangedHeavy.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.knowledge.coreWorlds) $rootScope.SelectedCharModel.char.skills.knowledge.coreWorlds = {name: "coreWorlds", i18n: "skills.knowledge.coreWorlds", rank: 0, attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.knowledge.coreWorlds) $rootScope.SelectedCharModel.char.skills.knowledge.coreWorlds = {name: "coreWorlds", i18n: "skills.knowledge.coreWorlds", rank: 0, career: "", attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.knowledge.coreWorlds.rank) $rootScope.SelectedCharModel.char.skills.knowledge.coreWorlds.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.knowledge.education) $rootScope.SelectedCharModel.char.skills.knowledge.education = {name: "education", i18n: "skills.knowledge.education", rank: 0, attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.knowledge.education) $rootScope.SelectedCharModel.char.skills.knowledge.education = {name: "education", i18n: "skills.knowledge.education", rank: 0, career: "", attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.knowledge.education.rank) $rootScope.SelectedCharModel.char.skills.knowledge.education.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.knowledge.lore) $rootScope.SelectedCharModel.char.skills.knowledge.lore = {name: "lore", i18n: "skills.knowledge.lore", rank: 0, attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.knowledge.lore) $rootScope.SelectedCharModel.char.skills.knowledge.lore = {name: "lore", i18n: "skills.knowledge.lore", rank: 0, career: "", attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.knowledge.lore.rank) $rootScope.SelectedCharModel.char.skills.knowledge.lore.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.knowledge.outerRim) $rootScope.SelectedCharModel.char.skills.knowledge.outerRim = {name: "outerRim", i18n: "skills.knowledge.outerRim", rank: 0, attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.knowledge.outerRim) $rootScope.SelectedCharModel.char.skills.knowledge.outerRim = {name: "outerRim", i18n: "skills.knowledge.outerRim", rank: 0, career: "", attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.knowledge.outerRim.rank) $rootScope.SelectedCharModel.char.skills.knowledge.outerRim.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.knowledge.underworld) $rootScope.SelectedCharModel.char.skills.knowledge.underworld = {name: "underworld", i18n: "skills.knowledge.underworld", rank: 0, attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.knowledge.underworld) $rootScope.SelectedCharModel.char.skills.knowledge.underworld = {name: "underworld", i18n: "skills.knowledge.underworld", rank: 0, career: "", attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.knowledge.underworld.rank) $rootScope.SelectedCharModel.char.skills.knowledge.underworld.rank = 0;
-				if (!$rootScope.SelectedCharModel.char.skills.knowledge.xenology) $rootScope.SelectedCharModel.char.skills.knowledge.xenology = {name: "xenology", i18n: "skills.knowledge.xenology", rank: 0, attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
+				if (!$rootScope.SelectedCharModel.char.skills.knowledge.xenology) $rootScope.SelectedCharModel.char.skills.knowledge.xenology = {name: "xenology", i18n: "skills.knowledge.xenology", rank: 0, career: "", attribute: {name: "intellect", i18n: "attributes.intellectSmall"}};
 				if (!$rootScope.SelectedCharModel.char.skills.knowledge.xenology.rank) $rootScope.SelectedCharModel.char.skills.knowledge.xenology.rank = 0;
 			}
 		}
-
 		
-		$scope.validateCharacterValues = function (characterValue) {
-			if (!characterValue) return '';
+		
+		$scope.checkNumberNotNull = function (self) {
+			if (!self.$data) self.$data = 0;
 		}
 		
 		
-		$scope.validateGameValues = function (gameValue) {
-			if (!gameValue && gameValue != 0) return '';
-		}
-		
-		
-		$scope.validateAttribute = function (attribute) {
-			if (!attribute && attribute != 0) return '';
-		}
-		
-		
-		$scope.validateSkillRank = function (skillRank) {
-			if (!skillRank && skillRank != 0) return '';
-		}
-		
-		
-		$scope.validateSkillCareer = function (skillCareer) {
-			if (!skillCareer) return '';
-		}
-		
-		
-		$scope.validateSkillDice = function (skillDice) {
-			if (!skillDice) return '';
+		$scope.checkStringNotNull = function (self) {
+			if (!self.$data) self.$data = "";
 		}
 		
 		
@@ -622,23 +650,21 @@
 		}
 		
 		
-		$scope.updateChar = function (fieldValue) {
-			if (fieldValue) {
-				$rootScope.SelectedCharModel.initiator = $rootScope.profil.$id;
-				
-				charService.modifyChar($rootScope.SelectedCharModel, function(error) {
-					if (error) {
-						switch (error.code) {
-							default:
-								alertService.addAlert({
-									type: 'error',
-									text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
-								});
-							break;
-						}
+		$scope.updateChar = function () {
+			$rootScope.SelectedCharModel.initiator = $rootScope.profil.$id;
+			
+			charService.modifyChar($rootScope.SelectedCharModel, function(error) {
+				if (error) {
+					switch (error.code) {
+						default:
+							alertService.addAlert({
+								type: 'error',
+								text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
+							});
+						break;
 					}
-				});
-			}
+				}
+			});
 		}
 		
 		

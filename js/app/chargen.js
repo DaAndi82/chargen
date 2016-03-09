@@ -102,6 +102,20 @@
 		}
 		
 		
+		$scope.dateFormat = function (timestamp) {
+			Date.prototype.yyyymmdd = function() {
+			   var yyyy = this.getFullYear().toString();
+			   var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
+			   var dd  = this.getDate().toString();
+			   return (dd[1]?dd:"0"+dd[0]) + "." + (mm[1]?mm:"0"+mm[0]) + "." + yyyy; // padding
+			};
+			
+			var date = new Date(timestamp);
+			
+			return date.yyyymmdd();
+		}
+		
+		
 		$scope.editProfil = function () {
 		$scope.showEditAvatar = false;
 			$scope.UserProfilModel = {user: $rootScope.profil, oldEmail: $scope.authData.password.email, password: null, newPassword: null, confirmNewPassword: null, editAvatar: null, cropedAvatar: null};
