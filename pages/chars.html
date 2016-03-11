@@ -525,7 +525,69 @@
 																		<p>
 																			<img class="char-skillTableDice" src="img/dice/proficiency.png" ng-repeat="n in [] | loop:getProficiencyCount(skill)" />
 																			<img class="char-skillTableDice" src="img/dice/ability.png" ng-repeat="n in [] | loop:getAbilityCount(skill)" />
+																			<button class="btn btn-warning btn-xs pull-right" type="button" ng-show="showCharEditing" ng-click="toggleDiceModifier(skill.name)"><i class="fa fa-bars"></i></button>
 																		</p>
+																	</div>
+																	<div id="diceModifier_{{skill.name}}" class="col-xs-12 collapse">
+																		<div class="row char-skillDetails">
+																			<div class="col-xs-12">
+																				<div class="row char-skillDetailsHeader">
+																					<div class="col-xs-12 ">
+																						<p><i class="fa fa-wrench"></i> Modifications</p>
+																					</div>
+																				</div>
+																				<div class="row char-skillDetailsRows">
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/proficiency.png" />
+																					</div>
+																					<div class="col-xs-3">
+																						<p editable-number="skill.modifications.proficiency" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.proficiency || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/ability.png" />
+																					</div>
+																					<div class="col-xs-3">
+																						<p editable-number="skill.modifications.ability" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.ability || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/boost.png" />
+																					</div>
+																					<div class="col-xs-3">
+																						<p editable-number="skill.modifications.boost" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.boost || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/challenge.png" />
+																					</div>
+																					<div class="col-xs-3">
+																						<p editable-number="skill.modifications.challenge" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.challenge || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/difficulty.png" />
+																					</div>
+																					<div class="col-xs-3">
+																						<p editable-number="skill.modifications.difficulty" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.difficulty || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/setback.png" />
+																					</div>
+																					<div class="col-xs-3">
+																						<p editable-number="skill.modifications.setback" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.setback || 0}}
+																						</p>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
 																	</div>
 																</div>
 															</div>
