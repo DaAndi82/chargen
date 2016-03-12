@@ -503,7 +503,7 @@
 																</div>
 																<div class="row char-skillsTableRow" ng-repeat="skill in SelectedCharModel.char.skills.basic">
 																	<div class="col-xs-6 col-sm-4">
-																		<p>{{skill.i18n | translate}} ({{skill.attribute.i18n | translate}})</p>
+																		<p>{{skill.i18n | translate}} ({{skill.attribute.i18n | translate}}) <a ng-show="skill.note" ng-click="toggleNoteLayer(skill.name)"><i class="fa fa-warning"></i></a></p>
 																	</div>
 																	<div class="col-xs-6 col-sm-3 col-lg-2">
 																		<p editable-text="skill.career" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
@@ -521,26 +521,43 @@
 																			{{skill.rank || 0}}
 																		</p>
 																	</div>
-																	<div class="col-xs-6 col-sm-3 col-lg-4">
+																	<div class="{{showCharEditing ? 'col-xs-5 col-sm-2 col-lg-3' : 'col-xs-6 col-sm-3 col-lg-4'}}">
 																		<p>
 																			<img class="char-skillTableDice" src="img/dice/proficiency.png" ng-repeat="n in [] | loop:getProficiencyCount(skill)" />
 																			<img class="char-skillTableDice" src="img/dice/ability.png" ng-repeat="n in [] | loop:getAbilityCount(skill)" />
-																			<button class="btn btn-warning btn-xs pull-right" type="button" ng-show="showCharEditing" ng-click="toggleDiceModifier(skill.name)"><i class="fa fa-bars"></i></button>
+																			<img class="char-skillTableDice" src="img/dice/boost.png" ng-repeat="n in [] | loop:skill.modifications.boost" />
+																			<img class="char-skillTableDice" src="img/dice/force.png" ng-repeat="n in [] | loop:skill.modifications.force" />
+																			<img class="char-skillTableDice" src="img/dice/challenge.png" ng-repeat="n in [] | loop:skill.modifications.challenge" />
+																			<img class="char-skillTableDice" src="img/dice/difficulty.png" ng-repeat="n in [] | loop:skill.modifications.difficulty" />
+																			<img class="char-skillTableDice" src="img/dice/setback.png" ng-repeat="n in [] | loop:skill.modifications.setback" />
+																			<img class="char-skillTableDice" src="img/icons/triumph.png" ng-repeat="n in [] | loop:skill.modifications.triumph" />
+																			<img class="char-skillTableDice" src="img/icons/success.png" ng-repeat="n in [] | loop:skill.modifications.success" />
+																			<img class="char-skillTableDice" src="img/icons/advantage.png" ng-repeat="n in [] | loop:skill.modifications.advantage" />
+																			<img class="char-skillTableDice" src="img/icons/lightside.png" ng-repeat="n in [] | loop:skill.modifications.lightside" />
+																			<img class="char-skillTableDice black" src="img/icons/despair.png" ng-repeat="n in [] | loop:skill.modifications.despair" />
+																			<img class="char-skillTableDice black" src="img/icons/failure.png" ng-repeat="n in [] | loop:skill.modifications.failure" />
+																			<img class="char-skillTableDice black" src="img/icons/threat.png" ng-repeat="n in [] | loop:skill.modifications.threat" />
+																			<img class="char-skillTableDice" src="img/icons/darkside.png" ng-repeat="n in [] | loop:skill.modifications.darkside" />
 																		</p>
 																	</div>
-																	<div id="diceModifier_{{skill.name}}" class="col-xs-12 collapse">
+																	<div class="col-xs-1" ng-show="showCharEditing">
+																		<p>
+																			<button class="btn btn-warning btn-xs pull-right" type="button" ng-click="toggleSkillDetails(skill.name)"><i class="fa fa-bars"></i></button>
+																		</p>
+																	</div>
+																	<div id="skillDetails_{{skill.name}}" class="col-xs-12 collapse">
 																		<div class="row char-skillDetails">
 																			<div class="col-xs-12">
 																				<div class="row char-skillDetailsHeader">
 																					<div class="col-xs-12 ">
-																						<p><i class="fa fa-wrench"></i> Modifications</p>
+																						<p><i class="fa fa-wrench"></i> {{"skills.modification" | translate}}</p>
 																					</div>
 																				</div>
 																				<div class="row char-skillDetailsRows">
 																					<div class="col-xs-1">
 																						<img class="char-skillTableDice" src="img/dice/proficiency.png" />
 																					</div>
-																					<div class="col-xs-3">
+																					<div class="col-xs-2">
 																						<p editable-number="skill.modifications.proficiency" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
 																							{{skill.modifications.proficiency || 0}}
 																						</p>
@@ -548,7 +565,7 @@
 																					<div class="col-xs-1">
 																						<img class="char-skillTableDice" src="img/dice/ability.png" />
 																					</div>
-																					<div class="col-xs-3">
+																					<div class="col-xs-2">
 																						<p editable-number="skill.modifications.ability" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
 																							{{skill.modifications.ability || 0}}
 																						</p>
@@ -556,15 +573,23 @@
 																					<div class="col-xs-1">
 																						<img class="char-skillTableDice" src="img/dice/boost.png" />
 																					</div>
-																					<div class="col-xs-3">
+																					<div class="col-xs-2">
 																						<p editable-number="skill.modifications.boost" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
 																							{{skill.modifications.boost || 0}}
 																						</p>
 																					</div>
 																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/force.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.force" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.force || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
 																						<img class="char-skillTableDice" src="img/dice/challenge.png" />
 																					</div>
-																					<div class="col-xs-3">
+																					<div class="col-xs-2">
 																						<p editable-number="skill.modifications.challenge" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
 																							{{skill.modifications.challenge || 0}}
 																						</p>
@@ -572,7 +597,7 @@
 																					<div class="col-xs-1">
 																						<img class="char-skillTableDice" src="img/dice/difficulty.png" />
 																					</div>
-																					<div class="col-xs-3">
+																					<div class="col-xs-2">
 																						<p editable-number="skill.modifications.difficulty" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
 																							{{skill.modifications.difficulty || 0}}
 																						</p>
@@ -580,10 +605,104 @@
 																					<div class="col-xs-1">
 																						<img class="char-skillTableDice" src="img/dice/setback.png" />
 																					</div>
-																					<div class="col-xs-3">
+																					<div class="col-xs-2">
 																						<p editable-number="skill.modifications.setback" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
 																							{{skill.modifications.setback || 0}}
 																						</p>
+																					</div>
+																				</div>
+																				<div class="row char-skillDetailsRows">
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/icons/triumph.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.triumph" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.triumph || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/icons/success.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.success" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.success || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/icons/advantage.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.advantage" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.advantage || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/icons/lightside.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.lightside" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.lightside || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice black" src="img/icons/despair.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.despair" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.despair || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice black" src="img/icons/failure.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.failure" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.failure || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice black" src="img/icons/threat.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.threat" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.threat || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/icons/darkside.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.darkside" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.darkside || 0}}
+																						</p>
+																					</div>
+																				</div>
+																				<div class="row char-skillDetailsHeader">
+																					<div class="col-xs-12">
+																						<p><i class="fa fa-warning"></i> {{"skills.note" | translate}}</p>
+																					</div>
+																				</div>
+																				<div class="row char-skillDetailsRows {{buttons == 'no' ? '' : 'apple'}}">
+																					<div class="col-xs-12">
+																						<a editable-textarea="skill.note" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" e-rows="6">
+																							<pre>{{skill.note || "Bitte eingeben"}}</pre>
+																						</a>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div id="noteLayer_{{skill.name}}" class="col-xs-12 collapse">
+																		<div class="row char-noteLayer">
+																			<div class="col-xs-12">
+																				<div class="row char-noteLayerHeader">
+																					<div class="col-xs-12 ">
+																						<p><i class="fa fa-warning"></i> {{"skills.note" | translate}}</p>
+																					</div>
+																				</div>
+																				<div class="row char-noteLayerRows">
+																					<div class="col-xs-12">
+																						<pre>{{skill.note}}</pre>
 																					</div>
 																				</div>
 																			</div>
@@ -616,7 +735,7 @@
 																</div>
 																<div class="row char-skillsTableRow" ng-repeat="skill in SelectedCharModel.char.skills.battle">
 																	<div class="col-xs-6 col-sm-4">
-																		<p>{{skill.i18n | translate}} ({{skill.attribute.i18n | translate}})</p>
+																		<p>{{skill.i18n | translate}} ({{skill.attribute.i18n | translate}}) <a ng-show="skill.note" ng-click="toggleNoteLayer(skill.name)"><i class="fa fa-warning"></i></a></p>
 																	</div>
 																	<div class="col-xs-6 col-sm-3 col-lg-2">
 																		<p editable-text="skill.career" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
@@ -634,11 +753,193 @@
 																			{{skill.rank || 0}}
 																		</p>
 																	</div>
-																	<div class="col-xs-6 col-sm-3 col-lg-4">
+																	
+																	<div class="{{showCharEditing ? 'col-xs-5 col-sm-2 col-lg-3' : 'col-xs-6 col-sm-3 col-lg-4'}}">
 																		<p>
 																			<img class="char-skillTableDice" src="img/dice/proficiency.png" ng-repeat="n in [] | loop:getProficiencyCount(skill)" />
 																			<img class="char-skillTableDice" src="img/dice/ability.png" ng-repeat="n in [] | loop:getAbilityCount(skill)" />
+																			<img class="char-skillTableDice" src="img/dice/boost.png" ng-repeat="n in [] | loop:skill.modifications.boost" />
+																			<img class="char-skillTableDice" src="img/dice/force.png" ng-repeat="n in [] | loop:skill.modifications.force" />
+																			<img class="char-skillTableDice" src="img/dice/challenge.png" ng-repeat="n in [] | loop:skill.modifications.challenge" />
+																			<img class="char-skillTableDice" src="img/dice/difficulty.png" ng-repeat="n in [] | loop:skill.modifications.difficulty" />
+																			<img class="char-skillTableDice" src="img/dice/setback.png" ng-repeat="n in [] | loop:skill.modifications.setback" />
+																			<img class="char-skillTableDice" src="img/icons/triumph.png" ng-repeat="n in [] | loop:skill.modifications.triumph" />
+																			<img class="char-skillTableDice" src="img/icons/success.png" ng-repeat="n in [] | loop:skill.modifications.success" />
+																			<img class="char-skillTableDice" src="img/icons/advantage.png" ng-repeat="n in [] | loop:skill.modifications.advantage" />
+																			<img class="char-skillTableDice" src="img/icons/lightside.png" ng-repeat="n in [] | loop:skill.modifications.lightside" />
+																			<img class="char-skillTableDice black" src="img/icons/despair.png" ng-repeat="n in [] | loop:skill.modifications.despair" />
+																			<img class="char-skillTableDice black" src="img/icons/failure.png" ng-repeat="n in [] | loop:skill.modifications.failure" />
+																			<img class="char-skillTableDice black" src="img/icons/threat.png" ng-repeat="n in [] | loop:skill.modifications.threat" />
+																			<img class="char-skillTableDice" src="img/icons/darkside.png" ng-repeat="n in [] | loop:skill.modifications.darkside" />
 																		</p>
+																	</div>
+																	<div class="col-xs-1" ng-show="showCharEditing">
+																		<p>
+																			<button class="btn btn-warning btn-xs pull-right" type="button" ng-click="toggleSkillDetails(skill.name)"><i class="fa fa-bars"></i></button>
+																		</p>
+																	</div>
+																	<div id="skillDetails_{{skill.name}}" class="col-xs-12 collapse">
+																		<div class="row char-skillDetails">
+																			<div class="col-xs-12">
+																				<div class="row char-skillDetailsHeader">
+																					<div class="col-xs-12 ">
+																						<p><i class="fa fa-wrench"></i> {{"skills.modification" | translate}}</p>
+																					</div>
+																				</div>
+																				<div class="row char-skillDetailsRows">
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/proficiency.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.proficiency" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.proficiency || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/ability.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.ability" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.ability || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/boost.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.boost" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.boost || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/force.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.force" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.force || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/challenge.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.challenge" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.challenge || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/difficulty.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.difficulty" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.difficulty || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/setback.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.setback" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.setback || 0}}
+																						</p>
+																					</div>
+																				</div>
+																				<div class="row char-skillDetailsRows">
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/icons/triumph.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.triumph" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.triumph || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/icons/success.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.success" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.success || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/icons/advantage.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.advantage" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.advantage || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/icons/lightside.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.lightside" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.lightside || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice black" src="img/icons/despair.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.despair" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.despair || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice black" src="img/icons/failure.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.failure" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.failure || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice black" src="img/icons/threat.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.threat" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.threat || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/icons/darkside.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.darkside" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.darkside || 0}}
+																						</p>
+																					</div>
+																				</div>
+																				<div class="row char-skillDetailsHeader">
+																					<div class="col-xs-12">
+																						<p><i class="fa fa-warning"></i> {{"skills.note" | translate}}</p>
+																					</div>
+																				</div>
+																				<div class="row char-skillDetailsRows {{buttons == 'no' ? '' : 'apple'}}">
+																					<div class="col-xs-12">
+																						<a editable-textarea="skill.note" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" e-rows="6">
+																							<pre>{{skill.note || "Bitte eingeben"}}</pre>
+																						</a>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div id="noteLayer_{{skill.name}}" class="col-xs-12 collapse">
+																		<div class="row char-noteLayer">
+																			<div class="col-xs-12">
+																				<div class="row char-noteLayerHeader">
+																					<div class="col-xs-12 ">
+																						<p><i class="fa fa-warning"></i> {{"skills.note" | translate}}</p>
+																					</div>
+																				</div>
+																				<div class="row char-noteLayerRows">
+																					<div class="col-xs-12">
+																						<pre>{{skill.note}}</pre>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
 																	</div>
 																</div>
 															</div>
@@ -665,7 +966,7 @@
 																</div>
 																<div class="row char-skillsTableRow" ng-repeat="skill in SelectedCharModel.char.skills.knowledge">
 																	<div class="col-xs-6 col-sm-4">
-																		<p>{{skill.i18n | translate}} ({{skill.attribute.i18n | translate}})</p>
+																		<p>{{skill.i18n | translate}} ({{skill.attribute.i18n | translate}}) <a ng-show="skill.note" ng-click="toggleNoteLayer(skill.name)"><i class="fa fa-warning"></i></a></p>
 																	</div>
 																	<div class="col-xs-6 col-sm-3 col-lg-2">
 																		<p editable-text="skill.career" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
@@ -683,11 +984,193 @@
 																			{{skill.rank || 0}}
 																		</p>
 																	</div>
-																	<div class="col-xs-6 col-sm-3 col-lg-4">
+																	
+																	<div class="{{showCharEditing ? 'col-xs-5 col-sm-2 col-lg-3' : 'col-xs-6 col-sm-3 col-lg-4'}}">
 																		<p>
 																			<img class="char-skillTableDice" src="img/dice/proficiency.png" ng-repeat="n in [] | loop:getProficiencyCount(skill)" />
 																			<img class="char-skillTableDice" src="img/dice/ability.png" ng-repeat="n in [] | loop:getAbilityCount(skill)" />
+																			<img class="char-skillTableDice" src="img/dice/boost.png" ng-repeat="n in [] | loop:skill.modifications.boost" />
+																			<img class="char-skillTableDice" src="img/dice/force.png" ng-repeat="n in [] | loop:skill.modifications.force" />
+																			<img class="char-skillTableDice" src="img/dice/challenge.png" ng-repeat="n in [] | loop:skill.modifications.challenge" />
+																			<img class="char-skillTableDice" src="img/dice/difficulty.png" ng-repeat="n in [] | loop:skill.modifications.difficulty" />
+																			<img class="char-skillTableDice" src="img/dice/setback.png" ng-repeat="n in [] | loop:skill.modifications.setback" />
+																			<img class="char-skillTableDice" src="img/icons/triumph.png" ng-repeat="n in [] | loop:skill.modifications.triumph" />
+																			<img class="char-skillTableDice" src="img/icons/success.png" ng-repeat="n in [] | loop:skill.modifications.success" />
+																			<img class="char-skillTableDice" src="img/icons/advantage.png" ng-repeat="n in [] | loop:skill.modifications.advantage" />
+																			<img class="char-skillTableDice" src="img/icons/lightside.png" ng-repeat="n in [] | loop:skill.modifications.lightside" />
+																			<img class="char-skillTableDice black" src="img/icons/despair.png" ng-repeat="n in [] | loop:skill.modifications.despair" />
+																			<img class="char-skillTableDice black" src="img/icons/failure.png" ng-repeat="n in [] | loop:skill.modifications.failure" />
+																			<img class="char-skillTableDice black" src="img/icons/threat.png" ng-repeat="n in [] | loop:skill.modifications.threat" />
+																			<img class="char-skillTableDice" src="img/icons/darkside.png" ng-repeat="n in [] | loop:skill.modifications.darkside" />
 																		</p>
+																	</div>
+																	<div class="col-xs-1" ng-show="showCharEditing">
+																		<p>
+																			<button class="btn btn-warning btn-xs pull-right" type="button" ng-click="toggleSkillDetails(skill.name)"><i class="fa fa-bars"></i></button>
+																		</p>
+																	</div>
+																	<div id="skillDetails_{{skill.name}}" class="col-xs-12 collapse">
+																		<div class="row char-skillDetails">
+																			<div class="col-xs-12">
+																				<div class="row char-skillDetailsHeader">
+																					<div class="col-xs-12 ">
+																						<p><i class="fa fa-wrench"></i> {{"skills.modification" | translate}}</p>
+																					</div>
+																				</div>
+																				<div class="row char-skillDetailsRows">
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/proficiency.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.proficiency" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.proficiency || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/ability.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.ability" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.ability || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/boost.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.boost" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.boost || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/force.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.force" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.force || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/challenge.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.challenge" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.challenge || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/difficulty.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.difficulty" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.difficulty || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/dice/setback.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.setback" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.setback || 0}}
+																						</p>
+																					</div>
+																				</div>
+																				<div class="row char-skillDetailsRows">
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/icons/triumph.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.triumph" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.triumph || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/icons/success.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.success" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.success || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/icons/advantage.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.advantage" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.advantage || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/icons/lightside.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.lightside" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.lightside || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice black" src="img/icons/despair.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.despair" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.despair || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice black" src="img/icons/failure.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.failure" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.failure || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice black" src="img/icons/threat.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.threat" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.threat || 0}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<img class="char-skillTableDice" src="img/icons/darkside.png" />
+																					</div>
+																					<div class="col-xs-2">
+																						<p editable-number="skill.modifications.darkside" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
+																							{{skill.modifications.darkside || 0}}
+																						</p>
+																					</div>
+																				</div>
+																				<div class="row char-skillDetailsHeader">
+																					<div class="col-xs-12">
+																						<p><i class="fa fa-warning"></i> {{"skills.note" | translate}}</p>
+																					</div>
+																				</div>
+																				<div class="row char-skillDetailsRows {{buttons == 'no' ? '' : 'apple'}}">
+																					<div class="col-xs-12">
+																						<a editable-textarea="skill.note" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" e-rows="6">
+																							<pre>{{skill.note || "Bitte eingeben"}}</pre>
+																						</a>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div id="noteLayer_{{skill.name}}" class="col-xs-12 collapse">
+																		<div class="row char-noteLayer">
+																			<div class="col-xs-12">
+																				<div class="row char-noteLayerHeader">
+																					<div class="col-xs-12 ">
+																						<p><i class="fa fa-warning"></i> {{"skills.note" | translate}}</p>
+																					</div>
+																				</div>
+																				<div class="row char-noteLayerRows">
+																					<div class="col-xs-12">
+																						<pre>{{skill.note}}</pre>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
 																	</div>
 																</div>
 															</div>

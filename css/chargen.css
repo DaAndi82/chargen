@@ -257,9 +257,12 @@ a {
 	border-top: 1px solid #9E998B;
 }
 
-.char-skillsTableRow p {
+.char-skillsTableRow p,
+.char-skillsTableRow a,
+.char-skillsTableRow pre {
 	font-style: normal !important;
 	border: 0px !important;
+	background-color: #d6d6d6;
 }
 /* Speziell für iPhone-Buttons */
 .char-skillsTableRow .editable-controls button {
@@ -278,6 +281,9 @@ a {
 .char-skillTableDice {
 	height:20px;
 }
+.char-skillTableDice.black {
+	background-color: #000;
+}
 .char-skillDetails {
 	border: 1px solid #f39c12;
 	margin-left: 5px;
@@ -286,4 +292,36 @@ a {
 }
 .char-skillDetailsHeader {
 	font-weight: bold;
+}
+.char-skillDetailsHeader p{
+	border-bottom: 1px solid #f39c12 !important;
+}
+.char-skillDetailsRows form.editable-wrap{
+	display: block;
+}
+.char-skillDetailsRows .editable-textarea div {
+	display: block;
+}
+.char-skillDetailsRows.apple .editable-textarea div {
+	padding-right: 62px;
+}
+.char-skillDetailsRows textarea {
+	margin-bottom: 10px !important;
+	width: 100% !important;
+}
+
+.char-noteLayer {
+	border: 1px solid #00c0ef;
+	margin-left: 5px;
+	margin-right: 6px;
+	margin-bottom: 5px;
+}
+.char-noteLayerHeader {
+	font-weight: bold;
+}
+.char-noteLayerHeader p{
+	border-bottom: 1px solid #00c0ef !important;
+}
+.char-skillDetailsRows pre {
+	color: #428bca;
 }

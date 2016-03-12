@@ -43,6 +43,8 @@
 		"career": "BERUF",
 		"rank": "RANG",
 		"dice": "WÜRFEL",
+		"modification": "Modifikation",
+		"note": "Hinweis",
 		"basic":
 		{
 			"astrogation": "Astronavigation",
@@ -84,6 +86,7 @@
 			"lore": "Altes Wissen",
 			"outerRim": "Äußerer Rand",
 			"underworld": "Unterwelt",
+			"warefare": "Kriegsführung",
 			"xenology": "Xenologie"
 		}
 	}
