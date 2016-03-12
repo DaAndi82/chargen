@@ -503,7 +503,7 @@
 																</div>
 																<div class="row char-skillsTableRow" ng-repeat="skill in SelectedCharModel.char.skills.basic">
 																	<div class="col-xs-6 col-sm-4">
-																		<p>{{skill.i18n | translate}} ({{skill.attribute.i18n | translate}}) <a ng-show="skill.note" ng-click="toggleNoteLayer(skill.name)"><i class="fa fa-warning"></i></a></p>
+																		<p>{{skill.i18n | translate}} ({{skill.attribute.i18n | translate}}) <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="skill.note" ng-click="toggleNoteLayer(skill.name)"><i class="fa fa-warning"></i></a></p>
 																	</div>
 																	<div class="col-xs-6 col-sm-3 col-lg-2">
 																		<p editable-text="skill.career" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
@@ -692,7 +692,7 @@
 																			</div>
 																		</div>
 																	</div>
-																	<div id="noteLayer_{{skill.name}}" class="col-xs-12 collapse">
+																	<div id="noteLayer_{{skill.name}}" class="col-xs-12 collapse" ng-hide="showCharEditing">
 																		<div class="row char-noteLayer">
 																			<div class="col-xs-12">
 																				<div class="row char-noteLayerHeader">
@@ -735,7 +735,7 @@
 																</div>
 																<div class="row char-skillsTableRow" ng-repeat="skill in SelectedCharModel.char.skills.battle">
 																	<div class="col-xs-6 col-sm-4">
-																		<p>{{skill.i18n | translate}} ({{skill.attribute.i18n | translate}}) <a ng-show="skill.note" ng-click="toggleNoteLayer(skill.name)"><i class="fa fa-warning"></i></a></p>
+																		<p>{{skill.i18n | translate}} ({{skill.attribute.i18n | translate}}) <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="skill.note" ng-click="toggleNoteLayer(skill.name)"><i class="fa fa-warning"></i></a></p>
 																	</div>
 																	<div class="col-xs-6 col-sm-3 col-lg-2">
 																		<p editable-text="skill.career" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
@@ -925,7 +925,7 @@
 																			</div>
 																		</div>
 																	</div>
-																	<div id="noteLayer_{{skill.name}}" class="col-xs-12 collapse">
+																	<div id="noteLayer_{{skill.name}}" class="col-xs-12 collapse" ng-hide="showCharEditing">
 																		<div class="row char-noteLayer">
 																			<div class="col-xs-12">
 																				<div class="row char-noteLayerHeader">
@@ -966,7 +966,7 @@
 																</div>
 																<div class="row char-skillsTableRow" ng-repeat="skill in SelectedCharModel.char.skills.knowledge">
 																	<div class="col-xs-6 col-sm-4">
-																		<p>{{skill.i18n | translate}} ({{skill.attribute.i18n | translate}}) <a ng-show="skill.note" ng-click="toggleNoteLayer(skill.name)"><i class="fa fa-warning"></i></a></p>
+																		<p>{{skill.i18n | translate}} ({{skill.attribute.i18n | translate}}) <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="skill.note" ng-click="toggleNoteLayer(skill.name)"><i class="fa fa-warning"></i></a></p>
 																	</div>
 																	<div class="col-xs-6 col-sm-3 col-lg-2">
 																		<p editable-text="skill.career" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
@@ -1156,7 +1156,7 @@
 																			</div>
 																		</div>
 																	</div>
-																	<div id="noteLayer_{{skill.name}}" class="col-xs-12 collapse">
+																	<div id="noteLayer_{{skill.name}}" class="col-xs-12 collapse" ng-hide="showCharEditing">
 																		<div class="row char-noteLayer">
 																			<div class="col-xs-12">
 																				<div class="row char-noteLayerHeader">

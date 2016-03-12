@@ -1466,6 +1466,8 @@
 		
 		
 		$scope.toggleNoteLayer = function (div) {
-			$("#noteLayer_" + div).toggle();
+			if (!$scope.showCharEditing) {
+				$("#noteLayer_" + div).toggle();
+			}
 		}
 	});

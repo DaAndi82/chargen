@@ -325,3 +325,6 @@ a {
 .char-skillDetailsRows pre {
 	color: #428bca;
 }
+.char-skillsTable a.disabled {
+	cursor: not-allowed;
+}
