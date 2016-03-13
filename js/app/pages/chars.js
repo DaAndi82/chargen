@@ -1446,6 +1446,7 @@
 		
 		
 		$scope.endEditChar = function () {
+			$("[id^=skillDetails_]").hide();
 			$scope.showCharEditing = false;
 		}
 		
