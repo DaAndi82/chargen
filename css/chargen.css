@@ -2,6 +2,9 @@ a {
 	cursor: pointer;
 }
 
+iframe {
+	display: none;
+}
 
 .dropAndCropArea {
     padding: 15px;

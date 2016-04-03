@@ -37,9 +37,10 @@
 	"skills":
 	{
 		"skills": "SKILLS",
-		"basicSkills": "BASIC-SKILLS",
-		"battleSkills": "BATTLE-SKILLS",
-		"knowledgeSkills": "KNOWLEDGE-SKILLS",
+		"generalSkills": "GENERAL SKILLS",
+		"combatSkills": "COMBAT SKILLS",
+		"knowledgeSkills": "KNOWLEDGE SKILLS",
+		"customSkills": "CUSTOM SKILLS",
 		"career": "CAREER",
 		"rank": "RANK",
 		"dice": "DICE",

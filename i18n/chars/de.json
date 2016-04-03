@@ -36,10 +36,11 @@
 	},
 	"skills":
 	{
-		"skills": "TALENTE",
-		"basicSkills": "BASIS-TALENTE",
-		"battleSkills": "KAMPF-TALENTE",
-		"knowledgeSkills": "WISSENS-TALENTE",
+		"skills": "FERTIGKEITEN",
+		"generalSkills": "FERTIGKEITEN",
+		"combatSkills": "KAMPFFERTIGKEITEN",
+		"knowledgeSkills": "WISSENSFERTIGKEITEN",
+		"customSkills": "EIGENE FERTIGKEITEN",
 		"career": "BERUF",
 		"rank": "RANG",
 		"dice": "WÜRFEL",

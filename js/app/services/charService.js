@@ -93,6 +93,12 @@ angular.module('chargen.charService', [
 		}
 		
 		
+		/*charService.getSkillServiceForChar = function (char, callback) {
+			skillService.init(char);
+			return skillService;
+		}*/
+		
+		
 		charService.signTransaction = function (char, initiator, isCreation) {
 			var now = Date.now();
 			

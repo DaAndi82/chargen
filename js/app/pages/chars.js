@@ -39,8 +39,12 @@
 		$scope.newCharModel = null;
 		/* DeleteCharModel für die Delete-Maske */
 		$scope.DeleteCharModel = null;
+		/* DeleteSkillModel für die Delete-Maske */
+		$scope.DeleteSkillModel = null;
 		/* Triggert das DeleteCharWarning .*/
 		$scope.showDeleteCharWarning = false;
+		/* Triggert das DeleteSkillWarning .*/
+		$scope.showDeleteSkillWarning = false;
 		/* Triggert das Bearbeiten eines Chars .*/
 		$scope.showCharEditing = false;
 		/* Lädt die Lokalisation */
@@ -1164,7 +1168,7 @@
 					});
 				}
 				
-				$scope.closeDeleteAlert();
+				$scope.closeDeleteCharAlert();
 				$scope.DeleteCharModel = null;
 			});
 		}
@@ -1420,6 +1424,43 @@
 		}
 		
 		
+		$scope.newSkill = function () {
+			if ($rootScope.SelectedCharModel != null) {
+				if ($rootScope.SelectedCharModel.char.skills.custom == null) {
+					$rootScope.SelectedCharModel.char.skills.custom = [];
+				}
+				
+				$rootScope.SelectedCharModel.char.skills.custom.push({
+					name: "",
+					rank: 0,
+					career: "",
+					note: "",
+					attribute: {
+						name: "",
+						i18n: ""
+					},
+					modifications: {
+						proficiency: 0,
+						ability: 0,
+						boost: 0,
+						force: 0,
+						challenge: 0,
+						difficulty: 0,
+						setback: 0,
+						triumph: 0,
+						success: 0,
+						advantage: 0,
+						lightside: 0,
+						despair: 0,
+						failure: 0,
+						threat: 0,
+						darkside: 0
+					}
+				})
+			}
+		}
+		
+		
 		$scope.deselectChar = function () {
 			$rootScope.SelectedCharModel = null;
 		}
@@ -1433,10 +1474,25 @@
 		}
 		
 		
-		$scope.cancelDeleting = function () {
-			$scope.closeDeleteAlert();
+		$scope.deleteSkill = function (id) {
+			/*$scope.DeleteSkillModel = charService.getChar(id);
+			if ($scope.DeleteCharModel != null) {
+				$scope.showDeleteCharWarning = true;
+			}*/
+		}
+		
+		
+		$scope.cancelDeletingChar = function () {
+			$scope.closeDeleteCharAlert();
 			$scope.showDeleteCharWarning = false;
 			$scope.DeleteCharModel = null;
+		}
+		
+		
+		$scope.cancelDeletingSkill = function () {
+			$scope.closeDeleteSkillAlert();
+			$scope.showDeleteSkillWarning = false;
+			$scope.DeleteSkillModel = null;
 		}
 		
 		
@@ -1456,8 +1512,13 @@
 		}
 		
 		
-		$scope.closeDeleteAlert = function () {
-			$('#delete-modal').modal('hide');
+		$scope.closeDeleteCharAlert = function () {
+			$('#deleteChar-modal').modal('hide');
+		}
+		
+		
+		$scope.closeDeleteSkillAlert = function () {
+			$('#deleteSkill-modal').modal('hide');
 		}
 		
 		
