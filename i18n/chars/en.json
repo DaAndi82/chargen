@@ -44,6 +44,9 @@
 		"career": "CAREER",
 		"rank": "RANK",
 		"dice": "DICE",
+		"details": "Details",
+		"name": "Name",
+		"attribute": "Attribute",
 		"modification": "Modification",
 		"note": "Note",
 		"basic":

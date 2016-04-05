@@ -1196,16 +1196,8 @@
 																	</div>
 																</div>
 																<div class="row char-skillsTableRow" ng-repeat="skill in SelectedCharModel.char.skills.custom | orderBy: 'name'">
-																	<!--div class="col-xs-6 col-sm-4">
-																		<p>{{skill.i18n | translate}} ({{skill.attribute.i18n | translate}}) <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="skill.note" ng-click="toggleNoteLayer(skill.name)"><i class="fa fa-warning"></i></a></p>
-																	</div-->
 																	<div class="col-xs-6 col-sm-4">
-																		<p editable-text="skill.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
-																			{{skill.name || 'Eingeben'}} <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="skill.note" ng-click="toggleNoteLayer(skill.name)"><i class="fa fa-warning"></i></a>
-																		</p>
-																		<p ng-hide="showCharEditing">
-																			{{skill.name || ''}}<br />
-																		</p>
+																		<p ng-show="skill.name">{{skill.name}} ({{skill.attribute.i18n | translate}}) <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="skill.note" ng-click="toggleNoteLayer(skill.name)"><i class="fa fa-warning"></i></a></p>
 																	</div>
 																	<div class="col-xs-6 col-sm-3 col-lg-2">
 																		<p editable-text="skill.career" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
@@ -1245,13 +1237,38 @@
 																	</div>
 																	<div class="col-xs-1" ng-show="showCharEditing">
 																		<p>
-																			<button class="btn btn-warning btn-xs pull-right" type="button" ng-click="toggleSkillDetails(skill.name)"><i class="fa fa-bars"></i></button>
-																			<button class="btn btn-danger btn-xs pull-right" type="button" style="width: 24px" data-toggle="modal" data-target="#deleteSkill-modal" ng-click="deleteSkill(skill.$id)"><i class="fa fa-trash-o"></i></button>
+																			<button class="btn btn-warning btn-xs pull-right" type="button" ng-click="toggleSkillDetails($index)"><i class="fa fa-bars"></i></button>
 																		</p>
 																	</div>
-																	<div id="skillDetails_{{skill.name}}" class="col-xs-12 collapse">
+																	<div id="skillDetails_{{$index}}" class="col-xs-12 collapse">
 																		<div class="row char-skillDetails">
 																			<div class="col-xs-12">
+																				<div class="row char-skillDetailsHeader">
+																					<div class="col-xs-12 ">
+																						<p><i class="fa fa-wrench"></i> {{"skills.details" | translate}}</p>
+																					</div>
+																				</div>
+																				<div class="row char-skillDetailsRows">
+																					<div class="col-xs-2">
+																						<p translate>skills.name</p>
+																					</div>
+																					<div class="col-xs-4">
+																						<p editable-text="skill.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
+																							{{skill.name || 'Eingeben'}}
+																						</p>
+																					</div>
+																					<div class="col-xs-2">
+																						<p translate>skills.attribute</p>
+																					</div>
+																					<div class="col-xs-3">
+																						<p editable-text="skill.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
+																							{{skill.name || 'Eingeben'}}
+																						</p>
+																					</div>
+																					<div class="col-xs-1">
+																						<button class="btn btn-danger btn-xs pull-right" type="button" style="width: 24px" data-toggle="modal" data-target="#deleteSkill-modal" ng-click="deleteSkill(skill.$id)"><i class="fa fa-trash-o"></i></button>
+																					</div>
+																				</div>
 																				<div class="row char-skillDetailsHeader">
 																					<div class="col-xs-12 ">
 																						<p><i class="fa fa-wrench"></i> {{"skills.modification" | translate}}</p>
@@ -1419,6 +1436,7 @@
 																			<button type="submit" class="btn btn-success btn-xs pull-right" ng-click="newSkill()"><i class="fa fa-plus"></i></button>
 																		</p>
 																	</div>
+																</div>
 															</div>
 														</div>
 													</div>
@@ -1481,8 +1499,8 @@
 					</p>
 				</div><!-- /.box-body -->
 				<div class="box-footer clearfix">
-					<button type="button" class="btn btn-default pull-right" ng-click="cancelDeleting()"><i class="fa fa-times"></i> Abbrechen</button>
-					<button type="button" class="btn btn-danger pull-left" ng-click="removeChar()"><i class="fa fa-edit"></i> Löschen</button>
+					<button type="button" class="btn btn-default pull-right" ng-click="cancelDeletingSkill()"><i class="fa fa-times"></i> Abbrechen</button>
+					<button type="button" class="btn btn-danger pull-left" ng-click="removeSkill()"><i class="fa fa-edit"></i> Löschen</button>
 				</div>
 			</div>
 		</div><!-- /.modal-dialog -->

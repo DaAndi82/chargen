@@ -44,6 +44,9 @@
 		"career": "BERUF",
 		"rank": "RANG",
 		"dice": "WÜRFEL",
+		"details": "Details",
+		"name": "Name",
+		"attribute": "Eigenschaft",
 		"modification": "Modifikation",
 		"note": "Hinweis",
 		"basic":
