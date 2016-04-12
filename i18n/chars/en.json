@@ -20,18 +20,18 @@
 	},
 	"attributes":
 	{
-		"attributes": "ATTRIBUTES",
-		"brawn": "BRAWN",
+		"attributes": "Attributes",
+		"brawn": "Brawn",
 		"brawnSmall": "BR",
-		"agility": "AGILITY",
+		"agility": "Agility",
 		"agilitySmall": "AG",
-		"intellect": "INTELLECT",
+		"intellect": "Intellect",
 		"intellectSmall": "INT",
-		"cunning": "CUNNING",
+		"cunning": "Cunning",
 		"cunningSmall": "CUN",
-		"willpower": "WILLPOWER",
+		"willpower": "Willpower",
 		"willpowerSmall": "WIL",
-		"presence": "PRESENCE",
+		"presence": "Presence",
 		"presenceSmall": "PR"
 	},
 	"skills":

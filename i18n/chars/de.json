@@ -20,18 +20,18 @@
 	},
 	"attributes":
 	{
-		"attributes": "EIGENSCHAFTEN",
-		"brawn": "STÄRKE",
+		"attributes": "Eigenschaften",
+		"brawn": "Stärke",
 		"brawnSmall": "ST",
-		"agility": "GEWANDHEIT",
+		"agility": "Gewandheit",
 		"agilitySmall": "GE",
-		"intellect": "INTELLIGENZ",
+		"intellect": "Intelligenz",
 		"intellectSmall": "IN",
-		"cunning": "LIST",
+		"cunning": "List",
 		"cunningSmall": "LI",
-		"willpower": "WILLENSKRAFT",
+		"willpower": "Willenskraft",
 		"willpowerSmall": "WI",
-		"presence": "CHARISMA",
+		"presence": "Charisma",
 		"presenceSmall": "CH"
 	},
 	"skills":

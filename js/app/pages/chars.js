@@ -31,7 +31,7 @@
 		}
 	})
 	
-	.controller('CharController',  function ($scope, $rootScope, $state, $translatePartialLoader, charService, alertService) {
+	.controller('CharController',  function ($scope, $rootScope, $state, $translatePartialLoader, $translate, charService, alertService) {
 		
 		/* Hält den AlertService. */
 		$scope.alertService = alertService;
@@ -50,31 +50,49 @@
 		/* Lädt die Lokalisation */
 		$translatePartialLoader.addPart('chars');
 		/* Zeige Buttons bei xeditable */
-		$scope.buttons = (!/iPad|iPhone|iPod/g.test(navigator.userAgent)) ? 'no' : 'right';
+		$scope.buttons = (!/iPad|iPhone|iPod/g.test(navigator.userAgent)) ? 'no' : 'right';	
+	
+		$scope.choosableAttributes = {
+			brawn: {value: "brawn", text: "Stärke", i18n: "attributes.brawn", i18nSmall: "attributes.brawnSmall"},
+			agility: {value: "agility", text: "Gewandheit", i18n: "attributes.agility", i18nSmall: "attributes.agilitySmall"},
+			intellect: {value: "intellect", text: "Intelligenz", i18n: "attributes.intellect", i18nSmall: "attributes.intellectSmall"},
+			cunning: {value: "cunning",  text: "List", i18n: "attributes.cunning", i18nSmall: "attributes.cunningSmall"},
+			willpower: {value: "willpower", text: "Willenskraft", i18n: "attributes.willpower", i18nSmall: "attributes.willpowerSmall"},
+			presence: {value: "presence", text: "Charisma", i18n: "attributes.presence", i18nSmall: "attributes.presenceSmall"}
+		};
 		
-		/* charData - dummy: Perhaps in a later Version. */
-		/*$scope.charData = {
-			species: {
-				droid: {
-					value_de: 'Droide',
-					value_en: 'Droid'
-				},
-				human: {
-					value_de: 'Mensch',
-					value_en: 'Human'
-				}
-			},
-			career: {
-				bounty_hunter: {
-					value_de: 'Kopfgeldjäger',
-					value_en: 'Bounty Hunter'
-				},
-				pilot: {
-					value_de: 'Pilot',
-					value_en: 'Pilot'
-				}
-			}
+		
+		/*$scope.translateAttribute = function (attributeI18N) {
+			$translate(attributeI18N).then(function (attribute) {
+				$scope.namespaced_paragraph = attribute;
+			});
 		}*/
+		
+		
+		$rootScope.$on('$translateChangeSuccess', function () {
+			$translate('HEADLINE').then(function (translation) {
+				switch ($translate.use()) {
+					case "de":
+						$scope.choosableAttributes.brawn.text = "Stärke";
+						$scope.choosableAttributes.agility.text = "Gewandheit";
+						$scope.choosableAttributes.intellect.text = "Intelligenz";
+						$scope.choosableAttributes.cunning.text = "List";
+						$scope.choosableAttributes.willpower.text = "Willenskraft";
+						$scope.choosableAttributes.presence.text = "Charisma";
+					break;
+					
+					case "en":
+						$scope.choosableAttributes.brawn.text = "Brawn";
+						$scope.choosableAttributes.agility.text = "Agility";
+						$scope.choosableAttributes.intellect.text = "Intellect";
+						$scope.choosableAttributes.cunning.text = "Cunning";
+						$scope.choosableAttributes.willpower.text = "Willpower";
+						$scope.choosableAttributes.presence.text = "Presence";
+					break;
+				}
+			});
+		});
+
 		
 		$rootScope.$watch('profil', function () {
 			if ($rootScope.charList == null && $rootScope.profil != null) {
@@ -1361,6 +1379,14 @@
 			if (!self.$data) self.$data = "";
 		}
 		
+		// TODO: Weiter machen!!!
+		$scope.customSkill18n = function (skill, self) {
+			if (skill && self.$data) {
+				skill.attribute.i18n = $scope.choosableAttributes[self.$data].i18n;
+				skill.attribute.i18nSmall = $scope.choosableAttributes[self.$data].i18nSmall;
+			}
+		}
+		
 		
 		$scope.getProficiencyCount = function (skill) {
 			var diceCount = 0;
@@ -1427,10 +1453,12 @@
 		$scope.newSkill = function () {
 			if ($rootScope.SelectedCharModel != null) {
 				if ($rootScope.SelectedCharModel.char.skills.custom == null) {
-					$rootScope.SelectedCharModel.char.skills.custom = [];
+					$rootScope.SelectedCharModel.char.skills.custom = {};
 				}
 				
-				$rootScope.SelectedCharModel.char.skills.custom.push({
+				var customSkillCount = Object.keys($rootScope.SelectedCharModel.char.skills.custom).length;
+				
+				$rootScope.SelectedCharModel.char.skills.custom['skill' + (customSkillCount + 1)] = {
 					name: "",
 					rank: 0,
 					career: "",
@@ -1456,7 +1484,7 @@
 						threat: 0,
 						darkside: 0
 					}
-				})
+				}
 			}
 		}
 		

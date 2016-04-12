@@ -312,7 +312,7 @@
 									<div class="col-xs-12">
 										<div class="row">
 											<div class="col-xs-12 text-center char-attributesHeader">
-												<p translate>attributes.attributes<p>
+												<p>{{"attributes.attributes" | translate | uppercase}}<p>
 											</div>
 										</div>
 										<div class="row">
@@ -335,7 +335,7 @@
 														</div>
 														<div class="row">
 															<div class="col-xs-12 text-center char-singleAttributeFooter">
-																<p translate>attributes.brawn</p>
+																<p>{{"attributes.brawn" | translate | uppercase}}</p>
 															</div>
 														</div>
 													</div>
@@ -360,7 +360,7 @@
 														</div>
 														<div class="row">
 															<div class="col-xs-12 text-center char-singleAttributeFooter">
-																<p translate>attributes.agility</p>
+																<p>{{"attributes.agility" | translate | uppercase}}</p>
 															</div>
 														</div>
 													</div>
@@ -385,7 +385,7 @@
 														</div>
 														<div class="row">
 															<div class="col-xs-12 text-center char-singleAttributeFooter">
-																<p translate>attributes.intellect</p>
+																<p>{{"attributes.intellect" | translate | uppercase}}</p>
 															</div>
 														</div>
 													</div>
@@ -410,7 +410,7 @@
 														</div>
 														<div class="row">
 															<div class="col-xs-12 text-center char-singleAttributeFooter">
-																<p translate>attributes.cunning</p>
+																<p>{{"attributes.cunning" | translate | uppercase}}</p>
 															</div>
 														</div>
 													</div>
@@ -435,7 +435,7 @@
 														</div>
 														<div class="row">
 															<div class="col-xs-12 text-center char-singleAttributeFooter">
-																<p translate>attributes.willpower</p>
+																<p>{{"attributes.willpower" | translate | uppercase}}</p>
 															</div>
 														</div>
 													</div>
@@ -460,7 +460,7 @@
 														</div>
 														<div class="row">
 															<div class="col-xs-12 text-center char-singleAttributeFooter">
-																<p translate>attributes.presence</p>
+																<p>{{"attributes.presence" | translate | uppercase}}</p>
 															</div>
 														</div>
 													</div>
@@ -1197,7 +1197,7 @@
 																</div>
 																<div class="row char-skillsTableRow" ng-repeat="skill in SelectedCharModel.char.skills.custom | orderBy: 'name'">
 																	<div class="col-xs-6 col-sm-4">
-																		<p ng-show="skill.name">{{skill.name}} ({{skill.attribute.i18n | translate}}) <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="skill.note" ng-click="toggleNoteLayer(skill.name)"><i class="fa fa-warning"></i></a></p>
+																		<p ng-show="skill.name">{{skill.name}} ({{skill.attribute.i18nSmall | translate}}) <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="skill.note" ng-click="toggleNoteLayer(skill.name)"><i class="fa fa-warning"></i></a></p>
 																	</div>
 																	<div class="col-xs-6 col-sm-3 col-lg-2">
 																		<p editable-text="skill.career" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
@@ -1261,8 +1261,8 @@
 																						<p translate>skills.attribute</p>
 																					</div>
 																					<div class="col-xs-3">
-																						<p editable-text="skill.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
-																							{{skill.name || 'Eingeben'}}
+																						<p editable-select="skill.attribute.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="customSkill18n(skill, this)" e-ng-options="ca.value  as ca.text  for ca in choosableAttributes">
+																							{{(skill.attribute.i18n | translate) || 'Auswählen'}}
 																						</p>
 																					</div>
 																					<div class="col-xs-1">
