@@ -53,12 +53,12 @@
 		$scope.buttons = (!/iPad|iPhone|iPod/g.test(navigator.userAgent)) ? 'no' : 'right';	
 	
 		$scope.choosableAttributes = {
-			brawn: {value: "brawn", text: "Stärke", i18n: "attributes.brawn", i18nSmall: "attributes.brawnSmall"},
-			agility: {value: "agility", text: "Gewandheit", i18n: "attributes.agility", i18nSmall: "attributes.agilitySmall"},
-			intellect: {value: "intellect", text: "Intelligenz", i18n: "attributes.intellect", i18nSmall: "attributes.intellectSmall"},
-			cunning: {value: "cunning",  text: "List", i18n: "attributes.cunning", i18nSmall: "attributes.cunningSmall"},
-			willpower: {value: "willpower", text: "Willenskraft", i18n: "attributes.willpower", i18nSmall: "attributes.willpowerSmall"},
-			presence: {value: "presence", text: "Charisma", i18n: "attributes.presence", i18nSmall: "attributes.presenceSmall"}
+			brawn: {value: "brawn", text: "", i18n: "attributes.brawn", i18nSmall: "attributes.brawnSmall"},
+			agility: {value: "agility", text: "", i18n: "attributes.agility", i18nSmall: "attributes.agilitySmall"},
+			intellect: {value: "intellect", text: "", i18n: "attributes.intellect", i18nSmall: "attributes.intellectSmall"},
+			cunning: {value: "cunning",  text: "", i18n: "attributes.cunning", i18nSmall: "attributes.cunningSmall"},
+			willpower: {value: "willpower", text: "", i18n: "attributes.willpower", i18nSmall: "attributes.willpowerSmall"},
+			presence: {value: "presence", text: "", i18n: "attributes.presence", i18nSmall: "attributes.presenceSmall"}
 		};
 		
 		
@@ -70,26 +70,11 @@
 		
 		
 		$rootScope.$on('$translateChangeSuccess', function () {
-			$translate('HEADLINE').then(function (translation) {
-				switch ($translate.use()) {
-					case "de":
-						$scope.choosableAttributes.brawn.text = "Stärke";
-						$scope.choosableAttributes.agility.text = "Gewandheit";
-						$scope.choosableAttributes.intellect.text = "Intelligenz";
-						$scope.choosableAttributes.cunning.text = "List";
-						$scope.choosableAttributes.willpower.text = "Willenskraft";
-						$scope.choosableAttributes.presence.text = "Charisma";
-					break;
-					
-					case "en":
-						$scope.choosableAttributes.brawn.text = "Brawn";
-						$scope.choosableAttributes.agility.text = "Agility";
-						$scope.choosableAttributes.intellect.text = "Intellect";
-						$scope.choosableAttributes.cunning.text = "Cunning";
-						$scope.choosableAttributes.willpower.text = "Willpower";
-						$scope.choosableAttributes.presence.text = "Presence";
-					break;
-				}
+			// Für "choosableAttributes"
+			jQuery.each($scope.choosableAttributes, function(key, attribute) {
+				$translate(attribute.i18n).then(function (translation) {
+					attribute.text = translation;
+				});
 			});
 		});
 
@@ -1154,13 +1139,33 @@
 				} else {
 					alertService.addAlert({
 						type: 'error',
-						text: 'Es ist ein Fehler aufgetreten. Der User mit der E-Mail "' + $scope.DeleteCharModel.name + '" konnte nicht gelöscht werden.'
+						text: 'Es ist ein Fehler aufgetreten. Der Char mit dem Namen "' + $scope.DeleteCharModel.name + '" konnte nicht gelöscht werden.'
 					});
 				}
 				
 				$scope.closeDeleteCharAlert();
 				$scope.DeleteCharModel = null;
 			});
+		}
+		
+		
+		$scope.removeSkill = function () {
+			if ($scope.DeleteSkillModel != null) {
+				delete $rootScope.SelectedCharModel.char.skills.custom["skill" + $scope.DeleteSkillModel.index];
+				
+				$scope.updateChar(function (error) {
+					if (error) {
+						alertService.addAlert({
+							type: 'error',
+							text: 'Es ist ein Fehler aufgetreten. Der Skill "' + $scope.DeleteSkillModel.name + '" konnte nicht gelöscht werden.'
+						});
+					}
+					
+					$scope.DeleteSkillModel = null;
+				});
+					
+				$scope.closeDeleteSkillAlert();
+			}
 		}
 		
 		
@@ -1356,7 +1361,7 @@
 		}
 		
 		
-		$scope.getProficiencyCount = function (skill) {
+		$scope.getProficiencyCountForSkill = function (skill) {
 			var diceCount = 0;
 			
 			if (skill) {
@@ -1378,7 +1383,7 @@
 		}
 		
 		
-		$scope.getAbilityCount = function (skill) {
+		$scope.getAbilityCountForSkill = function (skill) {
 			var diceCount = 0;
 			
 			if (skill) {
@@ -1400,21 +1405,25 @@
 		}
 		
 		
-		$scope.updateChar = function () {
+		$scope.updateChar = function (callback) {
 			$rootScope.SelectedCharModel.initiator = $rootScope.profil.$id;
 			
-			charService.modifyChar($rootScope.SelectedCharModel, function(error) {
-				if (error) {
-					switch (error.code) {
-						default:
-							alertService.addAlert({
-								type: 'error',
-								text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
-							});
-						break;
+			if (callback == null) {
+				charService.modifyChar($rootScope.SelectedCharModel, function(error) {
+					if (error) {
+						switch (error.code) {
+							default:
+								alertService.addAlert({
+									type: 'error',
+									text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
+								});
+							break;
+						}
 					}
-				}
-			});
+				});
+			} else {
+				charService.modifyChar($rootScope.SelectedCharModel, callback);
+			}
 		}
 		
 		
@@ -1470,11 +1479,15 @@
 		}
 		
 		
-		$scope.deleteSkill = function (id) {
-			/*$scope.DeleteSkillModel = charService.getChar(id);
-			if ($scope.DeleteCharModel != null) {
+		$scope.deleteSkill = function (index) {
+			$scope.DeleteSkillModel = {
+				index: index + 1,
+				name: angular.copy($rootScope.SelectedCharModel.char.skills.custom["skill" + (index + 1)].name)
+			}
+			
+			if ($scope.DeleteSkillModel != null) {
 				$scope.showDeleteCharWarning = true;
-			}*/
+			}
 		}
 		
 		

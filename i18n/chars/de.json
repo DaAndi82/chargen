@@ -93,5 +93,16 @@
 			"warefare": "Kriegsführung",
 			"xenology": "Xenologie"
 		}
+	},
+	"weapons":
+	{
+		"weapons": "Waffen",
+		"weapon": "Waffe",
+		"skill": "Fertigkeit",
+		"damage": "Schaden",
+		"range": "Reichweite",
+		"crit": "Krit",
+		"dice": "Würfel",
+		"special": "Spezial"
 	}
 }

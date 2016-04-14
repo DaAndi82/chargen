@@ -93,5 +93,16 @@
 			"warefare": "Warefare",
 			"xenology": "Xenology"
 		}
+	},
+	"weapons":
+	{
+		"weapons": "Weapons",
+		"weapon": "Weapon",
+		"skill": "Skill",
+		"damage": "Damage",
+		"range": "Range",
+		"crit": "Crit",
+		"dice": "Dice",
+		"special": "Special"
 	}
 }
