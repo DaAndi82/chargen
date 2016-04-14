@@ -61,6 +61,18 @@
 			presence: {value: "presence", text: "", i18n: "attributes.presence", i18nSmall: "attributes.presenceSmall"}
 		};
 		
+		$scope.choosableSkillsForWeapons = {
+		
+		};
+		
+		$scope.choosableRangeForWeapons = {
+			engaged: {value: "engaged", text: "", i18n: "range.engaged"},
+			short: {value: "short", text: "", i18n: "range.short"},
+			medium: {value: "medium", text: "", i18n: "range.medium"},
+			long: {value: "long", text: "", i18n: "range.long"},
+			extreme: {value: "extreme", text: "", i18n: "range.extreme"}
+		};
+		
 		
 		/*$scope.translateAttribute = function (attributeI18N) {
 			$translate(attributeI18N).then(function (attribute) {
@@ -72,6 +84,37 @@
 		$rootScope.$on('$translateChangeSuccess', function () {
 			// Für "choosableAttributes"
 			jQuery.each($scope.choosableAttributes, function(key, attribute) {
+				$translate(attribute.i18n).then(function (translation) {
+					attribute.text = translation;
+				});
+			});
+			
+			// Für "choosableSkillsForWeapons"
+			if ($scope.SelectedCharModel != null) {
+				jQuery.each($scope.SelectedCharModel.char.skills.battle, function(key, skill) {
+					if ($scope.choosableSkillsForWeapons[key] == null) {
+						$scope.choosableSkillsForWeapons[key] = {
+							value: key,
+							i18n: skill.i18n
+						}
+					}
+					
+					$translate($scope.choosableSkillsForWeapons[key].i18n).then(function (translation) {
+						$scope.choosableSkillsForWeapons[key].text = translation;
+					});
+				});
+				jQuery.each($scope.SelectedCharModel.char.skills.custom, function(key, skill) {
+					if ($scope.choosableSkillsForWeapons[key] == null) {
+						$scope.choosableSkillsForWeapons[key] = {
+							value: key,
+							text: skill.name
+						}
+					}
+				});
+			}
+				
+			// Für "choosableRangeForWeapons"
+			jQuery.each($scope.choosableRangeForWeapons, function(key, attribute) {
 				$translate(attribute.i18n).then(function (translation) {
 					attribute.text = translation;
 				});
@@ -1352,11 +1395,31 @@
 			if (!self.$data) self.$data = "";
 		}
 		
-		// TODO: Weiter machen!!!
-		$scope.customSkill18n = function (skill, self) {
+		
+		$scope.i18nForCustomSkillAttribute = function (skill, self) {
 			if (skill && self.$data) {
 				skill.attribute.i18n = $scope.choosableAttributes[self.$data].i18n;
 				skill.attribute.i18nSmall = $scope.choosableAttributes[self.$data].i18nSmall;
+			}
+		}
+		
+		
+		$scope.i18nForWeaponSkill = function (weapon, self) {
+			if (weapon && self.$data) {
+				// Prüft ob i18n vorhanden - nicht bei customSkills
+				if ($scope.choosableSkillsForWeapons[self.$data].i18n != null) {
+					weapon.skill.i18n = $scope.choosableSkillsForWeapons[self.$data].i18n;
+				} else {
+					delete weapon.skill.i18n;
+					weapon.skill.text = $scope.choosableSkillsForWeapons[self.$data].text;
+				}
+			}
+		}
+		
+		
+		$scope.i18nForWeaponRange = function (weapon, self) {
+			if (weapon && self.$data) {
+				weapon.range.i18n = $scope.choosableRangeForWeapons[self.$data].i18n;
 			}
 		}
 		
@@ -1383,6 +1446,26 @@
 		}
 		
 		
+		$scope.getProficiencyCountForWeapon = function (weapon) {
+			var diceCount = 0;
+			
+			if (weapon.skill.name != "") {
+				
+				if ($rootScope.SelectedCharModel.char.skills.battle[weapon.skill.name] != null) {
+					var skill = $rootScope.SelectedCharModel.char.skills.battle[weapon.skill.name];
+					diceCount = $scope.getProficiencyCountForSkill(skill);
+				} else if ($rootScope.SelectedCharModel.char.skills.custom[weapon.skill.name] != null) {
+					var skill = $rootScope.SelectedCharModel.char.skills.custom[weapon.skill.name];
+					diceCount = $scope.getProficiencyCountForSkill(skill);
+				}
+			}
+			
+			diceCount += weapon.modifications.proficiency;
+			
+			return diceCount;
+		}
+		
+		
 		$scope.getAbilityCountForSkill = function (skill) {
 			var diceCount = 0;
 			
@@ -1400,6 +1483,25 @@
 			}
 			
 			diceCount += skill.modifications.ability;
+			
+			return diceCount;
+		}
+		
+		
+		$scope.getAbilityCountForWeapon = function (weapon) {
+			var diceCount = 0;
+			
+			if (weapon.skill.name != "") {
+				if ($rootScope.SelectedCharModel.char.skills.battle[weapon.skill.name] != null) {
+					var skill = $rootScope.SelectedCharModel.char.skills.battle[weapon.skill.name];
+					diceCount = $scope.getAbilityCountForSkill(skill);
+				} else if ($rootScope.SelectedCharModel.char.skills.custom[weapon.skill.name] != null) {
+					var skill = $rootScope.SelectedCharModel.char.skills.custom[weapon.skill.name];			
+					diceCount = $scope.getAbilityCountForSkill(skill);
+				}
+			}
+			
+			diceCount += weapon.modifications.ability;
 			
 			return diceCount;
 		}
@@ -1461,6 +1563,50 @@
 						threat: 0,
 						darkside: 0
 					}
+				}
+			}
+		}
+		
+		
+		$scope.newWeapon = function () {
+			if ($rootScope.SelectedCharModel != null) {
+				if ($rootScope.SelectedCharModel.char.equipment == null) $rootScope.SelectedCharModel.char.equipment = {};
+				if ($rootScope.SelectedCharModel.char.equipment.weapons == null) $rootScope.SelectedCharModel.char.equipment.weapons = {};
+				
+				var weaponCount = Object.keys($rootScope.SelectedCharModel.char.equipment.weapons).length;
+				
+				$rootScope.SelectedCharModel.char.equipment.weapons['weapon' + (weaponCount + 1)] = {
+					name: "",
+					skill: {
+						name: "",
+						i18n: ""
+					},
+					range: {
+						name: "",
+						i18n: ""
+					},
+					damage: 0,
+					crit: 0,
+					specialSmall: "",
+					specialLarge: "",
+					modifications: {
+						proficiency: 0,
+						ability: 0,
+						boost: 0,
+						force: 0,
+						challenge: 0,
+						difficulty: 0,
+						setback: 0,
+						triumph: 0,
+						success: 0,
+						advantage: 0,
+						lightside: 0,
+						despair: 0,
+						failure: 0,
+						threat: 0,
+						darkside: 0
+					},
+					note: "",
 				}
 			}
 		}
@@ -1533,6 +1679,11 @@
 		
 		$scope.toggleSkillDetails = function (div) {
 			$("#skillDetails_" + div).toggle();
+		}
+		
+		
+		$scope.toggleWeaponDetails = function (div) {
+			$("#weaponDetails" + div).toggle();
 		}
 		
 		

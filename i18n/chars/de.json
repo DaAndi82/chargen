@@ -103,6 +103,16 @@
 		"range": "Reichweite",
 		"crit": "Krit",
 		"dice": "Würfel",
-		"special": "Spezial"
+		"special": "Spezial",
+		"modification": "Modifikation",
+		"note": "Hinweis"
+	},
+	"range":
+	{
+		"engaged": "Nahkampf",
+		"short": "Kurz",
+		"medium": "Mittel",
+		"long": "Groß",
+		"extreme": "Extrem groß"
 	}
 }

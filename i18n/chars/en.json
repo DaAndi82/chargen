@@ -103,6 +103,16 @@
 		"range": "Range",
 		"crit": "Crit",
 		"dice": "Dice",
-		"special": "Special"
+		"special": "Special",
+		"modification": "Modification",
+		"note": "Note"
+	},
+	"range":
+	{
+		"engaged": "Engaged",
+		"short": "Short",
+		"medium": "Medium",
+		"long": "Long",
+		"extreme": "Extreme"
 	}
 }
