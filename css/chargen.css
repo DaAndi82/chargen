@@ -299,6 +299,12 @@ iframe {
 .char-skillDetailsHeader p{
 	border-bottom: 1px solid #f39c12 !important;
 }
+.char-skillDetailsRows {
+	padding-left: 25px !important;
+}
+.char-skillDetailsRows.textarea {
+	padding-left: 20px !important;
+}
 .char-skillDetailsRows form.editable-wrap{
 	display: block;
 }
@@ -312,6 +318,140 @@ iframe {
 	margin-bottom: 10px !important;
 	width: 100% !important;
 }
+.char-skillDetailsRows pre {
+	color: #428bca;
+}
+.char-skillsTable a.disabled {
+	cursor: not-allowed;
+}
+
+
+.char-weapons {
+	border-radius: 30px;
+	border: 4px solid #9E998B;
+	margin-right: 0px;
+	margin-left: 0px;
+	margin-top: 10px;
+	padding: 5px;
+}
+.char-weapons p{
+	margin: 5px;
+}
+.char-weaponsHeader {
+	color: #fff;
+	background-color: #394457;
+	border-radius: 30px;
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+.char-weaponsColumnContainer {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.char-weaponsColumn {
+	background-color: #d6d6d6;
+	border: 10px solid #d6d6d6;
+	border-radius: 30px;
+	margin-right: 0px;
+	margin-left: 0px;
+	margin-top: 5px;
+}
+.char-weaponsColumn p{
+	font-size: 10pt;
+}
+.char-weaponsTable {
+	/*border: 1px solid #9E998B;*/
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+.char-weaponsTableHeader {
+	border-bottom: 2px solid #9E998B;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.char-weaponsTableHeader p {
+	font-weight: bold;
+	color: #000;
+}
+.char-weaponsTableRow {
+	border-top: 1px solid #9E998B;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.char-weaponsTableRow.noPadding {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+.char-weaponsTableRow p,
+.char-weaponsTableRow a,
+.char-weaponsTableRow pre {
+	font-style: normal !important;
+	border: 0px !important;
+	background-color: #d6d6d6;
+}
+/* Speziell für iPhone-Buttons */
+.char-weaponsTableRow .editable-controls button {
+	padding: 1px 4px;
+}
+.char-weaponsTableRow  input.editable-has-buttons {
+	width: 50%;
+}
+/* // Speziell für iPhone-Buttons */
+.char-weaponsTableHeader div,
+.char-weaponsTableRow div {
+	padding-left: 5px;
+	padding-right: 5px;
+	min-height: 29px;
+}
+.char-weaponTableDice {
+	height:20px;
+}
+.char-weaponTableDice.black {
+	background-color: #000;
+}
+.char-weaponDetailsContainer {
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+.char-weaponDetails {
+	border: 1px solid #f39c12;
+	margin-left: 5px;
+	margin-right: 6px;
+	margin-bottom: 5px;
+}
+.char-weaponDetailsHeader {
+	font-weight: bold;
+}
+.char-weaponDetailsHeader p{
+	border-bottom: 1px solid #f39c12 !important;
+}
+.char-weaponDetailsRows {
+	padding-left: 25px !important;
+}
+.char-weaponDetailsRows.textarea {
+	padding-left: 20px !important;
+}
+.char-weaponDetailsRows form.editable-wrap{
+	display: block;
+}
+.char-weaponDetailsRows .editable-textarea div {
+	display: block;
+}
+.char-weaponDetailsRows.apple .editable-textarea div {
+	padding-right: 62px;
+}
+.char-weaponDetailsRows textarea {
+	margin-bottom: 10px !important;
+	width: 100% !important;
+}
+.char-weaponDetailsRows pre {
+	color: #428bca;
+}
+.char-weaponsTable a.disabled {
+	cursor: not-allowed;
+}
+
 
 .char-noteLayer {
 	border: 1px solid #00c0ef;
@@ -325,9 +465,7 @@ iframe {
 .char-noteLayerHeader p{
 	border-bottom: 1px solid #00c0ef !important;
 }
-.char-skillDetailsRows pre {
-	color: #428bca;
-}
-.char-skillsTable a.disabled {
-	cursor: not-allowed;
+.char-weaponsTableRow .char-noteLayer {
+	margin-left: 0px;
+	margin-right: 0px;
 }

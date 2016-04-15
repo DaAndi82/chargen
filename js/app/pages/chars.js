@@ -41,10 +41,14 @@
 		$scope.DeleteCharModel = null;
 		/* DeleteSkillModel für die Delete-Maske */
 		$scope.DeleteSkillModel = null;
+		/* DeleteWeaponModel für die Delete-Maske */
+		$scope.DeleteWeaponModel = null;
 		/* Triggert das DeleteCharWarning .*/
 		$scope.showDeleteCharWarning = false;
 		/* Triggert das DeleteSkillWarning .*/
 		$scope.showDeleteSkillWarning = false;
+		/* Triggert das DeleteWeaponWarning .*/
+		$scope.showDeleteWeaponWarning = false;
 		/* Triggert das Bearbeiten eines Chars .*/
 		$scope.showCharEditing = false;
 		/* Lädt die Lokalisation */
@@ -82,6 +86,20 @@
 		
 		
 		$rootScope.$on('$translateChangeSuccess', function () {
+			$scope.setChoosableValuesForSelectFields();
+		});
+
+		
+		$rootScope.$watch('profil', function () {
+			if ($rootScope.charList == null && $rootScope.profil != null) {
+				charService.init(function () {
+					$rootScope.charList = charService.getCharList();
+				});
+			}
+		});
+		
+		
+		$scope.setChoosableValuesForSelectFields = function () {
 			// Für "choosableAttributes"
 			jQuery.each($scope.choosableAttributes, function(key, attribute) {
 				$translate(attribute.i18n).then(function (translation) {
@@ -119,16 +137,7 @@
 					attribute.text = translation;
 				});
 			});
-		});
-
-		
-		$rootScope.$watch('profil', function () {
-			if ($rootScope.charList == null && $rootScope.profil != null) {
-				charService.init(function () {
-					$rootScope.charList = charService.getCharList();
-				});
-			}
-		});
+		}
 		
 		
 		$scope.createChar = function () {		
@@ -1212,6 +1221,26 @@
 		}
 		
 		
+		$scope.removeWeapon = function () {
+			if ($scope.DeleteWeaponModel != null) {
+				delete $rootScope.SelectedCharModel.char.equipment.weapons["weapon" + $scope.DeleteWeaponModel.index];
+				
+				$scope.updateChar(function (error) {
+					if (error) {
+						alertService.addAlert({
+							type: 'error',
+							text: 'Es ist ein Fehler aufgetreten. Die Waffe "' + $scope.DeleteWeaponModel.name + '" konnte nicht gelöscht werden.'
+						});
+					}
+					
+					$scope.DeleteWeaponModel = null;
+				});
+					
+				$scope.closeDeleteWeaponAlert();
+			}
+		}
+		
+		
 		$scope.selectChar = function (id) {
 			$rootScope.SelectedCharModel = {
 				char: charService.getChar(id),
@@ -1383,6 +1412,8 @@
 				if (!$rootScope.SelectedCharModel.char.skills.knowledge.warefare.note) $rootScope.SelectedCharModel.char.skills.knowledge.warefare.note = "";
 				if (!$rootScope.SelectedCharModel.char.skills.knowledge.warefare.modifications) $rootScope.SelectedCharModel.char.skills.knowledge.warefare.modifications = {proficiency: 0, ability: 0, boost: 0, force: 0, challenge: 0, difficulty: 0, setback: 0, triumph: 0, success: 0, advantage: 0, lightside: 0, despair: 0, failure: 0, threat: 0, darkside: 0}
 			}
+			
+			$scope.setChoosableValuesForSelectFields();
 		}
 		
 		
@@ -1585,6 +1616,9 @@
 						name: "",
 						i18n: ""
 					},
+					held: false,
+					equip: false,
+					own: true,
 					damage: 0,
 					crit: 0,
 					specialSmall: "",
@@ -1612,6 +1646,14 @@
 		}
 		
 		
+		$scope.duplicateWeapon = function (weapon) {
+			if (weapon != null) {
+				var weaponCount = Object.keys($rootScope.SelectedCharModel.char.equipment.weapons).length;
+				$rootScope.SelectedCharModel.char.equipment.weapons['weapon' + (weaponCount + 1)] = angular.copy(weapon);
+			}
+		}
+		
+		
 		$scope.deselectChar = function () {
 			$rootScope.SelectedCharModel = null;
 		}
@@ -1632,7 +1674,19 @@
 			}
 			
 			if ($scope.DeleteSkillModel != null) {
-				$scope.showDeleteCharWarning = true;
+				$scope.showDeleteSkillWarning = true;
+			}
+		}
+		
+		
+		$scope.deleteWeapon = function (index) {
+			$scope.DeleteWeaponModel = {
+				index: index + 1,
+				name: angular.copy($rootScope.SelectedCharModel.char.equipment.weapons["weapon" + (index + 1)].name)
+			}
+			
+			if ($scope.DeleteWeaponModel != null) {
+				$scope.showDeleteWeaponWarning = true;
 			}
 		}
 		
@@ -1651,6 +1705,13 @@
 		}
 		
 		
+		$scope.cancelDeletingWeapon = function () {
+			$scope.closeDeleteWeaponAlert();
+			$scope.showDeleteWeaponWarning = false;
+			$scope.DeleteWeaponModel = null;
+		}
+		
+		
 		$scope.beginEditChar = function () {
 			$scope.showCharEditing = true;
 		}
@@ -1658,6 +1719,7 @@
 		
 		$scope.endEditChar = function () {
 			$("[id^=skillDetails_]").hide();
+			$("[id^=weaponDetails_]").hide();
 			$scope.showCharEditing = false;
 		}
 		
@@ -1674,6 +1736,11 @@
 		
 		$scope.closeDeleteSkillAlert = function () {
 			$('#deleteSkill-modal').modal('hide');
+		}
+		
+		
+		$scope.closeDeleteWeaponAlert = function () {
+			$('#deleteWeapon-modal').modal('hide');
 		}
 		
 		
