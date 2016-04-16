@@ -119,12 +119,14 @@
 						$scope.choosableSkillsForWeapons[key].text = translation;
 					});
 				});
-				jQuery.each($scope.SelectedCharModel.char.skills.custom, function(key, skill) {
-					$scope.choosableSkillsForWeapons[key] = {
-						value: key,
-						text: skill.name
-					}
-				});
+				if ($scope.SelectedCharModel.char.skills.custom) {
+					jQuery.each($scope.SelectedCharModel.char.skills.custom, function(key, skill) {
+						$scope.choosableSkillsForWeapons[key] = {
+							value: key,
+							text: skill.name
+						}
+					});
+				}
 			}
 				
 			// Für "choosableRangeForWeapons"
