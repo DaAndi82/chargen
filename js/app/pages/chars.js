@@ -110,23 +110,19 @@
 			// Für "choosableSkillsForWeapons"
 			if ($scope.SelectedCharModel != null) {
 				jQuery.each($scope.SelectedCharModel.char.skills.battle, function(key, skill) {
-					if ($scope.choosableSkillsForWeapons[key] == null) {
-						$scope.choosableSkillsForWeapons[key] = {
-							value: key,
-							i18n: skill.i18n
-						}
-					}
+					$scope.choosableSkillsForWeapons[key] = {
+						value: key,
+						i18n: skill.i18n
+					};
 					
 					$translate($scope.choosableSkillsForWeapons[key].i18n).then(function (translation) {
 						$scope.choosableSkillsForWeapons[key].text = translation;
 					});
 				});
 				jQuery.each($scope.SelectedCharModel.char.skills.custom, function(key, skill) {
-					if ($scope.choosableSkillsForWeapons[key] == null) {
-						$scope.choosableSkillsForWeapons[key] = {
-							value: key,
-							text: skill.name
-						}
+					$scope.choosableSkillsForWeapons[key] = {
+						value: key,
+						text: skill.name
 					}
 				});
 			}
@@ -1203,6 +1199,16 @@
 		
 		$scope.removeSkill = function () {
 			if ($scope.DeleteSkillModel != null) {
+				
+				jQuery.each($scope.SelectedCharModel.char.equipment.weapons, function(key, weapon) {
+					if (weapon.skill.name == "skill" + $scope.DeleteSkillModel.index) {
+						if (weapon.skill.name) weapon.skill.name = "";
+						if (weapon.skill.i18n) weapon.skill.i18n = "";
+						if (weapon.skill.text) weapon.skill.text = "";
+					}
+				});
+				
+				delete $scope.choosableSkillsForWeapons["skill" + $scope.DeleteSkillModel.index];
 				delete $rootScope.SelectedCharModel.char.skills.custom["skill" + $scope.DeleteSkillModel.index];
 				
 				$scope.updateChar(function (error) {
@@ -1427,6 +1433,19 @@
 		}
 		
 		
+		$scope.checkStringNotNullAndRenameSkill= function (index, self) {
+			if (!self.$data) {
+				self.$data = "";
+			} else {
+				jQuery.each($scope.SelectedCharModel.char.equipment.weapons, function(key, weapon) {
+					if (weapon.skill.name == "skill" + (index + 1)) {
+						weapon.skill.text = self.$data;
+					}
+				});
+			}			
+		}
+		
+		
 		$scope.i18nForCustomSkillAttribute = function (skill, self) {
 			if (skill && self.$data) {
 				skill.attribute.i18n = $scope.choosableAttributes[self.$data].i18n;
@@ -1439,6 +1458,7 @@
 			if (weapon && self.$data) {
 				// Prüft ob i18n vorhanden - nicht bei customSkills
 				if ($scope.choosableSkillsForWeapons[self.$data].i18n != null) {
+					delete weapon.skill.text;
 					weapon.skill.i18n = $scope.choosableSkillsForWeapons[self.$data].i18n;
 				} else {
 					delete weapon.skill.i18n;
@@ -1541,22 +1561,21 @@
 		$scope.updateChar = function (callback) {
 			$rootScope.SelectedCharModel.initiator = $rootScope.profil.$id;
 			
-			if (callback == null) {
-				charService.modifyChar($rootScope.SelectedCharModel, function(error) {
-					if (error) {
-						switch (error.code) {
-							default:
-								alertService.addAlert({
-									type: 'error',
-									text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
-								});
-							break;
-						}
+			charService.modifyChar($rootScope.SelectedCharModel, function(error) {
+				if (error) {
+					switch (error.code) {
+						default:
+							alertService.addAlert({
+								type: 'error',
+								text: 'Es ist ein Fehler aufgetreten (Error-Code: ' + error.code + ').'
+							});
+						break;
 					}
-				});
-			} else {
-				charService.modifyChar($rootScope.SelectedCharModel, callback);
-			}
+				} else {
+					$scope.setChoosableValuesForSelectFields();
+					if (callback)  callback();
+				}
+			});
 		}
 		
 		
@@ -1595,6 +1614,8 @@
 						darkside: 0
 					}
 				}
+				
+				$scope.updateChar();
 			}
 		}
 		
@@ -1642,6 +1663,8 @@
 					},
 					note: "",
 				}
+				
+				$scope.updateChar();
 			}
 		}
 		

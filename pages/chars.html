@@ -1255,7 +1255,7 @@
 																								<p translate>skills.name</p>
 																							</div>
 																							<div class="col-xs-4">
-																								<p editable-text="skill.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
+																								<p editable-text="skill.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNullAndRenameSkill($index, this)">
 																									{{skill.name || 'Eingeben'}}
 																								</p>
 																							</div>
@@ -1468,7 +1468,7 @@
 														<div class="row char-weaponsTableHeader">
 															<div class="col-xs-12 col-sm-6">
 																<div class="row">
-																	<div class="col-xs-3">
+																	<div class="col-xs-4">
 																		<p translate>weapons.weapon</p>
 																	</div>
 																	<div class="col-xs-3">
@@ -1477,20 +1477,20 @@
 																	<div class="col-xs-3">
 																		<p translate>weapons.range</p>
 																	</div>
-																	<div class="col-xs-3">
+																	<div class="col-xs-2">
 																		<p translate>weapons.damage</p>
 																	</div>
 																</div>
 															</div>
 															<div class="col-xs-12 col-sm-6">
 																<div class="row">
-																	<div class="col-xs-4">
+																	<div class="col-xs-2">
 																		<p translate>weapons.crit</p>
 																	</div>
-																	<div class="col-xs-4">
+																	<div class="col-xs-5">
 																		<p translate>weapons.dice</p>
 																	</div>
-																	<div class="col-xs-4">
+																	<div class="col-xs-5">
 																		<p translate>weapons.special</p>
 																	</div>
 																</div>
@@ -1499,7 +1499,7 @@
 														<div class="row char-weaponsTableRow" ng-repeat="weapon in SelectedCharModel.char.equipment.weapons | orderBy: 'name'">
 															<div class="col-xs-12 col-sm-6">
 																<div class="row">
-																	<div class="col-xs-3">
+																	<div class="col-xs-4">
 																		<p editable-text="weapon.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" style="font-weight: bold">
 																			{{weapon.name || 'Auswählen'}} <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="weapon.note" ng-click="toggleNoteLayer('weapon' + $index)"><i class="fa fa-warning"></i></a>
 																		</p>
@@ -1523,7 +1523,7 @@
 																			{{(weapon.range.i18n | translate) || ''}}
 																		</p>
 																	</div>
-																	<div class="col-xs-3">
+																	<div class="col-xs-2">
 																		<p editable-number="weapon.damage" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)" style="font-weight: bold">
 																			{{weapon.damage || 0}}
 																		</p>
@@ -1535,7 +1535,7 @@
 															</div>
 															<div class="col-xs-12 col-sm-6">
 																<div class="row">
-																	<div class="col-xs-4">
+																	<div class="col-xs-2">
 																		<p editable-number="weapon.crit" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
 																			{{weapon.crit || 0}}
 																		</p>
@@ -1543,7 +1543,7 @@
 																			<img class="char-weaponTableDice" src="img/icons/advantage.png" ng-repeat="n in [] | loop:weapon.crit" />
 																		</p>
 																	</div>															
-																	<div class="col-xs-4">
+																	<div class="col-xs-5">
 																		<p>
 																			<img class="char-weaponTableDice" src="img/dice/proficiency.png" ng-repeat="n in [] | loop:getProficiencyCountForWeapon(weapon)" />
 																			<img class="char-weaponTableDice" src="img/dice/ability.png" ng-repeat="n in [] | loop:getAbilityCountForWeapon(weapon)" />
@@ -1562,7 +1562,7 @@
 																			<img class="char-weaponTableDice" src="img/icons/darkside.png" ng-repeat="n in [] | loop:weapon.modifications.darkside" />
 																		</p>
 																	</div>
-																	<div class="{{showCharEditing ? 'col-xs-3' : 'col-xs-4'}}">
+																	<div class="{{showCharEditing ? 'col-xs-4' : 'col-xs-5'}}">
 																		<p editable-text="weapon.specialShort" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
 																			{{weapon.specialShort || 'Auswählen'}}
 																		</p>
