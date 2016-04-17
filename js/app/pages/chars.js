@@ -51,6 +51,8 @@
 		$scope.showDeleteWeaponWarning = false;
 		/* Triggert das Bearbeiten eines Chars .*/
 		$scope.showCharEditing = false;
+		/*Zeigt den Avatar-Edit-Bereich im Profil an. */
+		$scope.showCharImageEditing = false;
 		/* Lädt die Lokalisation */
 		$translatePartialLoader.addPart('chars');
 		/* Zeige Buttons bei xeditable */
@@ -1203,15 +1205,16 @@
 			if ($scope.DeleteSkillModel != null) {
 				
 				jQuery.each($scope.SelectedCharModel.char.equipment.weapons, function(key, weapon) {
-					if (weapon.skill.name == "skill" + $scope.DeleteSkillModel.index) {
+					if (weapon.skill.name == $scope.DeleteSkillModel.key) {
 						if (weapon.skill.name) weapon.skill.name = "";
 						if (weapon.skill.i18n) weapon.skill.i18n = "";
 						if (weapon.skill.text) weapon.skill.text = "";
 					}
 				});
 				
-				delete $scope.choosableSkillsForWeapons["skill" + $scope.DeleteSkillModel.index];
-				delete $rootScope.SelectedCharModel.char.skills.custom["skill" + $scope.DeleteSkillModel.index];
+				delete $scope.choosableSkillsForWeapons[$scope.DeleteSkillModel.key];
+				delete $rootScope.SelectedCharModel.char.skills.custom[$scope.DeleteSkillModel.key];
+				$scope.slideDownSkills();
 				
 				$scope.updateChar(function (error) {
 					if (error) {
@@ -1231,7 +1234,8 @@
 		
 		$scope.removeWeapon = function () {
 			if ($scope.DeleteWeaponModel != null) {
-				delete $rootScope.SelectedCharModel.char.equipment.weapons["weapon" + $scope.DeleteWeaponModel.index];
+				delete $rootScope.SelectedCharModel.char.equipment.weapons[$scope.DeleteWeaponModel.key];
+				$scope.slideDownWeapons();
 				
 				$scope.updateChar(function (error) {
 					if (error) {
@@ -1589,7 +1593,13 @@
 				
 				var customSkillCount = Object.keys($rootScope.SelectedCharModel.char.skills.custom).length;
 				
-				$rootScope.SelectedCharModel.char.skills.custom['skill' + (customSkillCount + 1)] = {
+				if (customSkillCount < 9) {
+					var stringIndex = "skill0" + (customSkillCount + 1);
+				} else {
+					var stringIndex = "skill" + (customSkillCount + 1);
+				}
+				
+				$rootScope.SelectedCharModel.char.skills.custom[stringIndex] = {
 					name: "",
 					rank: 0,
 					career: "",
@@ -1629,7 +1639,13 @@
 				
 				var weaponCount = Object.keys($rootScope.SelectedCharModel.char.equipment.weapons).length;
 				
-				$rootScope.SelectedCharModel.char.equipment.weapons['weapon' + (weaponCount + 1)] = {
+				if (weaponCount < 9) {
+					var stringIndex = "weapon0" + (weaponCount + 1);
+				} else {
+					var stringIndex = "weapon" + (weaponCount + 1);
+				}
+				
+				$rootScope.SelectedCharModel.char.equipment.weapons[stringIndex] = {
 					name: "",
 					skill: {
 						name: "",
@@ -1674,8 +1690,58 @@
 		$scope.duplicateWeapon = function (weapon) {
 			if (weapon != null) {
 				var weaponCount = Object.keys($rootScope.SelectedCharModel.char.equipment.weapons).length;
-				$rootScope.SelectedCharModel.char.equipment.weapons['weapon' + (weaponCount + 1)] = angular.copy(weapon);
+				
+				if (weaponCount < 9) {
+					var stringIndex = "weapon0" + (weaponCount + 1);
+				} else {
+					var stringIndex = "weapon" + (weaponCount + 1);
+				}
+				
+				$rootScope.SelectedCharModel.char.equipment.weapons[stringIndex] = angular.copy(weapon);
+				$scope.updateChar();
 			}
+		}
+		
+		
+		$scope.slideDownSkills = function () {
+			var index = 1;
+			var skills = angular.copy($scope.SelectedCharModel.char.skills.custom);
+			
+			jQuery.each(skills, function(key, skill) {
+				if (index < 10) {
+					var stringIndex = "skill0" + index;
+				} else {
+					var stringIndex = "skill" + index;
+				}
+				
+				if (key != stringIndex && $scope.SelectedCharModel.char.skills.custom[stringIndex] == undefined) {
+					$scope.SelectedCharModel.char.skills.custom[stringIndex] = skill;
+					delete $scope.SelectedCharModel.char.skills.custom[key];
+				}
+				
+				index++;
+			});
+		}
+		
+		
+		$scope.slideDownWeapons = function () {
+			var index = 1;
+			var weapons = angular.copy($scope.SelectedCharModel.char.equipment.weapons);
+			
+			jQuery.each(weapons, function(key, weapon) {
+				if (index < 10) {
+					var stringIndex = "weapon0" + index;
+				} else {
+					var stringIndex = "weapon" + index;
+				}
+				
+				if (key != stringIndex && $scope.SelectedCharModel.char.equipment.weapons[stringIndex] == undefined) {
+					$scope.SelectedCharModel.char.equipment.weapons[stringIndex] = weapon;
+					delete $scope.SelectedCharModel.char.equipment.weapons[key];
+				}
+				
+				index++;
+			});
 		}
 		
 		
@@ -1693,9 +1759,15 @@
 		
 		
 		$scope.deleteSkill = function (index) {
+			if (index < 9) {
+				var stringIndex = "skill0" + (index + 1);
+			} else {
+				var stringIndex = "skill" + (index + 1);
+			}
+		
 			$scope.DeleteSkillModel = {
-				index: index + 1,
-				name: angular.copy($rootScope.SelectedCharModel.char.skills.custom["skill" + (index + 1)].name)
+				key: stringIndex,
+				name: angular.copy($rootScope.SelectedCharModel.char.skills.custom[stringIndex].name)
 			}
 			
 			if ($scope.DeleteSkillModel != null) {
@@ -1705,9 +1777,15 @@
 		
 		
 		$scope.deleteWeapon = function (index) {
+			if (index < 9) {
+				var stringIndex = "weapon0" + (index + 1);
+			} else {
+				var stringIndex = "weapon" + (index + 1);
+			}
+			
 			$scope.DeleteWeaponModel = {
-				index: index + 1,
-				name: angular.copy($rootScope.SelectedCharModel.char.equipment.weapons["weapon" + (index + 1)].name)
+				key: stringIndex,
+				name: angular.copy($rootScope.SelectedCharModel.char.equipment.weapons[stringIndex].name)
 			}
 			
 			if ($scope.DeleteWeaponModel != null) {

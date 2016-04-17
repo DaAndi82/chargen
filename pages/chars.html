@@ -160,8 +160,18 @@
 									</div>
 								</div>
 							</div> 
-							<div class="col-sm-3">
+							<div class="col-sm-3" ng-hide="showCharEditing && showCharImageEditing">
 								<div class="row char-image">
+									<div class="col-xs-12">
+										<div class="thumbnail">
+											<img class="img-circle" src="img/avatar.jpg"  />
+										</div>
+									</div>
+									<div class="col-xs-12" ng-show="showCharEditing">
+										<button type="button" class="btn btn-default" ng-click="editAvatar()">Avatar ändern</button>	
+									</div>
+								</div>
+								<div class="row char-image" ng-show="showCharEditing && showCharImageEditing">
 									<div class="col-xs-12">
 										<div class="thumbnail">
 											<img class="img-circle" src="img/avatar.jpg"  />
