@@ -1476,40 +1476,48 @@
 												<div class="row char-weaponsTable">
 													<div class="col-xs-12">
 														<div class="row char-weaponsTableHeader">
-															<div class="col-xs-12 col-sm-6">
+															<div class="col-xs-12 col-sm-3">
 																<div class="row">
-																	<div class="col-xs-4">
+																	<div class="col-xs-5">
 																		<p translate>weapons.weapon</p>
 																	</div>
-																	<div class="col-xs-3">
+																	<div class="col-xs-7">
 																		<p translate>weapons.skill</p>
 																	</div>
-																	<div class="col-xs-3">
+																</div>
+															</div>
+															<div class="col-xs-12 col-sm-3">
+																<div class="row">
+																	<div class="col-xs-7">
 																		<p translate>weapons.range</p>
 																	</div>
-																	<div class="col-xs-2">
+																	<div class="col-xs-5">
 																		<p translate>weapons.damage</p>
 																	</div>
 																</div>
 															</div>
-															<div class="col-xs-12 col-sm-6">
+															<div class="col-xs-12 col-sm-3">
 																<div class="row">
-																	<div class="col-xs-2">
+																	<div class="col-xs-5">
 																		<p translate>weapons.crit</p>
 																	</div>
-																	<div class="col-xs-5">
+																	<div class="col-xs-7">
 																		<p translate>weapons.dice</p>
 																	</div>
-																	<div class="col-xs-5">
+																</div>
+															</div>
+															<div class="col-xs-12 col-sm-3">
+																<div class="row">
+																	<div class="col-xs-12">
 																		<p translate>weapons.special</p>
 																	</div>
 																</div>
 															</div>
 														</div>
 														<div class="row char-weaponsTableRow" ng-repeat="weapon in SelectedCharModel.char.equipment.weapons">
-															<div class="col-xs-12 col-sm-6">
+															<div class="col-xs-12 col-sm-3">
 																<div class="row">
-																	<div class="col-xs-4">
+																	<div class="col-xs-5">
 																		<p editable-text="weapon.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" style="font-weight: bold">
 																			{{weapon.name || 'Auswählen'}} <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="weapon.note" ng-click="toggleNoteLayer('weapon' + $index)"><i class="fa fa-warning"></i></a>
 																		</p>
@@ -1517,7 +1525,7 @@
 																			{{weapon.name || ''}} <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="weapon.note" ng-click="toggleNoteLayer('weapon' + $index)"><i class="fa fa-warning"></i></a>
 																		</p>
 																	</div>
-																	<div class="col-xs-3">
+																	<div class="col-xs-7">
 																		<p editable-select="weapon.skill.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="i18nForWeaponSkill(weapon, this)" e-ng-options="cs.value  as cs.text  for cs in choosableSkillsForWeapons">
 																			{{(weapon.skill.i18n | translate) || weapon.skill.text || 'Auswählen'}}
 																		</p>
@@ -1525,7 +1533,11 @@
 																			{{(weapon.skill.i18n | translate) || weapon.skill.text || ''}}
 																		</p>
 																	</div>
-																	<div class="col-xs-3">
+																</div>
+															</div>
+															<div class="col-xs-12 col-sm-3">
+																<div class="row">
+																	<div class="col-xs-7">
 																		<p editable-select="weapon.range.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="i18nForWeaponRange(weapon, this)" e-ng-options="cr.value  as cr.text  for cr in choosableRangeForWeapons">
 																			{{(weapon.range.i18n | translate) || 'Auswählen'}}
 																		</p>
@@ -1533,7 +1545,7 @@
 																			{{(weapon.range.i18n | translate) || ''}}
 																		</p>
 																	</div>
-																	<div class="col-xs-2">
+																	<div class="col-xs-5">
 																		<p editable-number="weapon.damage" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)" style="font-weight: bold">
 																			{{weapon.damage || 0}}
 																		</p>
@@ -1543,9 +1555,9 @@
 																	</div>
 																</div>
 															</div>
-															<div class="col-xs-12 col-sm-6">
+															<div class="col-xs-12 col-sm-3">
 																<div class="row">
-																	<div class="col-xs-2">
+																	<div class="col-xs-5">
 																		<p editable-number="weapon.crit" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
 																			{{weapon.crit || 0}}
 																		</p>
@@ -1553,7 +1565,7 @@
 																			<img class="char-weaponTableDice" src="img/icons/advantage.png" ng-repeat="n in [] | loop:weapon.crit" />
 																		</p>
 																	</div>															
-																	<div class="col-xs-5">
+																	<div class="col-xs-7">
 																		<p>
 																			<img class="char-weaponTableDice" src="img/dice/proficiency.png" ng-repeat="n in [] | loop:getProficiencyCountForWeapon(weapon)" />
 																			<img class="char-weaponTableDice" src="img/dice/ability.png" ng-repeat="n in [] | loop:getAbilityCountForWeapon(weapon)" />
@@ -1572,15 +1584,19 @@
 																			<img class="char-weaponTableDice" src="img/icons/darkside.png" ng-repeat="n in [] | loop:weapon.modifications.darkside" />
 																		</p>
 																	</div>
-																	<div class="{{showCharEditing ? 'col-xs-4' : 'col-xs-5'}}">
-																		<p editable-text="weapon.specialShort" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
+																</div>
+															</div>
+															<div class="col-xs-12 col-sm-3">
+																<div class="row char-weaponTableSpecial textarea {{buttons == 'no' ? '' : 'apple'}}">
+																	<div class="{{showCharEditing ? 'col-xs-10' : 'col-xs-12'}}">
+																		<a editable-textarea="weapon.specialShort" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" e-rows="3">
 																			{{weapon.specialShort || 'Auswählen'}}
-																		</p>
+																		</a>
 																		<p ng-hide="showCharEditing">
 																			{{weapon.specialShort || ''}}
 																		</p>
 																	</div>
-																	<div class="col-xs-1" ng-show="showCharEditing">
+																	<div class="col-xs-2" ng-show="showCharEditing">
 																		<p>
 																			<button class="btn btn-warning btn-xs pull-right" type="button" ng-click="toggleWeaponDetails($index)"><i class="fa fa-bars"></i></button>
 																		</p>
@@ -1596,7 +1612,7 @@
 																			</div>
 																		</div>
 																		<div class="row char-weaponDetailsRows">
-																			<div class="col-xs-10">
+																			<div class="col-xs-12 col-sm-10">
 																				<div class="row">
 																					<div class="col-xs-2">
 																						<p translate>weapons.held</p>
@@ -1624,7 +1640,7 @@
 																					</div>
 																				</div>
 																			</div>
-																			<div class="col-xs-2 text-center">
+																			<div class="col-xs-12 col-sm-2 text-right char-weaponDetailsButtons">
 																				<button class="btn btn-info btn-xs" type="button" style="width: 24px" ng-click="moveDownWeapon($index)" ng-disabled="$last"><i class="fa fa-chevron-down"></i></button>
 																				<button class="btn btn-info btn-xs" type="button" style="width: 24px" ng-click="moveUpWeapon($index)" ng-disabled="$first"><i class="fa fa-chevron-up"></i></button>
 																				&nbsp;|&nbsp;

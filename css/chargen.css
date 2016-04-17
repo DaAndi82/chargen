@@ -451,6 +451,29 @@ iframe {
 .char-weaponsTable a.disabled {
 	cursor: not-allowed;
 }
+.char-weaponDetailsButtons {
+	padding-right: 10px !important;
+}
+.char-weaponTableSpecial.textarea {
+	padding-left: 10px !important;
+	padding-bottom: 10px;
+}
+.char-weaponTableSpecial form.editable-wrap{
+	display: block;
+	padding-top: 5px;
+}
+.char-weaponTableSpecial .editable-textarea div {
+	display: block;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+.char-weaponTableSpecial.apple .editable-textarea div {
+	padding-right: 42px;
+}
+.char-weaponTableSpecial textarea {
+	margin-bottom: 5px !important;
+	width: 100% !important;
+}
 
 
 .char-noteLayer {
