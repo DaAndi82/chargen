@@ -1253,6 +1253,77 @@
 		}
 		
 		
+		$scope.moveUpWeapon = function (index) {
+			if (index < 9) {
+				var oldIndex = "weapon0" + (index + 1);
+				var newIndex = "weapon0" + index;
+			} else {
+				var oldIndex = "weapon" + (index + 1);
+				if (index == 9) {
+					var newIndex = "weapon09";
+				} else {
+					var newIndex = "weapon" + index;
+				}
+			}
+		
+			var oldWeapon = angular.copy($rootScope.SelectedCharModel.char.equipment.weapons[newIndex]);
+			$rootScope.SelectedCharModel.char.equipment.weapons[newIndex] = angular.copy($rootScope.SelectedCharModel.char.equipment.weapons[oldIndex]);
+			$rootScope.SelectedCharModel.char.equipment.weapons[oldIndex] = oldWeapon;
+			
+			var oldWeaponDetailsShown = $("#weaponDetails_" + index).is(":visible")
+			var newWeaponDetailsShown = $("#weaponDetails_" + (index - 1)).is(":visible")
+			
+			if (oldWeaponDetailsShown) {
+				$("#weaponDetails_" + (index - 1)).show();
+			} else {
+				$("#weaponDetails_" + (index - 1)).hide();
+			}
+			if (newWeaponDetailsShown) {
+				$("#weaponDetails_" + index).show();
+			} else {
+				$("#weaponDetails_" + index).hide();
+			}
+			
+			$scope.updateChar();
+		}
+		
+		
+		$scope.moveDownWeapon = function (index) {
+			if (index < 9) {
+				var oldIndex = "weapon0" + (index + 1);
+				if (index == 8) {
+					var newIndex = "weapon10";
+				} else {
+					var newIndex = "weapon0" + (index + 2);
+				}
+				var newIndex = "weapon0" + (index + 2);
+			} else {
+				var oldIndex = "weapon" + (index + 1);
+				var newIndex = "weapon" + (index + 2);
+			}
+		
+			var oldWeapon = angular.copy($rootScope.SelectedCharModel.char.equipment.weapons[newIndex]);
+			$rootScope.SelectedCharModel.char.equipment.weapons[newIndex] = angular.copy($rootScope.SelectedCharModel.char.equipment.weapons[oldIndex]);
+			$rootScope.SelectedCharModel.char.equipment.weapons[oldIndex] = oldWeapon;
+			
+			var oldWeaponDetailsShown = $("#weaponDetails_" + index).is(":visible")
+			var newWeaponDetailsShown = $("#weaponDetails_" + (index + 1)).is(":visible")
+			
+			if (oldWeaponDetailsShown) {
+				$("#weaponDetails_" + (index + 1)).show();
+			} else {
+				$("#weaponDetails_" + (index + 1)).hide();
+			}
+			if (newWeaponDetailsShown) {
+				$("#weaponDetails_" + index).show();
+			} else {
+				$("#weaponDetails_" + index).hide();
+			}
+			
+			$scope.updateChar();
+		}
+		
+		
 		$scope.selectChar = function (id) {
 			$rootScope.SelectedCharModel = {
 				char: charService.getChar(id),
@@ -1847,13 +1918,13 @@
 		}
 		
 		
-		$scope.toggleSkillDetails = function (div) {
-			$("#skillDetails_" + div).toggle();
+		$scope.toggleSkillDetails = function (index) {
+			$("#skillDetails_" + index).toggle();
 		}
 		
 		
-		$scope.toggleWeaponDetails = function (div) {
-			$("#weaponDetails" + div).toggle();
+		$scope.toggleWeaponDetails = function (index) {
+			$("#weaponDetails_" + index).toggle();
 		}
 		
 		
