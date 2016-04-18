@@ -1914,6 +1914,7 @@
 		$scope.endEditChar = function () {
 			$("[id^=skillDetails_]").hide();
 			$("[id^=weaponDetails_]").hide();
+			$("[id^=equipmentWeaponDetails_]").hide();
 			$scope.showCharEditing = false;
 		}
 		
@@ -1945,6 +1946,11 @@
 		
 		$scope.toggleWeaponDetails = function (index) {
 			$("#weaponDetails_" + index).toggle();
+		}
+		
+		
+		$scope.toggleEquipmentWeaponDetails = function (index) {
+			$("#equipmentWeaponDetails_" + index).toggle();
 		}
 		
 		
