@@ -1886,6 +1886,26 @@
 		}
 		
 		
+		$scope.beginEditCharImage = function () {
+			$scope.showCharImageEditing = true;
+			$scope.SelectedCharModel.cropedCharImage = null;
+		}
+		
+		
+		$scope.changeCharImage = function () {
+			$scope.SelectedCharModel.char.image = $scope.SelectedCharModel.cropedCharImage;
+			$scope.updateChar();
+			$scope.SelectedCharModel.editCharImage = null;
+			$scope.showCharImageEditing = false;
+		}
+		
+		
+		$scope.endEditCharImage = function () {
+			$scope.SelectedCharModel.editCharImage = null;
+			$scope.showCharImageEditing = false;
+		}
+		
+		
 		$scope.beginEditChar = function () {
 			$scope.showCharEditing = true;
 		}

@@ -1,6 +1,9 @@
 ﻿{
 	"character":
 	{
+		"identity": "Identity",
+		"talents": "Talents",
+		"equipment": "Equipment",
 		"character" : "CHARACTER",
 		"name": "NAME",
 		"species": "SPECIES",
