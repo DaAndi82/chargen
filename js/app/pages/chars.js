@@ -1270,8 +1270,10 @@
 			$rootScope.SelectedCharModel.char.equipment.weapons[newIndex] = angular.copy($rootScope.SelectedCharModel.char.equipment.weapons[oldIndex]);
 			$rootScope.SelectedCharModel.char.equipment.weapons[oldIndex] = oldWeapon;
 			
-			var oldWeaponDetailsShown = $("#weaponDetails_" + index).is(":visible")
-			var newWeaponDetailsShown = $("#weaponDetails_" + (index - 1)).is(":visible")
+			var oldWeaponDetailsShown = $("#weaponDetails_" + index).is(":visible");
+			var oldEquipmentWeaponDetailsShown = $("#equipmentWeaponDetails_" + index).is(":visible");
+			var newWeaponDetailsShown = $("#weaponDetails_" + (index - 1)).is(":visible");
+			var newEquipmentWeaponDetailsShown = $("#equipmentWeaponDetails_" + (index - 1)).is(":visible");
 			
 			if (oldWeaponDetailsShown) {
 				$("#weaponDetails_" + (index - 1)).show();
@@ -1282,6 +1284,17 @@
 				$("#weaponDetails_" + index).show();
 			} else {
 				$("#weaponDetails_" + index).hide();
+			}
+			
+			if (oldEquipmentWeaponDetailsShown) {
+				$("#equipmentWeaponDetails_" + (index - 1)).show();
+			} else {
+				$("#equipmentWeaponDetails_" + (index - 1)).hide();
+			}
+			if (newEquipmentWeaponDetailsShown) {
+				$("#equipmentWeaponDetails_" + index).show();
+			} else {
+				$("#equipmentWeaponDetails_" + index).hide();
 			}
 			
 			$scope.updateChar();
@@ -1296,7 +1309,6 @@
 				} else {
 					var newIndex = "weapon0" + (index + 2);
 				}
-				var newIndex = "weapon0" + (index + 2);
 			} else {
 				var oldIndex = "weapon" + (index + 1);
 				var newIndex = "weapon" + (index + 2);
@@ -1306,8 +1318,10 @@
 			$rootScope.SelectedCharModel.char.equipment.weapons[newIndex] = angular.copy($rootScope.SelectedCharModel.char.equipment.weapons[oldIndex]);
 			$rootScope.SelectedCharModel.char.equipment.weapons[oldIndex] = oldWeapon;
 			
-			var oldWeaponDetailsShown = $("#weaponDetails_" + index).is(":visible")
-			var newWeaponDetailsShown = $("#weaponDetails_" + (index + 1)).is(":visible")
+			var oldWeaponDetailsShown = $("#weaponDetails_" + index).is(":visible");
+			var oldEquipmentWeaponDetailsShown = $("#equipmentWeaponDetails_" + index).is(":visible");
+			var newWeaponDetailsShown = $("#weaponDetails_" + (index + 1)).is(":visible");
+			var newEquipmentWeaponDetailsShown = $("#equipmentWeaponDetails_" + (index + 1)).is(":visible");
 			
 			if (oldWeaponDetailsShown) {
 				$("#weaponDetails_" + (index + 1)).show();
@@ -1318,6 +1332,17 @@
 				$("#weaponDetails_" + index).show();
 			} else {
 				$("#weaponDetails_" + index).hide();
+			}
+			
+			if (oldEquipmentWeaponDetailsShown) {
+				$("#equipmentWeaponDetails_" + (index + 1)).show();
+			} else {
+				$("#equipmentWeaponDetails_" + (index + 1)).hide();
+			}
+			if (newEquipmentWeaponDetailsShown) {
+				$("#equipmentWeaponDetails_" + index).show();
+			} else {
+				$("#equipmentWeaponDetails_" + index).hide();
 			}
 			
 			$scope.updateChar();
@@ -1703,7 +1728,7 @@
 		}
 		
 		
-		$scope.newWeapon = function () {
+		$scope.newWeapon = function (equipWeapon) {
 			if ($rootScope.SelectedCharModel != null) {
 				if ($rootScope.SelectedCharModel.char.equipment == null) $rootScope.SelectedCharModel.char.equipment = {};
 				if ($rootScope.SelectedCharModel.char.equipment.weapons == null) $rootScope.SelectedCharModel.char.equipment.weapons = {};
@@ -1751,6 +1776,10 @@
 						darkside: 0
 					},
 					note: "",
+				}
+				
+				if (equipWeapon) {
+					$rootScope.SelectedCharModel.char.equipment.weapons[stringIndex].equip = true;
 				}
 				
 				$scope.updateChar();

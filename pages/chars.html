@@ -1660,9 +1660,11 @@
 																				</div>
 																			</div>
 																			<div class="col-xs-12 col-sm-2 text-right char-weaponDetailsButtons">
+																				<!-- TODO: Eine Lösung für das überspringen des Index muss noch gefunden werden.
 																				<button class="btn btn-info btn-xs" type="button" style="width: 24px" ng-click="moveDownWeapon($index)" ng-disabled="$last"><i class="fa fa-chevron-down"></i></button>
 																				<button class="btn btn-info btn-xs" type="button" style="width: 24px" ng-click="moveUpWeapon($index)" ng-disabled="$first"><i class="fa fa-chevron-up"></i></button>
 																				&nbsp;|&nbsp;
+																				-->
 																				<button class="btn btn-success btn-xs" type="button" style="width: 24px" ng-click="duplicateWeapon(weapon)"><i class="fa fa-copy"></i></button>
 																				<button class="btn btn-danger btn-xs" type="button" style="width: 24px" data-toggle="modal" data-target="#deleteWeapon-modal" ng-click="deleteWeapon($index)"><i class="fa fa-trash-o"></i></button>
 																			</div>
@@ -1831,7 +1833,7 @@
 														<div class="row char-weaponsTableRow noPadding" ng-show="showCharEditing">
 															<div class="col-xs-12">
 																<p>
-																	<button type="submit" class="btn btn-success btn-xs pull-right" ng-click="newWeapon()"><i class="fa fa-plus"></i></button>
+																	<button type="submit" class="btn btn-success btn-xs pull-right" ng-click="newWeapon(true)"><i class="fa fa-plus"></i></button>
 																</p>
 															</div>
 														</div>
@@ -1913,7 +1915,7 @@
 																			{{weapon.name || 'Auswählen'}} <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="weapon.note" ng-click="toggleNoteLayer('equipmentWeapon' + $index)"><i class="fa fa-warning"></i></a>
 																		</p>
 																		<p ng-hide="showCharEditing" style="font-weight: bold">
-																			{{weapon.name || ''}} <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="weapon.note" ng-click="toggleNoteLayer('weapon' + $index)"><i class="fa fa-warning"></i></a>
+																			{{weapon.name || ''}} <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="weapon.note" ng-click="toggleNoteLayer('equipmentWeapon' + $index)"><i class="fa fa-warning"></i></a>
 																		</p>
 																	</div>
 																	<div class="col-xs-7 col-lg-6">
