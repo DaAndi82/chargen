@@ -1206,7 +1206,7 @@
 														</div>
 													</div>
 												</div>
-												<div class="row char-skillsColumnContainer">
+												<div class="row char-skillsColumnContainer" ng-show="SelectedCharModel.char.skills.custom || showCharEditing">
 													<div class="col-xs-12 char-skillsColumn">
 														<div class="row char-skillsTable">
 															<div class="col-xs-12">
@@ -1281,7 +1281,7 @@
 																					<div class="col-xs-10">
 																						<div class="row">
 																							<div class="col-xs-2">
-																								<p translate>skills.name</p>
+																								<p>{{"skills.name" | translate}}:</p>
 																							</div>
 																							<div class="col-xs-4">
 																								<p editable-text="skill.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNullAndRenameSkill($index, this)">
@@ -1289,7 +1289,7 @@
 																								</p>
 																							</div>
 																							<div class="col-xs-2">
-																								<p translate>skills.attribute</p>
+																								<p>{{"skills.attribute" | translate}}:</p>
 																							</div>
 																							<div class="col-xs-4">
 																								<p editable-select="skill.attribute.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="i18nForCustomSkillAttribute(skill, this)" e-ng-options="ca.value  as ca.text  for ca in choosableAttributes">
@@ -1534,7 +1534,7 @@
 															</div>
 														</div>
 														<div class="row char-weaponsTableRow" ng-repeat="weapon in SelectedCharModel.char.equipment.weapons" ng-show="weapon.equip">
-															<div class="col-xs-12 col-sm-6 col-lg-4">
+															<div class="col-xs-12 col-sm-6 col-lg-4 {{weapon.held ? 'inUse' : ''}}">
 																<div class="row">
 																	<div class="col-xs-5 col-lg-6">
 																		<p editable-text="weapon.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" style="font-weight: bold">
@@ -1554,7 +1554,7 @@
 																	</div>
 																</div>
 															</div>
-															<div class="col-xs-12 col-sm-6 col-lg-2">
+															<div class="col-xs-12 col-sm-6 col-lg-2 {{weapon.held ? 'inUse' : ''}}">
 																<div class="row">
 																	<div class="col-xs-5 col-lg-7">
 																		<p editable-select="weapon.range.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="i18nForWeaponRange(weapon, this)" e-ng-options="cr.value  as cr.text  for cr in choosableRangeForWeapons">
@@ -1574,7 +1574,7 @@
 																	</div>
 																</div>
 															</div>
-															<div class="col-xs-12 col-sm-6 col-lg-3">
+															<div class="col-xs-12 col-sm-6 col-lg-3 {{weapon.held ? 'inUse' : ''}}">
 																<div class="row">
 																	<div class="col-xs-5">
 																		<p editable-number="weapon.crit" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
@@ -1605,7 +1605,7 @@
 																	</div>
 																</div>
 															</div>
-															<div class="col-xs-12 col-sm-6 col-lg-3">
+															<div class="col-xs-12 col-sm-6 col-lg-3 {{weapon.held ? 'inUse' : ''}}">
 																<div class="row char-weaponTableSpecial textarea {{buttons == 'no' ? '' : 'apple'}}">
 																	<div class="{{showCharEditing ? 'col-xs-10' : 'col-xs-12'}}">
 																		<a editable-textarea="weapon.specialShort" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" e-rows="3">
@@ -1634,7 +1634,7 @@
 																			<div class="col-xs-12 col-sm-10">
 																				<div class="row">
 																					<div class="col-xs-2">
-																						<p translate>weapons.held</p>
+																						<p>{{"weapons.held" | translate}}:</p>
 																					</div>
 																					<div class="col-xs-2">
 																						<p editable-checkbox="weapon.held" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
@@ -1642,7 +1642,7 @@
 																						</p>
 																					</div>
 																					<div class="col-xs-2">
-																						<p translate>weapons.equip</p>
+																						<p>{{"weapons.equip" | translate}}:</p>
 																					</div>
 																					<div class="col-xs-2">
 																						<p editable-checkbox="weapon.equip" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="holsterWeapon(weapon)">
@@ -1650,7 +1650,7 @@
 																						</p>
 																					</div>
 																					<div class="col-xs-2">
-																						<p translate>weapons.own</p>
+																						<p>{{"weapons.own" | translate}}:</p>
 																					</div>
 																					<div class="col-xs-2">
 																						<p editable-checkbox="weapon.own" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
@@ -1906,7 +1906,7 @@
 															</div>
 														</div>
 														<div class="row char-weaponsTableRow" ng-repeat="weapon in SelectedCharModel.char.equipment.weapons">
-															<div class="col-xs-12 col-sm-6 col-lg-4">
+															<div class="col-xs-12 col-sm-6 col-lg-4 {{weapon.held ? 'inUse' : ''}}">
 																<div class="row">
 																	<div class="col-xs-5 col-lg-6">
 																		<p editable-text="weapon.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" style="font-weight: bold">
@@ -1926,7 +1926,7 @@
 																	</div>
 																</div>
 															</div>
-															<div class="col-xs-12 col-sm-6 col-lg-2">
+															<div class="col-xs-12 col-sm-6 col-lg-2 {{weapon.held ? 'inUse' : ''}}">
 																<div class="row">
 																	<div class="col-xs-5 col-lg-7">
 																		<p editable-select="weapon.range.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="i18nForWeaponRange(weapon, this)" e-ng-options="cr.value  as cr.text  for cr in choosableRangeForWeapons">
@@ -1946,7 +1946,7 @@
 																	</div>
 																</div>
 															</div>
-															<div class="col-xs-12 col-sm-6 col-lg-3">
+															<div class="col-xs-12 col-sm-6 col-lg-3 {{weapon.held ? 'inUse' : ''}}">
 																<div class="row">
 																	<div class="col-xs-5">
 																		<p editable-number="weapon.crit" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
@@ -1977,7 +1977,7 @@
 																	</div>
 																</div>
 															</div>
-															<div class="col-xs-12 col-sm-6 col-lg-3">
+															<div class="col-xs-12 col-sm-6 col-lg-3 {{weapon.held ? 'inUse' : ''}}">
 																<div class="row char-weaponTableSpecial textarea {{buttons == 'no' ? '' : 'apple'}}">
 																	<div class="{{showCharEditing ? 'col-xs-10' : 'col-xs-12'}}">
 																		<a editable-textarea="weapon.specialShort" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" e-rows="3">
@@ -2006,7 +2006,7 @@
 																			<div class="col-xs-12 col-sm-10">
 																				<div class="row">
 																					<div class="col-xs-2">
-																						<p translate>weapons.held</p>
+																						<p>{{"weapons.held" | translate}}:</p>
 																					</div>
 																					<div class="col-xs-2">
 																						<p editable-checkbox="weapon.held" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
@@ -2014,7 +2014,7 @@
 																						</p>
 																					</div>
 																					<div class="col-xs-2">
-																						<p translate>weapons.equip</p>
+																						<p>{{"weapons.equip" | translate}}:</p>
 																					</div>
 																					<div class="col-xs-2">
 																						<p editable-checkbox="weapon.equip" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="holsterWeapon(weapon)">
@@ -2022,7 +2022,7 @@
 																						</p>
 																					</div>
 																					<div class="col-xs-2">
-																						<p translate>weapons.own</p>
+																						<p>{{"weapons.own" | translate}}:</p>
 																					</div>
 																					<div class="col-xs-2">
 																						<p editable-checkbox="weapon.own" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">

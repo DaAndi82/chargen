@@ -414,6 +414,9 @@ iframe {
 .char-weaponsTableRow  input.editable-has-buttons {
 	width: 50%;
 }
+.char-weaponsTableRow .inUse {
+	color: #f56954;
+}
 /* // Speziell für iPhone-Buttons */
 .char-weaponsTableHeader div,
 .char-weaponsTableRow div {
