@@ -341,7 +341,7 @@
 									<div class="col-xs-12">
 										<div class="row">
 											<div class="col-xs-12 text-center char-attributesHeader">
-												<p>{{"attributes.attributes" | translate | uppercase}}<p>
+												<p>{{"attributes.attributes" | translate | uppercase}}</p>
 											</div>
 										</div>
 										<div class="row">
@@ -507,7 +507,7 @@
 									<div class="col-xs-12">
 										<div class="row">
 											<div class="col-xs-12 text-center char-skillsHeader">
-												<p translate>skills.skills<p>
+												<p translate>skills.skills</p>
 											</div>
 										</div>
 										<div class="row">
@@ -1487,7 +1487,7 @@
 									<div class="col-xs-12">
 										<div class="row">
 											<div class="col-xs-12 text-center char-weaponsHeader">
-												<p>{{"weapons.weapons" | translate | uppercase}}<p>
+												<p>{{"weapons.weapons" | translate | uppercase}}</p>
 											</div>
 										</div>
 										<div class="row">
@@ -1856,7 +1856,7 @@
 									<div class="col-xs-12">
 										<div class="row">
 											<div class="col-xs-12 text-center char-talentsHeader">
-												<p>{{"talents.talents" | translate | uppercase}}<p>
+												<p>{{"talents.talents" | translate | uppercase}}</p>
 											</div>
 										</div>
 										<div class="row">
@@ -1874,17 +1874,17 @@
 																	</div>
 																</div>
 															</div>
-															<div class="col-xs-12 col-sm-6 col-lg-2">
+															<div class="col-xs-12 col-sm-6 col-lg-4">
 																<div class="row">
-																	<div class="col-xs-5 col-lg-7">
+																	<div class="col-xs-7 col-lg-5">
 																		<p translate>talents.activation</p>
 																	</div>
-																	<div class="col-xs-7 col-lg-5">
+																	<div class="col-xs-5 col-lg-7">
 																		<p translate>talents.acquisition</p>
 																	</div>
 																</div>
 															</div>
-															<div class="col-xs-12 col-sm-6 col-lg-3">
+															<div class="col-xs-12 col-sm-12 col-lg-4">
 																<div class="row">
 																	<div class="col-xs-12">
 																		<p translate>talents.description</p>
@@ -1892,307 +1892,113 @@
 																</div>
 															</div>
 														</div>
-														<div class="row char-weaponsTableRow" ng-repeat="weapon in SelectedCharModel.char.equipment.weapons" ng-show="weapon.equip">
-															<div class="col-xs-12 col-sm-6 col-lg-4 {{weapon.held ? 'inUse' : ''}}">
+														<div class="row char-talentsTableRow" ng-repeat="talent in SelectedCharModel.char.talents">
+															<div class="col-xs-12 col-sm-6 col-lg-4">
 																<div class="row">
 																	<div class="col-xs-5 col-lg-6">
-																		<p editable-text="weapon.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" style="font-weight: bold">
-																			{{weapon.name || 'Auswählen'}} <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="weapon.note" ng-click="toggleNoteLayer('weapon' + $index)"><i class="fa fa-warning"></i></a>
+																		<p editable-text="talent.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" style="font-weight: bold">
+																			{{talent.name || 'Auswählen'}} <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="talent.note" ng-click="toggleNoteLayer('talent' + $index)"><i class="fa fa-warning"></i></a>
 																		</p>
 																		<p ng-hide="showCharEditing" style="font-weight: bold">
-																			{{weapon.name || ''}} <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="weapon.note" ng-click="toggleNoteLayer('weapon' + $index)"><i class="fa fa-warning"></i></a>
+																			{{talent.name || ''}} <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="talent.note" ng-click="toggleNoteLayer('talent' + $index)"><i class="fa fa-warning"></i></a>
 																		</p>
 																	</div>
 																	<div class="col-xs-7 col-lg-6">
-																		<p editable-select="weapon.skill.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="i18nForWeaponSkill(weapon, this)" e-ng-options="cs.value  as cs.text  for cs in choosableSkillsForWeapons">
-																			{{(weapon.skill.i18n | translate) || weapon.skill.text || 'Auswählen'}}
-																		</p>
-																		<p ng-hide="showCharEditing">
-																			{{(weapon.skill.i18n | translate) || weapon.skill.text || ''}}
-																		</p>
-																	</div>
-																</div>
-															</div>
-															<div class="col-xs-12 col-sm-6 col-lg-2 {{weapon.held ? 'inUse' : ''}}">
-																<div class="row">
-																	<div class="col-xs-5 col-lg-7">
-																		<p editable-select="weapon.range.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="i18nForWeaponRange(weapon, this)" e-ng-options="cr.value  as cr.text  for cr in choosableRangeForWeapons">
-																			{{(weapon.range.i18n | translate) || 'Auswählen'}}
-																		</p>
-																		<p ng-hide="showCharEditing">
-																			{{(weapon.range.i18n | translate) || ''}}
-																		</p>
-																	</div>
-																	<div class="col-xs-7 col-lg-5">
-																		<p editable-number="weapon.damage" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)" style="font-weight: bold">
-																			{{weapon.damage || 0}}
+																		<p editable-number="talent.rank" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)" style="font-weight: bold">
+																			{{talent.rank || 0}}
 																		</p>
 																		<p ng-hide="showCharEditing" style="font-weight: bold">
-																			{{weapon.damage || 0}}
+																			{{talent.rank || 0}}
 																		</p>
 																	</div>
 																</div>
 															</div>
-															<div class="col-xs-12 col-sm-6 col-lg-3 {{weapon.held ? 'inUse' : ''}}">
+															<div class="col-xs-12 col-sm-6 col-lg-4">
 																<div class="row">
-																	<div class="col-xs-5">
-																		<p editable-number="weapon.crit" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
-																			{{weapon.crit || 0}}
+																	<div class="col-xs-7 col-lg-5">
+																		<p editable-select="talent.activation.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="i18nForTalentActivation(talent, this)" e-ng-options="ca.value  as ca.text  for ca in choosableActivationsForTalents">
+																			{{(talent.activation.i18n | translate) || 'Auswählen'}}
 																		</p>
 																		<p ng-hide="showCharEditing">
-																			<img class="char-weaponTableDice" src="img/icons/advantage.png" ng-repeat="n in [] | loop:weapon.crit" />
+																			{{(talent.activation.i18n | translate) || ''}}
 																		</p>
-																	</div>															
-																	<div class="col-xs-7">
-																		<p>
-																			<img class="char-weaponTableDice" src="img/dice/proficiency.png" ng-repeat="n in [] | loop:getProficiencyCountForWeapon(weapon)" />
-																			<img class="char-weaponTableDice" src="img/dice/ability.png" ng-repeat="n in [] | loop:getAbilityCountForWeapon(weapon)" />
-																			<img class="char-weaponTableDice" src="img/dice/boost.png" ng-repeat="n in [] | loop:weapon.modifications.boost" />
-																			<img class="char-weaponTableDice" src="img/dice/force.png" ng-repeat="n in [] | loop:weapon.modifications.force" />
-																			<img class="char-weaponTableDice" src="img/dice/challenge.png" ng-repeat="n in [] | loop:weapon.modifications.challenge" />
-																			<img class="char-weaponTableDice" src="img/dice/difficulty.png" ng-repeat="n in [] | loop:weapon.modifications.difficulty" />
-																			<img class="char-weaponTableDice" src="img/dice/setback.png" ng-repeat="n in [] | loop:weapon.modifications.setback" />
-																			<img class="char-weaponTableDice" src="img/icons/triumph.png" ng-repeat="n in [] | loop:weapon.modifications.triumph" />
-																			<img class="char-weaponTableDice" src="img/icons/success.png" ng-repeat="n in [] | loop:weapon.modifications.success" />
-																			<img class="char-weaponTableDice" src="img/icons/advantage.png" ng-repeat="n in [] | loop:weapon.modifications.advantage" />
-																			<img class="char-weaponTableDice" src="img/icons/lightside.png" ng-repeat="n in [] | loop:weapon.modifications.lightside" />
-																			<img class="char-weaponTableDice black" src="img/icons/despair.png" ng-repeat="n in [] | loop:weapon.modifications.despair" />
-																			<img class="char-weaponTableDice black" src="img/icons/failure.png" ng-repeat="n in [] | loop:weapon.modifications.failure" />
-																			<img class="char-weaponTableDice black" src="img/icons/threat.png" ng-repeat="n in [] | loop:weapon.modifications.threat" />
-																			<img class="char-weaponTableDice" src="img/icons/darkside.png" ng-repeat="n in [] | loop:weapon.modifications.darkside" />
+																	</div>
+																	<div class="col-xs-5 col-lg-7">
+																		<p editable-text="talent.acquisition" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" style="font-weight: bold">
+																			{{talent.acquisition || 'Auswählen'}}
+																		</p>
+																		<p ng-hide="showCharEditing" style="font-weight: bold">
+																			{{talent.acquisition || ''}}
 																		</p>
 																	</div>
 																</div>
 															</div>
-															<div class="col-xs-12 col-sm-6 col-lg-3 {{weapon.held ? 'inUse' : ''}}">
-																<div class="row char-weaponTableSpecial textarea {{buttons == 'no' ? '' : 'apple'}}">
+															<div class="col-xs-12 col-sm-12 col-lg-4">
+																<div class="row char-talentTableDescription textarea {{buttons == 'no' ? '' : 'apple'}}">
 																	<div class="{{showCharEditing ? 'col-xs-10' : 'col-xs-12'}}">
-																		<a editable-textarea="weapon.specialShort" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" e-rows="3">
-																			{{weapon.specialShort || 'Auswählen'}}
+																		<a editable-textarea="talent.description" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" e-rows="3">
+																			{{talent.description || 'Auswählen'}}
 																		</a>
 																		<p ng-hide="showCharEditing">
-																			{{weapon.specialShort || ''}}
+																			{{talent.description || ''}}
 																		</p>
 																	</div>
 																	<div class="col-xs-2" ng-show="showCharEditing">
 																		<p>
-																			<button class="btn btn-warning btn-xs pull-right" type="button" ng-click="toggleWeaponDetails($index)"><i class="fa fa-bars"></i></button>
+																			<button class="btn btn-warning btn-xs pull-right" type="button" ng-click="toggleTalentDetails($index)"><i class="fa fa-bars"></i></button>
 																		</p>
 																	</div>
 																</div>
 															</div>
-															<div id="weaponDetails_{{$index}}" class="col-xs-12 collapse char-weaponDetailsContainer">
-																<div class="row char-weaponDetails">
+															<div id="talentDetails_{{$index}}" class="col-xs-12 collapse char-talentDetailsContainer">
+																<div class="row char-talentDetails">
 																	<div class="col-xs-12">
-																		<div class="row char-weaponDetailsHeader">
+																		<div class="row char-talentDetailsHeader">
 																			<div class="col-xs-12 ">
-																				<p><i class="fa fa-wrench"></i> {{"weapons.details" | translate}}</p>
+																				<p><i class="fa fa-wrench"></i> {{"talents.details" | translate}}</p>
 																			</div>
 																		</div>
-																		<div class="row char-weaponDetailsRows">
-																			<div class="col-xs-12 col-sm-10">
-																				<div class="row">
-																					<div class="col-xs-2">
-																						<p>{{"weapons.held" | translate}}:</p>
-																					</div>
-																					<div class="col-xs-2">
-																						<p editable-checkbox="weapon.held" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
-																							{{(weapon.held && "weapons.doHeld" | translate) || ("weapons.dontHeld" | translate)}}
-																						</p>
-																					</div>
-																					<div class="col-xs-2">
-																						<p>{{"weapons.equip" | translate}}:</p>
-																					</div>
-																					<div class="col-xs-2">
-																						<p editable-checkbox="weapon.equip" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="holsterWeapon(weapon)">
-																							{{(weapon.equip && "weapons.doEquip" | translate) || ("weapons.dontEquip" | translate)}}
-																						</p>
-																					</div>
-																					<div class="col-xs-2">
-																						<p>{{"weapons.own" | translate}}:</p>
-																					</div>
-																					<div class="col-xs-2">
-																						<p editable-checkbox="weapon.own" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing">
-																							{{(weapon.own && "weapons.doOwn" | translate) || ("weapons.dontOwn" | translate)}}
-																						</p>
-																					</div>
-																				</div>
-																			</div>
-																			<div class="col-xs-12 col-sm-2 text-right char-weaponDetailsButtons">
-																				<!-- TODO: Eine Lösung für das überspringen des Index muss noch gefunden werden.
-																				<button class="btn btn-info btn-xs" type="button" style="width: 24px" ng-click="moveDownWeapon($index)" ng-disabled="$last"><i class="fa fa-chevron-down"></i></button>
-																				<button class="btn btn-info btn-xs" type="button" style="width: 24px" ng-click="moveUpWeapon($index)" ng-disabled="$first"><i class="fa fa-chevron-up"></i></button>
-																				&nbsp;|&nbsp;
-																				-->
-																				<button class="btn btn-success btn-xs" type="button" style="width: 24px" ng-click="duplicateWeapon(weapon)"><i class="fa fa-copy"></i></button>
-																				<button class="btn btn-danger btn-xs" type="button" style="width: 24px" data-toggle="modal" data-target="#deleteWeapon-modal" ng-click="deleteWeapon($index)"><i class="fa fa-trash-o"></i></button>
+																		<div class="row char-talentDetailsRows">
+																			<div class="col-xs-12 text-right char-talentDetailsButtons">
+																				<button class="btn btn-danger btn-xs" type="button" style="width: 24px" data-toggle="modal" data-target="#deleteTalent-modal" ng-click="deleteTalent($index)"><i class="fa fa-trash-o"></i></button>
 																			</div>
 																		</div>
-																		<div class="row char-weaponDetailsHeader">
-																			<div class="col-xs-12 ">
-																				<p><i class="fa fa-wrench"></i> {{"weapons.modification" | translate}}</p>
-																			</div>
-																		</div>
-																		<div class="row char-weaponDetailsRows">
-																			<div class="col-xs-1">
-																				<img class="char-weaponTableDice" src="img/dice/proficiency.png" />
-																			</div>
-																			<div class="col-xs-2">
-																				<p editable-number="weapon.modifications.proficiency" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
-																					{{weapon.modifications.proficiency || 0}}
-																				</p>
-																			</div>
-																			<div class="col-xs-1">
-																				<img class="char-weaponTableDice" src="img/dice/ability.png" />
-																			</div>
-																			<div class="col-xs-2">
-																				<p editable-number="weapon.modifications.ability" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
-																					{{weapon.modifications.ability || 0}}
-																				</p>
-																			</div>
-																			<div class="col-xs-1">
-																				<img class="char-weaponTableDice" src="img/dice/boost.png" />
-																			</div>
-																			<div class="col-xs-2">
-																				<p editable-number="weapon.modifications.boost" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
-																					{{weapon.modifications.boost || 0}}
-																				</p>
-																			</div>
-																			<div class="col-xs-1">
-																				<img class="char-weaponTableDice" src="img/dice/force.png" />
-																			</div>
-																			<div class="col-xs-2">
-																				<p editable-number="weapon.modifications.force" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
-																					{{weapon.modifications.force || 0}}
-																				</p>
-																			</div>
-																			<div class="col-xs-1">
-																				<img class="char-weaponTableDice" src="img/dice/challenge.png" />
-																			</div>
-																			<div class="col-xs-2">
-																				<p editable-number="weapon.modifications.challenge" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
-																					{{weapon.modifications.challenge || 0}}
-																				</p>
-																			</div>
-																			<div class="col-xs-1">
-																				<img class="char-weaponTableDice" src="img/dice/difficulty.png" />
-																			</div>
-																			<div class="col-xs-2">
-																				<p editable-number="weapon.modifications.difficulty" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
-																					{{weapon.modifications.difficulty || 0}}
-																				</p>
-																			</div>
-																			<div class="col-xs-1">
-																				<img class="char-weaponTableDice" src="img/dice/setback.png" />
-																			</div>
-																			<div class="col-xs-2">
-																				<p editable-number="weapon.modifications.setback" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
-																					{{weapon.modifications.setback || 0}}
-																				</p>
-																			</div>
-																		</div>
-																		<div class="row char-skillDetailsRows">
-																			<div class="col-xs-1">
-																				<img class="char-weaponTableDice" src="img/icons/triumph.png" />
-																			</div>
-																			<div class="col-xs-2">
-																				<p editable-number="weapon.modifications.triumph" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
-																					{{weapon.modifications.triumph || 0}}
-																				</p>
-																			</div>
-																			<div class="col-xs-1">
-																				<img class="char-weaponTableDice" src="img/icons/success.png" />
-																			</div>
-																			<div class="col-xs-2">
-																				<p editable-number="weapon.modifications.success" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
-																					{{weapon.modifications.success || 0}}
-																				</p>
-																			</div>
-																			<div class="col-xs-1">
-																				<img class="char-weaponTableDice" src="img/icons/advantage.png" />
-																			</div>
-																			<div class="col-xs-2">
-																				<p editable-number="weapon.modifications.advantage" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
-																					{{weapon.modifications.advantage || 0}}
-																				</p>
-																			</div>
-																			<div class="col-xs-1">
-																				<img class="char-weaponTableDice" src="img/icons/lightside.png" />
-																			</div>
-																			<div class="col-xs-2">
-																				<p editable-number="weapon.modifications.lightside" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
-																					{{weapon.modifications.lightside || 0}}
-																				</p>
-																			</div>
-																			<div class="col-xs-1">
-																				<img class="char-weaponTableDice black" src="img/icons/despair.png" />
-																			</div>
-																			<div class="col-xs-2">
-																				<p editable-number="weapon.modifications.despair" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
-																					{{weapon.modifications.despair || 0}}
-																				</p>
-																			</div>
-																			<div class="col-xs-1">
-																				<img class="char-weaponTableDice black" src="img/icons/failure.png" />
-																			</div>
-																			<div class="col-xs-2">
-																				<p editable-number="weapon.modifications.failure" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
-																					{{weapon.modifications.failure || 0}}
-																				</p>
-																			</div>
-																			<div class="col-xs-1">
-																				<img class="char-weaponTableDice black" src="img/icons/threat.png" />
-																			</div>
-																			<div class="col-xs-2">
-																				<p editable-number="weapon.modifications.threat" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
-																					{{weapon.modifications.threat || 0}}
-																				</p>
-																			</div>
-																			<div class="col-xs-1">
-																				<img class="char-weaponTableDice" src="img/icons/darkside.png" />
-																			</div>
-																			<div class="col-xs-2">
-																				<p editable-number="weapon.modifications.darkside" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
-																					{{weapon.modifications.darkside || 0}}
-																				</p>
-																			</div>
-																		</div>
-																		<div class="row char-weaponDetailsHeader">
+																		<div class="row char-talentDetailsHeader">
 																			<div class="col-xs-12">
-																				<p><i class="fa fa-warning"></i> {{"weapons.note" | translate}}</p>
+																				<p><i class="fa fa-warning"></i> {{"talents.note" | translate}}</p>
 																			</div>
 																		</div>
-																		<div class="row char-weaponDetailsRows textarea {{buttons == 'no' ? '' : 'apple'}}">
+																		<div class="row char-talentDetailsRows textarea {{buttons == 'no' ? '' : 'apple'}}">
 																			<div class="col-xs-12">
-																				<a editable-textarea="weapon.note" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" e-rows="6">
-																					<pre>{{weapon.note || "Bitte eingeben"}}</pre>
+																				<a editable-textarea="talent.note" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" e-rows="6">
+																					<pre>{{talent.note || "Bitte eingeben"}}</pre>
 																				</a>
 																			</div>
 																		</div>
 																	</div>
 																</div>
 															</div>
-															<div id="noteLayer_weapon{{$index}}" class="col-xs-12 collapse" ng-hide="showCharEditing">
+															<div id="noteLayer_talent{{$index}}" class="col-xs-12 collapse" ng-hide="showCharEditing">
 																<div class="row char-noteLayer">
 																	<div class="col-xs-12">
 																		<div class="row char-noteLayerHeader">
 																			<div class="col-xs-12">
-																				<p><i class="fa fa-warning"></i> {{"weapons.note" | translate}}</p>
+																				<p><i class="fa fa-warning"></i> {{"talents.note" | translate}}</p>
 																			</div>
 																		</div>
 																		<div class="row char-noteLayerRows">
 																			<div class="col-xs-12">
-																				<pre>{{weapon.note}}</pre>
+																				<pre>{{talent.note}}</pre>
 																			</div>
 																		</div>
 																	</div>
 																</div>
 															</div>
 														</div>
-														<div class="row char-weaponsTableRow noPadding" ng-show="showCharEditing">
+														<div class="row char-talentsTableRow noPadding" ng-show="showCharEditing">
 															<div class="col-xs-12">
 																<p>
-																	<button type="submit" class="btn btn-success btn-xs pull-right" ng-click="newWeapon(true)"><i class="fa fa-plus"></i></button>
+																	<button type="submit" class="btn btn-success btn-xs pull-right" ng-click="newTalent()"><i class="fa fa-plus"></i></button>
 																</p>
 															</div>
 														</div>
@@ -2622,7 +2428,7 @@
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 	
-	<!-- DeleteSkill-Modal -->
+	<!-- DeleteWeapon-Modal -->
 	<div class="modal fade" id="deleteWeapon-modal" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
 		<div class="modal-dialog">
 			<div class="box box-solid box-danger">
@@ -2639,6 +2445,28 @@
 				<div class="box-footer clearfix">
 					<button type="button" class="btn btn-default pull-right" ng-click="cancelDeletingWeapon()"><i class="fa fa-times"></i> Abbrechen</button>
 					<button type="button" class="btn btn-danger pull-left" ng-click="removeWeapon()"><i class="fa fa-edit"></i> Löschen</button>
+				</div>
+			</div>
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	<!-- DeleteTalent-Modal -->
+	<div class="modal fade" id="deleteTalent-modal" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="box box-solid box-danger">
+				<div class="box-header">
+					<h3 class="box-title">Warnung: Diese Änderung ist nicht rückgängig zu machen.</h3>
+				</div>
+				<div class="box-body">
+					<p>
+						<br />
+						Wollen Sie das Talent "{{DeleteTalentModel.name}}" wirklich löschen?<br />
+						<br />
+					</p>
+				</div><!-- /.box-body -->
+				<div class="box-footer clearfix">
+					<button type="button" class="btn btn-default pull-right" ng-click="cancelDeletingTalent()"><i class="fa fa-times"></i> Abbrechen</button>
+					<button type="button" class="btn btn-danger pull-left" ng-click="removeTalent()"><i class="fa fa-edit"></i> Löschen</button>
 				</div>
 			</div>
 		</div><!-- /.modal-dialog -->

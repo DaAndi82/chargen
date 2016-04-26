@@ -127,5 +127,22 @@
 		"medium": "Medium",
 		"long": "Long",
 		"extreme": "Extreme"
+	},
+	"talents":
+	{
+		"talents": "Talents",
+		"name": "Name",
+		"rank": "Rank",
+		"activation": "Activation",
+		"acquisition": "Acquisition",
+		"description": "Description",
+		"details": "Details",
+		"note": "Note"
+	},
+	"activation":
+	{
+		"maneuver": "Maneuver",
+		"incidental": "Incidental",
+		"passive": "Passive"
 	}
 }

@@ -127,5 +127,22 @@
 		"medium": "Mittel",
 		"long": "Groß",
 		"extreme": "Extrem groß"
+	},
+	"talents":
+	{
+		"talents": "Talente",
+		"name": "Name",
+		"rank": "Rang",
+		"activation": "Aktivierung",
+		"acquisition": "Erworben",
+		"description": "Beschreibung",
+		"details": "Details",
+		"note": "Hinweis"
+	},
+	"activation":
+	{
+		"maneuver": "Manöver",
+		"incidental": "Beiläufig",
+		"passive": "Passiv"
 	}
 }

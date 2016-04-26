@@ -503,6 +503,158 @@ iframe {
 }
 
 
+.char-talents {
+	border-radius: 30px;
+	border: 4px solid #9E998B;
+	margin-right: 0px;
+	margin-left: 0px;
+	margin-top: 10px;
+	padding: 5px;
+}
+.char-talents p{
+	margin: 5px;
+}
+.char-talentsHeader {
+	color: #fff;
+	background-color: #394457;
+	border-radius: 30px;
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+.char-talentsColumnContainer {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.char-talentsColumn {
+	background-color: #d6d6d6;
+	border: 10px solid #d6d6d6;
+	border-radius: 30px;
+	margin-right: 0px;
+	margin-left: 0px;
+	margin-top: 5px;
+}
+.char-talentsColumn p{
+	font-size: 10pt;
+}
+.char-talentsTable {
+	/*border: 1px solid #9E998B;*/
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+.char-talentsTableHeader {
+	border-bottom: 2px solid #9E998B;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.char-talentsTableHeader p {
+	font-weight: bold;
+	color: #000;
+}
+.char-talentsTableRow {
+	border-top: 1px solid #9E998B;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.char-talentsTableRow.noPadding {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+.char-talentsTableRow p,
+.char-talentsTableRow a,
+.char-talentsTableRow pre {
+	font-style: normal !important;
+	border: 0px !important;
+	background-color: #d6d6d6;
+}
+/* Speziell für iPhone-Buttons */
+.char-talentsTableRow .editable-controls button {
+	padding: 1px 4px;
+}
+.char-talentsTableRow  input.editable-has-buttons {
+	width: 50%;
+}
+/* // Speziell für iPhone-Buttons */
+.char-talentsTableHeader div,
+.char-talentsTableRow div {
+	padding-left: 5px;
+	padding-right: 5px;
+	min-height: 29px;
+}
+.char-talentDetailsContainer {
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+.char-talentDetails {
+	border: 1px solid #f39c12;
+	margin-left: 5px;
+	margin-right: 6px;
+	margin-bottom: 5px;
+}
+.char-talentDetailsHeader {
+	font-weight: bold;
+}
+.char-talentDetailsHeader p{
+	border-bottom: 1px solid #f39c12 !important;
+}
+.char-talentDetailsRows {
+	padding-left: 25px !important;
+}
+.char-talentDetailsRows.textarea {
+	padding-left: 20px !important;
+}
+.char-talentDetailsRows form.editable-wrap{
+	display: block;
+}
+.char-talentDetailsRows .editable-textarea div {
+	display: block;
+}
+.char-talentDetailsRows.apple .editable-textarea div {
+	padding-right: 62px;
+}
+.char-talentDetailsRows textarea {
+	margin-bottom: 10px !important;
+	width: 100% !important;
+}
+.char-talentDetailsRows pre {
+	color: #428bca;
+}
+.char-talentTable a.disabled {
+	cursor: not-allowed;
+}
+.char-talentDetailsButtons {
+	padding-right: 10px !important;
+}
+.char-talentTableDescription.textarea {
+	padding-left: 10px !important;
+	padding-bottom: 10px;
+}
+.char-talentTableDescription div {
+	padding-top: 5px;
+}
+.char-talentTableDescription p {
+	margin-top: 0px;
+	margin-left: 0px;
+}
+.char-talentTableDescription form.editable-wrap{
+	display: block;
+	padding-top: 5px;
+}
+.char-talentTableDescription .editable-textarea div {
+	display: block;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-top: -11px;
+}
+.char-talentTableDescription.apple .editable-textarea div {
+	padding-right: 42px;
+}
+.char-talentTableDescription textarea {
+	width: 100% !important;
+}
+
+
+
 .char-noteLayer {
 	border: 1px solid #00c0ef;
 	margin-left: 5px;
@@ -516,6 +668,10 @@ iframe {
 	border-bottom: 1px solid #00c0ef !important;
 }
 .char-weaponsTableRow .char-noteLayer {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+.char-talentsTableRow .char-noteLayer {
 	margin-left: 0px;
 	margin-right: 0px;
 }

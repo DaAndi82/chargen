@@ -43,12 +43,16 @@
 		$scope.DeleteSkillModel = null;
 		/* DeleteWeaponModel für die Delete-Maske */
 		$scope.DeleteWeaponModel = null;
+		/* DeleteTalentModel für die Delete-Maske */
+		$scope.DeleteTalentModel = null;
 		/* Triggert das DeleteCharWarning .*/
 		$scope.showDeleteCharWarning = false;
 		/* Triggert das DeleteSkillWarning .*/
 		$scope.showDeleteSkillWarning = false;
 		/* Triggert das DeleteWeaponWarning .*/
 		$scope.showDeleteWeaponWarning = false;
+		/* Triggert das DeleteTalentWarning .*/
+		$scope.showDeleteTalentWarning = false;
 		/* Triggert das Bearbeiten eines Chars .*/
 		$scope.showCharEditing = false;
 		/*Zeigt den Avatar-Edit-Bereich im Profil an. */
@@ -77,6 +81,12 @@
 			medium: {value: "medium", text: "", i18n: "range.medium"},
 			long: {value: "long", text: "", i18n: "range.long"},
 			extreme: {value: "extreme", text: "", i18n: "range.extreme"}
+		};
+		
+		$scope.choosableActivationsForTalents = {
+			maneuver: {value: "maneuver", text: "", i18n: "activation.maneuver"},
+			incidental: {value: "incidental", text: "", i18n: "activation.incidental"},
+			passive: {value: "passive", text: "", i18n: "activation.passive"}
 		};
 		
 		
@@ -132,9 +142,16 @@
 			}
 				
 			// Für "choosableRangeForWeapons"
-			jQuery.each($scope.choosableRangeForWeapons, function(key, attribute) {
-				$translate(attribute.i18n).then(function (translation) {
-					attribute.text = translation;
+			jQuery.each($scope.choosableRangeForWeapons, function(key, range) {
+				$translate(range.i18n).then(function (translation) {
+					range.text = translation;
+				});
+			});
+				
+			// Für "choosableActivationsForTalents"
+			jQuery.each($scope.choosableActivationsForTalents, function(key, activation) {
+				$translate(activation.i18n).then(function (translation) {
+					activation.text = translation;
 				});
 			});
 		}
@@ -1253,6 +1270,26 @@
 		}
 		
 		
+		$scope.removeTalent = function () {
+			if ($scope.DeleteTalentModel != null) {
+				delete $rootScope.SelectedCharModel.char.talents[$scope.DeleteTalentModel.key];
+				
+				$scope.updateChar(function (error) {
+					if (error) {
+						alertService.addAlert({
+							type: 'error',
+							text: 'Es ist ein Fehler aufgetreten. Das Talent "' + $scope.DeleteTalentModel.name + '" konnte nicht gelöscht werden.'
+						});
+					}
+					
+					$scope.DeleteTalentModel = null;
+				});
+					
+				$scope.closeDeleteTalentAlert();
+			}
+		}
+		
+		
 		$scope.moveUpWeapon = function (index) {
 			if (index < 9) {
 				var oldIndex = "weapon0" + (index + 1);
@@ -1577,6 +1614,13 @@
 		}
 		
 		
+		$scope.i18nForTalentActivation = function (talent, self) {
+			if (talent && self.$data) {
+				talent.activation.i18n = $scope.choosableActivationsForTalents[self.$data].i18n;
+			}
+		}
+		
+		
 		$scope.getProficiencyCountForSkill = function (skill) {
 			var diceCount = 0;
 			
@@ -1787,6 +1831,35 @@
 		}
 		
 		
+		$scope.newTalent = function () {
+			if ($rootScope.SelectedCharModel != null) {
+				if ($rootScope.SelectedCharModel.char.talents == null) $rootScope.SelectedCharModel.char.talents = {};
+				
+				var talentCount = Object.keys($rootScope.SelectedCharModel.char.talents).length;
+				
+				if (talentCount < 9) {
+					var stringIndex = "talent0" + (talentCount + 1);
+				} else {
+					var stringIndex = "talent" + (talentCount + 1);
+				}
+				
+				$rootScope.SelectedCharModel.char.talents[stringIndex] = {
+					name: "",
+					rank: 0,
+					activation: {
+						name: "",
+						i18n: ""
+					},
+					acquisition: "",
+					description: "",
+					note: "",
+				}
+				
+				$scope.updateChar();
+			}
+		}
+		
+		
 		$scope.duplicateWeapon = function (weapon) {
 			if (weapon != null) {
 				var weaponCount = Object.keys($rootScope.SelectedCharModel.char.equipment.weapons).length;
@@ -1894,6 +1967,24 @@
 		}
 		
 		
+		$scope.deleteTalent = function (index) {
+			if (index < 9) {
+				var stringIndex = "talent0" + (index + 1);
+			} else {
+				var stringIndex = "talent" + (index + 1);
+			}
+			
+			$scope.DeleteTalentModel = {
+				key: stringIndex,
+				name: angular.copy($rootScope.SelectedCharModel.char.talents[stringIndex].name)
+			}
+			
+			if ($scope.DeleteTalentModel != null) {
+				$scope.showDeleteTalentWarning = true;
+			}
+		}
+		
+		
 		$scope.cancelDeletingChar = function () {
 			$scope.closeDeleteCharAlert();
 			$scope.showDeleteCharWarning = false;
@@ -1912,6 +2003,13 @@
 			$scope.closeDeleteWeaponAlert();
 			$scope.showDeleteWeaponWarning = false;
 			$scope.DeleteWeaponModel = null;
+		}
+		
+		
+		$scope.cancelDeletingTalent = function () {
+			$scope.closeDeleteTalentAlert();
+			$scope.showDeleteTalentWarning = false;
+			$scope.DeleteTalentModel = null;
 		}
 		
 		
@@ -1943,6 +2041,7 @@
 		$scope.endEditChar = function () {
 			$("[id^=skillDetails_]").hide();
 			$("[id^=weaponDetails_]").hide();
+			$("[id^=talentDetails_]").hide();
 			$("[id^=equipmentWeaponDetails_]").hide();
 			$scope.showCharEditing = false;
 		}
@@ -1968,6 +2067,11 @@
 		}
 		
 		
+		$scope.closeDeleteTalentAlert = function () {
+			$('#deleteTalent-modal').modal('hide');
+		}
+		
+		
 		$scope.toggleSkillDetails = function (index) {
 			$("#skillDetails_" + index).toggle();
 		}
@@ -1975,6 +2079,11 @@
 		
 		$scope.toggleWeaponDetails = function (index) {
 			$("#weaponDetails_" + index).toggle();
+		}
+		
+		
+		$scope.toggleTalentDetails = function (index) {
+			$("#talentDetails_" + index).toggle();
 		}
 		
 		
