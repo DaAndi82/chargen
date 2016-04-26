@@ -546,15 +546,34 @@ iframe {
 	border-bottom: 2px solid #9E998B;
 	padding-left: 5px;
 	padding-right: 5px;
+	margin-bottom: 5px;
 }
 .char-talentsTableHeader p {
 	font-weight: bold;
 	color: #000;
 }
 .char-talentsTableRow {
-	border-top: 1px solid #9E998B;
+	border-bottom: 1px solid #9E998B;
 	padding-left: 5px;
 	padding-right: 5px;
+}
+.char-talentsTableRow.active {	
+    border-top: 5px solid #71081E;
+    margin-bottom: 5px;
+}
+.char-talentsTableRow.passive {
+    border-top: 5px solid #313E53;
+    margin-bottom: 5px;
+}
+.char-talentsTableRow.active .active,
+.char-talentsTableRow.active .active p {
+    background-color: #71081E;
+    color: white;
+}
+.char-talentsTableRow.passive .passive,
+.char-talentsTableRow.passive .passive p {
+    background-color: #313E53;
+    color: white;
 }
 .char-talentsTableRow.noPadding {
 	padding-left: 0px;

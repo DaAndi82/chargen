@@ -1892,22 +1892,22 @@
 																</div>
 															</div>
 														</div>
-														<div class="row char-talentsTableRow" ng-repeat="talent in SelectedCharModel.char.talents">
+														<div class="row char-talentsTableRow {{talent.activation.name == 'passive' ? 'passive' : 'active'}}" ng-repeat="talent in SelectedCharModel.char.talents | orderObjectBy:'name'">
 															<div class="col-xs-12 col-sm-6 col-lg-4">
 																<div class="row">
-																	<div class="col-xs-5 col-lg-6">
-																		<p editable-text="talent.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" style="font-weight: bold">
+																	<div class="col-xs-5 col-lg-6 {{talent.activation.name == 'passive' ? 'passive' : 'active'}}">
+																		<p editable-text="talent.name" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
 																			{{talent.name || 'Auswählen'}} <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="talent.note" ng-click="toggleNoteLayer('talent' + $index)"><i class="fa fa-warning"></i></a>
 																		</p>
-																		<p ng-hide="showCharEditing" style="font-weight: bold">
+																		<p ng-hide="showCharEditing">
 																			{{talent.name || ''}} <a class="{{showCharEditing ? 'disabled' : ''}}" ng-show="talent.note" ng-click="toggleNoteLayer('talent' + $index)"><i class="fa fa-warning"></i></a>
 																		</p>
 																	</div>
 																	<div class="col-xs-7 col-lg-6">
-																		<p editable-number="talent.rank" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)" style="font-weight: bold">
+																		<p editable-number="talent.rank" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkNumberNotNull(this)">
 																			{{talent.rank || 0}}
 																		</p>
-																		<p ng-hide="showCharEditing" style="font-weight: bold">
+																		<p ng-hide="showCharEditing">
 																			{{talent.rank || 0}}
 																		</p>
 																	</div>
@@ -1924,10 +1924,10 @@
 																		</p>
 																	</div>
 																	<div class="col-xs-5 col-lg-7">
-																		<p editable-text="talent.acquisition" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" style="font-weight: bold">
+																		<p editable-text="talent.acquisition" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)">
 																			{{talent.acquisition || 'Auswählen'}}
 																		</p>
-																		<p ng-hide="showCharEditing" style="font-weight: bold">
+																		<p ng-hide="showCharEditing">
 																			{{talent.acquisition || ''}}
 																		</p>
 																	</div>
