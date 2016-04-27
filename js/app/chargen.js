@@ -1,5 +1,6 @@
 ﻿angular.module('chargen', [
 		'ngMessages',
+		'ngSanitize',
         'ui.router',
 		'ngFileUpload',
 		'ngImgCrop',

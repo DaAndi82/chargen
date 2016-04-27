@@ -44,6 +44,43 @@
 		}
 	})
 	
+	.filter('replaceBBCode', function () {
+		return function (input) {
+			input = input.replace(/\[(ABILITY)\]/gi, '<img src="img/dice/ability.png" class="descDice"/>');
+			input = input.replace(/\[(AB)\]/gi, '<img src="img/dice/ability.png" class="descDice"/>');
+			input = input.replace(/\[(ADVANTAGE)\]/gi, '<img src="img/dice/advantage.png" class="descDice"/>');
+			input = input.replace(/\[(AD)\]/gi, '<img src="img/dice/advantage.png" class="descDice"/>');
+			input = input.replace(/\[(BOOST)\]/gi, '<img src="img/dice/boost.png" class="descDice"/>');
+			input = input.replace(/\[(BO)\]/gi, '<img src="img/dice/boost.png" class="descDice"/>');
+			input = input.replace(/\[(CHALLENGE)\]/gi, '<img src="img/dice/challenge.png" class="descDice"/>');
+			input = input.replace(/\[(CH)\]/gi, '<img src="img/dice/challenge.png" class="descDice"/>');
+			input = input.replace(/\[(DARK)\]/gi, '<img src="img/dice/darkside.png" class="descDice"/>');
+			input = input.replace(/\[(DA)\]/gi, '<img src="img/dice/darkside.png" class="descDice"/>');
+			input = input.replace(/\[(DESPAIR)\]/gi, '<img src="img/dice/despair.png" class="descDice black"/>');
+			input = input.replace(/\[(DE)\]/gi, '<img src="img/dice/despair.png" class="descDice black"/>');
+			input = input.replace(/\[(DIFFICULTY)\]/gi, '<img src="img/dice/difficulty.png" class="descDice"/>');
+			input = input.replace(/\[(DI)\]/gi, '<img src="img/dice/difficulty.png" class="descDice"/>');
+			input = input.replace(/\[(FAILURE)\]/gi, '<img src="img/dice/failure.png" class="descDice black"/>');
+			input = input.replace(/\[(FA)\]/gi, '<img src="img/dice/failure.png" class="descDice black"/>');
+			input = input.replace(/\[(FORCE)\]/gi, '<img src="img/dice/force.png" class="descDice"/>');
+			input = input.replace(/\[(FO)\]/gi, '<img src="img/dice/force.png" class="descDice"/>');
+			input = input.replace(/\[(LIGHT)\]/gi, '<img src="img/dice/lightside.png" class="descDice"/>');
+			input = input.replace(/\[(LI)\]/gi, '<img src="img/dice/lightside.png" class="descDice"/>');
+			input = input.replace(/\[(PROFICIENCY)\]/gi, '<img src="img/dice/proficiency.png" class="descDice"/>');
+			input = input.replace(/\[(PR)\]/gi, '<img src="img/dice/proficiency.png" class="descDice"/>');
+			input = input.replace(/\[(SETBACK)\]/gi, '<img src="img/dice/setback.png" class="descDice"/>');
+			input = input.replace(/\[(SE)\]/gi, '<img src="img/dice/setback.png" class="descDice"/>');
+			input = input.replace(/\[(SUCCESS)\]/gi, '<img src="img/dice/success.png" class="descDice"/>');
+			input = input.replace(/\[(SU)\]/gi, '<img src="img/dice/success.png" class="descDice"/>');
+			input = input.replace(/\[(THREAT)\]/gi, '<img src="img/dice/threat.png" class="descDice black"/>');
+			input = input.replace(/\[(TH)\]/gi, '<img src="img/dice/threat.png" class="descDice black"/>');
+			input = input.replace(/\[(TRIUMPH)\]/gi, '<img src="img/dice/triumph.png" class="descDice"/>');
+			input = input.replace(/\[(TR)\]/gi, '<img src="img/dice/triumph.png" class="descDice"/>');
+		
+			return input;
+		}
+	})
+	
 	.directive('popover', function() {
 		return function(scope, elem, attrs) {
 			elem;

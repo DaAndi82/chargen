@@ -1939,8 +1939,7 @@
 																		<a editable-textarea="talent.description" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" e-rows="3">
 																			{{talent.description || 'Auswählen'}}
 																		</a>
-																		<p ng-hide="showCharEditing">
-																			{{talent.description || ''}}
+																		<p ng-hide="showCharEditing" ng-bind-html="(talent.description | replaceBBCode) || ''">																			
 																		</p>
 																	</div>
 																	<div class="col-xs-2" ng-show="showCharEditing">

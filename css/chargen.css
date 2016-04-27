@@ -593,6 +593,9 @@ iframe {
 .char-talentsTableRow  input.editable-has-buttons {
 	width: 50%;
 }
+.char-talentsTableRow p img.descDice {
+	height: 17px;
+}
 /* // Speziell für iPhone-Buttons */
 .char-talentsTableHeader div,
 .char-talentsTableRow div {
