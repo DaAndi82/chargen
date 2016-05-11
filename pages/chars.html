@@ -1528,7 +1528,7 @@
 															<div class="col-xs-12 col-sm-6 col-lg-3">
 																<div class="row">
 																	<div class="col-xs-12">
-																		<p translate>weapons.special</p>
+																		<p translate>weapons.specialSmall</p>
 																	</div>
 																</div>
 															</div>
@@ -1667,6 +1667,18 @@
 																				-->
 																				<button class="btn btn-success btn-xs" type="button" style="width: 24px" ng-click="duplicateWeapon(weapon)"><i class="fa fa-copy"></i></button>
 																				<button class="btn btn-danger btn-xs" type="button" style="width: 24px" data-toggle="modal" data-target="#deleteWeapon-modal" ng-click="deleteWeapon($index)"><i class="fa fa-trash-o"></i></button>
+																			</div>
+																		</div>
+																		<div class="row char-weaponDetailsHeader">
+																			<div class="col-xs-12">
+																				<p><i class="fa fa-warning"></i> {{"weapons.specialLarge" | translate}}</p>
+																			</div>
+																		</div>
+																		<div class="row char-weaponDetailsRows textarea {{buttons == 'no' ? '' : 'apple'}}">
+																			<div class="col-xs-12">
+																				<a editable-textarea="weapon.specialLarge" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" e-rows="6">
+																					<pre>{{weapon.specialLarge || "Bitte eingeben"}}</pre>
+																				</a>
 																			</div>
 																		</div>
 																		<div class="row char-weaponDetailsHeader">
@@ -2061,7 +2073,7 @@
 															<div class="col-xs-12 col-sm-6 col-lg-3">
 																<div class="row">
 																	<div class="col-xs-12">
-																		<p translate>weapons.special</p>
+																		<p translate>weapons.specialSmall</p>
 																	</div>
 																</div>
 															</div>
@@ -2190,6 +2202,18 @@
 																							{{(weapon.own && "weapons.doOwn" | translate) || ("weapons.dontOwn" | translate)}}
 																						</p>
 																					</div>
+																				</div>
+																			</div>
+																			<div class="row char-weaponDetailsHeader">
+																				<div class="col-xs-12">
+																					<p><i class="fa fa-warning"></i> {{"weapons.specialLarge" | translate}}</p>
+																				</div>
+																			</div>
+																			<div class="row char-weaponDetailsRows textarea {{buttons == 'no' ? '' : 'apple'}}">
+																				<div class="col-xs-12">
+																					<a editable-textarea="weapon.specialLarge" onaftersave="updateChar()" buttons="{{buttons}}" blur="submit" ng-show="showCharEditing" onbeforesave="checkStringNotNull(this)" e-rows="6">
+																						<pre>{{weapon.specialLarge || "Bitte eingeben"}}</pre>
+																					</a>
 																				</div>
 																			</div>
 																			<div class="col-xs-12 col-sm-2 text-right char-weaponDetailsButtons">
